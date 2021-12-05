@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" data-auto-replace-svg="nest"></script>
+        <script src="jquery.js"></script>
+        <script src="javascript.js"></script>
+    </head>
+    <body>
+        <div class='main-container'>
+            
+            <!-- BossMenu Conainer -->
+            <div class="welcome-container">
+                <div class="w3-animate-left"> <!-- Animation -->
+                    <span id="welcome-title">Quản Lý</span>
+                    <div id="waiting-players">
+                        <div class='option-box box-shadow goto' datafrom='welcome-container' datato='employees-container' id="option-employee"><span id='option-text'>Nhân viên</span></div>
+                        <div class='option-box box-shadow goto' datafrom='welcome-container' datato='recruits-container' id="option-recruit"><span id='option-text'>Tuyển dụng</span></div>
+                        <div class='option-box box-shadow' id="option-bosstash"><span id='option-text'>Tủ đồ</span></div>
+                        <div class='option-box box-shadow goto' datafrom='welcome-container' datato='society-container' id="option-employee"><span id='option-text'>Tiền quỹ</span></div>
+                    </div>
+                    <span class='goto bottom-option' datafrom='welcome-container' datato='quit'><i class="fas fa-sign-out-alt" style="font-size: 20px;"></i> Thoát</span>
+                </div>
+            </div>
+            
+            <!-- Employees Conainer -->
+            <div class="employees-container" style="display: none;">
+                <div class="w3-animate-left"> <!-- Animation -->
+                    <span id="emplyees-title">Quản lý nhân viên</span>
+                    <div id="emplyees-list"></div>
+                    <span class='goto bottom-option' datafrom='employees-container' datato='welcome-container'><i class="fas fa-backward" style="font-size: 20px;"></i> Quay lại</span>
+                </div>
+            </div>
+            
+            <!-- Recruits Conainer -->
+            <div class="recruits-container" style="display: none;">
+                <div class="w3-animate-left"> <!-- Animation -->
+                    <span id="recruits-title">Tuyển dụng</span>
+                        <div id="recruits-list"></div>
+                    <span class='goto bottom-option' datafrom='recruits-container' datato='welcome-container'><i class="fas fa-backward" style="font-size: 20px;"></i> Quay lại</span>
+                </div>
+            </div>
+
+            <!-- Society Conainer -->
+            <div class="society-container" style="display: none;">
+                <div class="w3-animate-left"> <!-- Animation -->
+                    <span id="society-title">Tiền quỹ</span>
+                        <div id="society-list">
+                            <div class='player-box box-shadow option-enabled'><span id='option-text'>Số tiền hiện tại: $<span id='society-amount'>0</span></span></div>
+                            <div class="player-box box-shadow" id="player-deposit">
+                                <span id="option-text" class="">Nhập số tiền:<input id="cashamount" type="number" style="
+                                    border-width: 2px;
+                                    padding-left: 36px;
+                                    /* background: black; */
+                                    border-color: rgba(0, 0, 0, 0.63);
+                                    color: white;
+                                    font-weight: 600;
+                                    margin: 0em;
+                                    background-color: rgba(0, 0, 0, 0.63);
+                                " oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"> </span>
+                            </div>
+                            <div class='player-box box-shadow' id="player-deposit">
+                                <span id='option-text' class='deposit'>Gửi vào</span>
+                            </div>
+                            <div class='player-box box-shadow' id="player-withdraw">
+                                <span id='option-text' class='withdraw'>Rút ra</span>
+                            </div>
+                        </div>
+                    <span class='goto bottom-option' datafrom='society-container' datato='welcome-container'><i class="fas fa-backward" style="font-size: 20px;"></i> Quay lại</span>
+                </div>
+            </div>
+
+            <!-- Job grades -->
+            <div class="job-container" style="display: none;">
+                <div class="w3-animate-left"> <!-- Animation -->
+                    <span id="emplyees-title">Cấp độ nhân viên</span>
+                    <div id="grade-list"></div>
+                    <span class='goto bottom-option' datafrom='job-container' datato='employees-container'><i class="fas fa-backward" style="font-size: 20px;"></i> Quay lại</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

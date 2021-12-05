@@ -1,0 +1,16 @@
+["corn_kernel"] 		        = {["name"] = "corn_kernel", 			        ["label"] = "Corn Kernel", 	        ["weight"] = 300, 		["type"] = "item", 		["image"] = "corn_kernel.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Corn kernel"},
+["corn_pack"] 		         	= {["name"] = "corn_pack", 			        ["label"] = "Corn Pack", 	        ["weight"] = 500, 		["type"] = "item", 		["image"] = "corn_pack.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Corn Pack"},
+["orange"] 		                = {["name"] = "orange", 			        ["label"] = "Orange", 	                ["weight"] = 100, 		["type"] = "item", 		["image"] = "orange.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Orange"},
+["fruit_pack"] 		             	= {["name"] = "fruit_pack", 			        ["label"] = "Fruit Pack", 	        ["weight"] = 300, 		["type"] = "item", 		["image"] = "fruit_pack.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Fruit Pack"},
+["milk"] 		                = {["name"] = "milk", 			                ["label"] = "Milk", 	                ["weight"] = 200, 		["type"] = "item", 		["image"] = "milk.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Milk"},
+["milk_pack"] 		            	= {["name"] = "milk_pack", 			        ["label"] = "Milk Pack", 	        ["weight"] = 500, 		["type"] = "item", 		["image"] = "milk_pack.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Milk pack"},
+["box"] 		                = {["name"] = "box", 			                ["label"] = "Box", 	                ["weight"] = 100, 		["type"] = "item", 		["image"] = "box.png", 	            	["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Box"},
+
+
+Credits: 
+
+QBUS x OSM | A VAST FARMING SCRIPT | Cows, Corn Farm, Oranges and more!
+
+- Alen for Assisting in Development.
+- All Contributors who gave their time into testing scripts.
+- R.Linn for the IDEA! 

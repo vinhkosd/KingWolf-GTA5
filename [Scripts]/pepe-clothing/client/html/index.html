@@ -1,0 +1,1576 @@
+d<html>
+
+<head>
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="closemenu" class="modal">
+            <div class="modal-content">
+                <h4>Leaving</h4>
+                <p>Wil je je aankoop bevestigen?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" id="save" class="modal-close waves-effect waves-light btn green">Sla veranderingen op</a>
+                <a href="#!" id="discard" class="modal-close waves-effect waves-light btn red">Gooi veranderingen weg</a>
+                <a href="#!" id="cancel" class="modal-close waves-effect waves-light btn grey">Ga Terug</a>
+            </div>
+        </div>
+        <div id="clothesmenu" style="display: none" class="row">
+            <div id="clothes-container" class="col s5">
+                <div id="button_menu" class="row">
+                    <button id="button-clothes" data-target="clothes"
+                        class="button-menu waves-effect waves-light btn-large active">Kleren</button>
+                    <button id="button-access" data-target="access"
+                        class="button-menu waves-effect waves-light btn-large">Accessories</button>
+                    <button id="button-ped" data-target="ped"
+                        class="button-menu waves-effect waves-light btn-large">Karakter</button>
+                </div>
+                <div id="camera_menu" class="row">
+                    <div class="col s12">
+                        <button class="tog_hat col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fab fa-redhat"></i>
+                        </button>
+                        <button class="tog_glasses col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-glasses"></i>
+                        </button>
+                        <button class="tog_tops col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-tshirt"></i>
+                        </button>
+                        <button class="tog_head col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-meh"></i>
+                        </button>
+                        <button class="tog_torso col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-user-tie"></i>
+                        </button>
+                        <button class="tog_leg col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-socks"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="clothes" class="row">
+                    <div class="scroll-container">
+                        <div id="hats" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Hoeden</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="hair" class="hair col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Haar</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Tweede Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="jackets" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Jassen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="undershirts" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Ondershirt</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="torsos" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Armen / Handschoenen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="legs" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Broeken</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="shoes" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Schoenen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="decals" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Toevoegingen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="access" class="row" style="display: none;">
+                    <div class="scroll-container">
+                        <div id="masks" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Maskers</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="glasses" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Brillen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="earrings" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Oorbellen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="neck" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Sjaalen en kettingen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="watches" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Horloges</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="braclets" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Armbanden</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="vest" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Vest</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bags" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Tassen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ped" class="row" style="display: none;">
+                    <div class="scroll-container">
+                        <div id="warning_skins" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Belangerijke Info</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s12 panel-col">
+                                    <p>Het veranderen van karakter zal alle wijzingen die je nu hebt aangepast verwijderen</p>
+                                    <button id="reset" class="waves-effect waves-light btn">RESET</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="skins" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Karakters</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Man: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="skin_male" class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Vrouw: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="skin_female" class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="face" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Gezichtsvarianten</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="skin_string" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Custom Karakters (Ignore this)</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s12 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Karakter naam</h6>
+                                    <input class="col s4" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="barbermenu" style="display: none" class="row">
+            <div id="barber-container" class="col s5">
+                <div id="button_menu" class="row">
+                    <button id="button-inheritance" data-target="inheritance"
+                        class="button-menu waves-effect waves-light btn active">Ouders</button>
+                    <button id="button-faceshape" data-target="faceshape"
+                        class="button-menu waves-effect waves-light btn">Gezicht</button>
+                    <button id="button-appear" data-target="appear"
+                        class="button-menu waves-effect waves-light btn">Huid</button>
+                    <button id="button-hair" data-target="bodyhair"
+                        class="button-menu waves-effect waves-light btn">Haar</button>
+                    <button id="button-features" data-target="features"
+                        class="button-menu waves-effect waves-light btn">Makeup</button>
+                </div>
+                <div id="camera_menu" class="row">
+                    <div class="col s12">
+                        <button class="tog_hat col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fab fa-redhat"></i>
+                        </button>
+                        <button class="tog_glasses col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-glasses"></i>
+                        </button>
+                        <button class="tog_mask col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-mask"></i>
+                        </button>
+                        <button class="tog_tops col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-tshirt"></i>
+                        </button>
+                        <button class="tog_head col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-meh"></i>
+                        </button>
+                        <button class="tog_torso col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-user-tie"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="inheritance" class="row">
+                    <div class="scroll-container">
+                        <div id="shapeFirstP" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Gezicht 1</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Hoofden: <span
+                                            class="total-number">46</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="shapeFirst" class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Huid: <span
+                                            class="total-number">46</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="skinFirst" class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="shapeSecondP" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Gezicht 2</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Hoofden: <span
+                                            class="total-number">46</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="shapeSecond" class="input-number col s4" type="number" value="0" min="0"
+                                        max="45" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Huid: <span
+                                            class="total-number">46</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="skinSecond" class="input-number col s4" type="number" value="0" min="0"
+                                        max="45" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="shapeThirdP" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Gezicht 3</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Hoofden: <span
+                                            class="total-number">46</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="shapeThird" class="input-number col s4" type="number" value="0" min="0"
+                                        max="45" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Huid: <span
+                                            class="total-number">46</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input id="skinThird" class="input-number col s4" type="number" value="0" min="0"
+                                        max="45" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="fmix" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Gezicht Mix</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s12 panel-col">
+                                    <input id="shapeMix" type="range" class="slider-range" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="smix" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Huid Mix</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s12 panel-col">
+                                    <input id="skinMix" type="range" class="slider-range" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tmix" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Derde gezicht mix</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s12 panel-col">
+                                    <input id="thirdMix" type="range" class="slider-range" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="faceshape" style="display: none;" class="row">
+                    <div class="scroll-container">
+                        <div id="nose" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Neus</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Neus breedte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Nose_Width" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Neusbeen hoogte: <span
+                                            class="total-number"></span></h6>
+                                    <input type="range" class="slider-range" data-value="Nose_Peak_Hight" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Top hoogte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Nose_Peak_Lenght" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Top lengte: <span
+                                            class="total-number"></span></h6>
+                                    <input type="range" class="slider-range" data-value="Nose_Bone_High" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Top verlaging: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Nose_Peak_Lowering" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Bot mix: <span
+                                            class="total-number"></span></h6>
+                                    <input type="range" class="slider-range" data-value="Nose_Bone_Twist" min="-100"
+                                        max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="brow" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Wenkbrauw</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Wenkbrauw hoogte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="EyeBrown_High" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Wenkbrauw diepte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="EyeBrown_Forward" min="-100"
+                                        max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cheek" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Wangen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Wang hoogte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Cheeks_Bone_High" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Wang bot breedte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Cheeks_Bone_Width" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Wang breedte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Cheeks_Width" min="-100"
+                                        max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="jaw" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Kaaklijn</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Kaaklijn breedte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Jaw_Bone_Width" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Kaaklijn lengte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Jaw_Bone_Back_Lenght"
+                                        min="-100" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="chin" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Kin</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Kin hoogte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Chimp_Bone_Lowering" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Kin lengte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Chimp_Bone_Lenght" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Kin breedte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Chimp_Bone_Width" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Kin diepte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Chimp_Hole" min="-100"
+                                        max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="facefeats" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Extra bewerkigen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Oog dikte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Eyes_Openning" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Lippen dikte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Lips_Thickness" min="-100"
+                                        max="100" />
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Nek dikte: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="Neck_Thikness" min="-100"
+                                        max="100" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="appear" style="display: none;" class="row">
+                    <div class="scroll-container">
+                        <div id="Blemishes" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Bloos</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">23</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Ageing" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Veroudering</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">14</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Complexion" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Complexiteit</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">11</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="SunDamage" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Huidschade</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">10</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="MolesFreckles" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Wratten & Pukkels</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">17</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="BodyBlemishes" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Lichaamspukkels</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">11</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bodyhair" style="display: none;" class="row">
+                    <div class="scroll-container">
+                        <div class="hair col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Haar</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Variant: <span
+                                            class="total-number"></span></h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Tweede Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="FacialHair" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Gezichtshaar</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Eyebrows" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Wenkbrauw</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">33</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ChestHair" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Lichaamshaar</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">16</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Color Palette</div>
+                                            <div class="collapsible-body color_palette_container haircol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="features" style="display: none;" class="row">
+                    <div class="scroll-container">
+                        <div id="Makeup" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Makeup</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">74</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container makeupcol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Tweede Kleuren Bord</div>
+                                            <div class="collapsible-body color_palette_container makeupcol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Blush" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Blozen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">6</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Color Palette</div>
+                                            <div class="collapsible-body color_palette_container makeupcol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Lipstick" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Lippenstift</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number">9</span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Zichtbaarheid: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <input type="range" class="slider-range" data-value="0" min="0" max="100" />
+                                </div>
+                                <div class="col s12">
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">Kleueren Bord</div>
+                                            <div class="collapsible-body color_palette_container makeupcol"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tattoomenu" style="display: none" class="row">
+            <div id="tats-container" class="col s5">
+                <!-- <div id="button_menu" class="row">
+                    <button id="button-clothes" data-target="clothes"
+                        class="button-menu waves-effect waves-light btn-large active">Clothes</button>
+                    <button id="button-access" data-target="access"
+                        class="button-menu waves-effect waves-light btn-large">Accessories</button>
+                    <button id="button-ped" data-target="ped"
+                        class="button-menu waves-effect waves-light btn-large">Ped</button>
+                </div> -->
+                <div id="camera_menu" class="row">
+                    <div class="col s12">
+                        <button class="tog_hat col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fab fa-redhat"></i>
+                        </button>
+                        <button class="tog_glasses col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-glasses"></i>
+                        </button>
+                        <button class="tog_tops col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-tshirt"></i>
+                        </button>
+                        <button class="tog_legs col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </button>
+                        <button class="tog_head col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-meh"></i>
+                        </button>
+                        <button class="tog_torso col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-user-tie"></i>
+                        </button>
+                        <button class="tog_leg col s2 btn-cam waves-effect waves-light btn-large">
+                            <i class="fas fa-socks"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="tattoos" class="row">
+                    <div class="scroll-container">
+                        <div id="ZONE_TORSO" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Borst</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ZONE_HEAD" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Hoofd</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ZONE_LEFT_ARM" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Linkerarm</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ZONE_RIGHT_ARM" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Rechterarm</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ZONE_LEFT_LEG" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Linkerbeen</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ZONE_RIGHT_LEG" class="col s12 panel">
+                            <div class="col s12 panel-title">
+                                <h6 class="grey-text text-lighten-3 panel-label">Rechterarm</h6>
+                            </div>
+                            <div class="col s12 panel-bottom">
+                                <div class="col s6 panel-col">
+                                    <h6 class="grey-text text-lighten-3 panel-label">Type: <span
+                                            class="total-number"></span>
+                                    </h6>
+                                    <button class="button-left col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <input class="input-number col s4" type="number" value="0" />
+                                    <button class="button-right col s4 waves-effect waves-light btn">
+                                        <i class="material-icons">chevron_right</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js" type="text/javascript"></script>
+</body>
+
+</html>

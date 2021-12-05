@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>City Hall</title>
+</head>
+    <body>
+        <div class="form-hoc-nghe" style="
+            display: none;
+            align-items: center;
+            border: 11px solid #222;
+            border-radius: 24px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            z-index: 9999999;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            width: 66%;
+            height: 100%;
+            color: #fff;
+            align-self: center;
+            margin-bottom: 30vh;
+            margin-top: 30vh;
+        ">
+            <div class="content">
+                <center>Tất cả công dân của King Wolf City phải vượt qua kỳ thi của họ trước khi họ có thể lái xe.
+                    <br>Hãy dành thời gian của bạn, trả lời một cách thông thường và không trả lời một cách ngẫu nhiên.
+                    <br>
+                    <br> Kiểm tra lý thuyết
+                    <br> - Đừng sợ, trường dạy lái xe chấp nhận tín dụng, nhưng hãy cẩn thận để không mắc nợ.
+                    <br> - Nếu bạn trượt bài kiểm tra lần đầu tiên, bạn có thể thi lại.
+                    .
+                    <br>
+                    <br> Kiểm tra lái xe
+                    <br> - Đảm bảo bạn luôn tỉnh táo khi lái xe và tránh tai nạn!<p></p>
+                    <br>
+                    <br>Tổng Chi phí Kiểm tra Lý thuyết &amp; Kiểm tra Lái xe là <span style="color: red;">$300</span>, khoản thanh toán này sẽ không được hoàn lại nếu bạn thi trượt.
+                </center>
+                <div class="buttonspot" style="
+                    display: flex;
+                    flex-direction: column;
+                    align-self: center;
+                    width: 30%;
+                    margin: auto;
+                    border: none;
+                ">
+                    <a href="#" class="button confirm" style="
+                        background-color: #4CAF50;
+                        border: none;
+                        color: white;
+                        padding: 15px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                    ">Xác nhận</a>
+                            
+                    <a href="#" class="button btnClosePanel" style="
+                        background-color: #4CAF50;
+                        border: none;
+                        color: white;
+                        padding: 15px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                    ">Đóng</a>
+                </div>
+            </div>         
+        </div>
+        <div class="container">
+            <div class="cityhall-main-container">
+
+                <div class="cityhall-option-blocks">
+                    <div class="cityhall-close">Đóng</div>
+                    <div class="cityhall-option-block" style="background-color: #4FC3F7" data-page="identity"><i class="fas fa-passport"></i><p>Tòa thị chính</p></div>
+                    <div class="cityhall-option-block" style="background-color: #4FC3F7" data-page="job"><i class="fas fa-user-tie"></i><p>Nghề nghiệp</p></div>
+                </div>
+
+                <div class="cityhall-identity-page">
+                    <div class="identity-page-blocks">
+                    </div>
+
+                    <div class="hover-description">
+
+                    </div>
+
+                    <div class="request-identity-button"></div>
+
+                    <div class="back-to-main"><p>Trở lại</p></div>
+                </div>
+
+                <div class="cityhall-job-page">
+                    <div class="job-page-blocks">
+                        <!-- <div class="job-page-block" data-job="tow"><p>Bergnet</p></div> -->
+                        <!-- <div class="job-page-block" data-job="reporter"><p>Verslaggever</p></div> -->
+                        <div class="job-page-block" data-job="garbage"><p>Chở rác</p></div>
+                        <div class="job-page-block" data-job="hocnghe"><p>Học chứng chỉ nghề</p></div>
+                        <!-- <div class="job-page-block" data-job="hocbacsi"><p>Học ngành Bác sĩ</p></div>
+                        <div class="job-page-block" data-job="hoccanhsat"><p>Học ngành Cảnh sát</p></div> -->
+                        <div class="job-page-block" data-job="unemployed"><p>Thất nghiệp</p></div>
+                        <!-- <div class="job-page-block" data-job="burger"><p>Burgershot</p></div> -->
+                    </div>
+                    <div class="apply-job-button"><p>Nhận việc!</p></div>
+                    <div class="back-to-main"><p>Trở lại</p></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="./app.js"></script>
+</html>

@@ -1,0 +1,25 @@
+Locales['en'] = {
+	["jobname"]  = "Ga-ra sửa xe",
+	["estash"]  = "~g~E~s~ Mở kho",
+	["eboss"]  = "~g~E~s~ Quản lý",
+	["evehicles"]  = "~g~E~s~ Phương tiện",
+	["epark"]  = "~g~E~s~ Đậu xe",
+	["offduty"]  = "~g~E~s~ Thoát ca",
+	["induty"]  = "~g~E~s~ Vào ca",
+	["elock"]  = "~g~E~s~ Đặt xe",
+	["emenu"]  = "~g~E~s~ Mở menu",
+	["nobikes"]  = "Không có xe đạp xin vui lòng!",
+	["options"]  = "Tùy chọn",
+	["close"]  = "Đóng menu",
+	["back"]  = "Quay lại",
+	["parts"]  = "Các bộ phận",
+	["check"]  = "Kiểm tra trạng thái",
+	["detach"]  = "Ngừng sửa",
+	["repair"]  = "Sửa chữa",
+	["nodmg"]  = "Không có thiệt hại về phần này",
+	["beingrepaired"]  = "đang được sửa chữa",
+	["cancel"]  = "Hủy bỏ",
+	["nomats"]  = "Không đủ vật liệu trong cửa hàng..",
+}
+-- _U("beingrepaired") .."
+--                         _U("nomats")

@@ -1,0 +1,9 @@
+#Asset
+\[Assets\]/*
+\[Cars\]/*
+\[Maps\]/*
+\[Vehicles\]/*
+mapbuilder/*
+#archive
+*.rar
+*.zip

@@ -1,0 +1,7 @@
+x 4773.20
+y -4969.59
+z -0.4155
+radius 1257
+useZ = false
+diameter = radius * 2.0
+DrawMarker(1, center.x, center.y, -200.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, diameter, diameter, 400.0, r, g, b, 96, false, false, 2, nil, nil, false)

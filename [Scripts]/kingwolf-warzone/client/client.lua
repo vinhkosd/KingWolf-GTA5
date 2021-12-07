@@ -90,11 +90,8 @@ Citizen.CreateThread(function()
 				inRange = true
 				Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] - 0.97, "~g~[E]~w~ WarZone")
 				if IsControlJustReleased(0, Keys["E"]) then
-					DoScreenFadeOut(5000)
-					Citizen.Wait(5000)
+					gotoWarZone()
 					
-					SetEntityCoords(GetPlayerPed(-1), Config.Locations["GoBack"]["x"], Config.Locations["GoBack"]["y"], Config.Locations["GoBack"]["z"] + 0.5 , 1, 0, 0, 1)
-					DoScreenFadeIn(250)
 				end
 			end
 
@@ -110,10 +107,7 @@ Citizen.CreateThread(function()
 				inRange = true
 				
 				if IsControlJustReleased(0, Keys["E"]) then
-					DoScreenFadeOut(5000)
-					Citizen.Wait(5000)
-					SetEntityCoords(GetPlayerPed(-1), Config.Locations["GoToWarZone"]["x"], Config.Locations["GoToWarZone"]["y"], Config.Locations["GoToWarZone"]["z"] + 0.5 , 1, 0, 0, 1)
-					DoScreenFadeIn(250)
+					goBack()
 				end
 			end
 
@@ -451,4 +445,35 @@ function DrawTxt(x, y, width, height, scale, text, r, g, b, a, outline)
 	SetTextEntry("STRING")
 	AddTextComponentString(text)
 	DrawText(x - width/2, y - height/2 + 0.005)
+end
+
+function goBack() 
+	Citizen.CreateThread(function()
+		TriggerEvent('pepe-inventory:client:set:busy', true)
+		TriggerEvent('pepe-inventory:client:reset:drop')
+		TriggerEvent('pepe-inventory:client:close:inventory')
+		DoScreenFadeOut(5000)
+		Citizen.Wait(5000)
+		SetEntityCoords(GetPlayerPed(-1), Config.Locations["GoToWarZone"]["x"], Config.Locations["GoToWarZone"]["y"], Config.Locations["GoToWarZone"]["z"] + 0.5 , 1, 0, 0, 1)
+		DoScreenFadeIn(250)
+		Citizen.Wait(500)
+		TriggerEvent('pepe-inventory:client:reset:drop')
+		TriggerEvent('pepe-inventory:client:set:busy', false)
+	end)
+end
+function gotoWarZone()
+	Citizen.CreateThread(function()
+		TriggerEvent('pepe-inventory:client:set:busy', true)
+		TriggerEvent('pepe-inventory:client:reset:drop')
+		TriggerEvent('pepe-inventory:client:close:inventory')
+		DoScreenFadeOut(5000)
+		Citizen.Wait(5000)
+		
+		SetEntityCoords(GetPlayerPed(-1), Config.Locations["GoBack"]["x"], Config.Locations["GoBack"]["y"], Config.Locations["GoBack"]["z"] + 0.5 , 1, 0, 0, 1)
+		DoScreenFadeIn(250)
+		Citizen.Wait(500)
+		TriggerEvent('pepe-inventory:client:reset:drop')
+		TriggerEvent('pepe-inventory:client:set:busy', false)
+	end)
+	
 end

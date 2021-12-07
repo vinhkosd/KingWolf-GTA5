@@ -223,21 +223,30 @@ function startGame()
             if not Config.UsePedModelsInsteadOutfitsForPlayers then
                 if isMale and #Config.PlayerOutfits["male"] > 0 then
                     for k,v in pairs(Config.PlayerOutfits["male"][math.random(#Config.PlayerOutfits["male"])]) do
-                        SetPedComponentVariation(
-                            ped, 
-                            k,
-                            v[1],
-                            v[2]
-                        )
+                        if k == 12 then
+                            SetPedPropIndex(ped, 0,  v[1], v[2], true)
+                        else
+                            SetPedComponentVariation(
+                                ped, 
+                                k,
+                                v[1],
+                                v[2]
+                            )
+                        end
+                        
                     end
                 elseif not isMale and #Config.PlayerOutfits["female"] > 0 then
                     for k,v in pairs(Config.PlayerOutfits["female"][math.random(#Config.PlayerOutfits["female"])]) do
-                        SetPedComponentVariation(
-                            ped, 
-                            k,
-                            v[1],
-                            v[2]
-                        )
+                        if k == 12 then
+                            SetPedPropIndex(ped, 0,  v[1], v[2], true)
+                        else
+                            SetPedComponentVariation(
+                                ped, 
+                                k,
+                                v[1],
+                                v[2]
+                            )
+                        end
                     end
                 end
             end
@@ -280,23 +289,31 @@ function startGame()
                 if playerPedModel == GetHashKey("mp_m_freemode_01") then
                     if #Config.PlayerOutfits["male"] > 0 then
                         for k,v in pairs(Config.PlayerOutfits["male"][math.random(#Config.PlayerOutfits["male"])]) do
-                            SetPedComponentVariation(
-                                playerPed, 
-                                k,
-                                v[1],
-                                v[2]
-                            )
+                            if k == 12 then
+                                SetPedPropIndex(playerPed, 0,  v[1], v[2], true)
+                            else
+                                SetPedComponentVariation(
+                                    playerPed, 
+                                    k,
+                                    v[1],
+                                    v[2]
+                                )
+                            end
                         end
                     end
                 elseif playerPedModel == GetHashKey("mp_f_freemode_01") then
                     if #Config.PlayerOutfits["female"] > 0 then
                         for k,v in pairs(Config.PlayerOutfits["female"][math.random(#Config.PlayerOutfits["female"])]) do
-                            SetPedComponentVariation(
-                                playerPed, 
-                                k,
-                                v[1],
-                                v[2]
-                            )
+                            if k == 12 then
+                                SetPedPropIndex(playerPed, 0,  v[1], v[2], true)
+                            else
+                                SetPedComponentVariation(
+                                    playerPed, 
+                                    k,
+                                    v[1],
+                                    v[2]
+                                )
+                            end
                         end
                     end
                 end

@@ -118,7 +118,7 @@ Citizen.CreateThread(function()
 						rices = true
 						GatLua()
 					elseif IsControlJustReleased(0, 38) and rices then
-						Framework.Functions.Notify('Thao tác quá nhanh, vui lòng chờ cam chín!')
+						Framework.Functions.Notify('Thao tác quá nhanh, vui lòng chờ lúa mì chín!')
 					end
 				elseif orangedis < 10 then 
 					DrawMarker(2, Config.RiceFarm[i].x, Config.RiceFarm[i].y, Config.RiceFarm[i].z , 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.15, 209, 41, 242, 200, 0, 0, 0, 0)

@@ -292,6 +292,54 @@ AddEventHandler('pepe-police:client:send:banktruck:alert', function(Coords, Plat
  end
 end)
 
+RegisterNetEvent('pepe-police:client:send:weed:alert')
+AddEventHandler('pepe-police:client:send:weed:alert', function(Coords, StreetName)
+    if (Framework.Functions.GetPlayerData().job.name == "police") and Framework.Functions.GetPlayerData().job.onduty then
+        TriggerEvent('pepe-alerts:client:send:alert', {
+            timeOut = 15000,
+            alertTitle = "Hái cần sa",
+            priority = 100,
+            coords = {
+                x = Coords.x,
+                y = Coords.y,
+                z = Coords.z,
+            },
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-cannabis"></i>',
+                    detail = StreetName,
+                },
+            },
+            callSign = '10-42A',
+        }, true)
+        AddAlert('Hái cần sa', 140, 250, Coords, false)
+    end
+end)
+
+RegisterNetEvent('pepe-police:client:send:packweed:alert')
+AddEventHandler('pepe-police:client:send:packweed:alert', function(Coords, StreetName)
+    if (Framework.Functions.GetPlayerData().job.name == "police") and Framework.Functions.GetPlayerData().job.onduty then
+        TriggerEvent('pepe-alerts:client:send:alert', {
+            timeOut = 15000,
+            alertTitle = "Chế cần sa",
+            priority = 100,
+            coords = {
+                x = Coords.x,
+                y = Coords.y,
+                z = Coords.z,
+            },
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-cannabis"></i>',
+                    detail = StreetName,
+                },
+            },
+            callSign = '10-42A',
+        }, true)
+        AddAlert('Chế cần sa', 140, 250, Coords, false)
+    end
+end)
+
 RegisterNetEvent('pepe-police:client:send:tracker:alert')
 AddEventHandler('pepe-police:client:send:tracker:alert', function(Coords, Name)
     if (Framework.Functions.GetPlayerData().job.name == "police") and Framework.Functions.GetPlayerData().job.onduty then

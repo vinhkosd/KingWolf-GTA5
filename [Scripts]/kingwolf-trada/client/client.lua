@@ -6,6 +6,7 @@ local isDrugs = false
 local DoingSomething = false
 local isNearShop = false
 local PlayerJob = {}
+local IDShopNearBy = 0
 
 Citizen.CreateThread(function()
 
@@ -96,6 +97,27 @@ Citizen.CreateThread(function()
 		AddTextComponentString('Suối tiên')
 
 		EndTextCommandSetBlipName(addBlipWater)
+	end
+	
+	for i = 1, #Config.Locations["ShopAuto"] do
+		local tableCoords = Config.Locations["ShopAuto"][i]
+		local addBlipShop = AddBlipForCoord(tableCoords.x, tableCoords.y, tableCoords.z)
+
+		SetBlipSprite (addBlipShop, 52)
+
+		SetBlipDisplay(addBlipShop, 4)
+
+		SetBlipScale  (addBlipShop, 0.7)
+
+		SetBlipColour (addBlipShop, 3)
+
+		SetBlipAsShortRange(addBlipShop, true)
+
+		BeginTextCommandSetBlipName("STRING")
+
+		AddTextComponentString('Tạp hóa')
+
+		EndTextCommandSetBlipName(addBlipShop)
 	end
 end)
 
@@ -237,19 +259,56 @@ Citizen.CreateThread(function()
 				end
 			end
 
-			local ShopDistance = GetDistanceBetweenCoords(plyCoords, Config.Locations["Shop"]["x"], Config.Locations["Shop"]["y"], Config.Locations["Shop"]["z"])
+			-- local ShopDistance = GetDistanceBetweenCoords(plyCoords, Config.Locations["Shop"]["x"], Config.Locations["Shop"]["y"], Config.Locations["Shop"]["z"])
 
-			if ShopDistance < 3.0 and PlayerJob.name == "trada" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
-				Framework.Functions.DrawText3D(Config.Locations["Shop"]["x"], Config.Locations["Shop"]["y"], Config.Locations["Shop"]["z"] + 1.0, "~g~E~w~ - Tủ bán tự động")
-				if IsControlJustReleased(0, 38) and ShopDistance < 1.0 then
-					Other = {maxweight = 900000, slots = Config.Items.slots}
-					TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_tra_da", Other)
-					TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_tra_da")
+			-- if ShopDistance < 3.0 and PlayerJob.name == "trada" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
+			-- 	Framework.Functions.DrawText3D(Config.Locations["Shop"]["x"], Config.Locations["Shop"]["y"], Config.Locations["Shop"]["z"] + 1.0, "~g~E~w~ - Tủ bán tự động")
+			-- 	if IsControlJustReleased(0, 38) and ShopDistance < 1.0 then
+			-- 		Other = {maxweight = 900000, slots = Config.Items.slots}
+			-- 		TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_tra_da", Other)
+			-- 		TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_tra_da")
+			-- 	end
+			-- elseif ShopDistance < 1.5 then
+			-- 	isNearShop = true
+			-- else
+			-- 	isNearShop = false
+			-- end
+
+			for i = 1, #Config.Locations["ShopAuto"] do		
+				local ShopDistance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Locations["ShopAuto"][i], true)
+
+				if ShopDistance < 10.0 then
+					DrawMarker(27, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
+
+					-- DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
 				end
-			elseif ShopDistance < 1.5 then
-				isNearShop = true
-			else
-				isNearShop = false
+
+				if ShopDistance < 3.0 and PlayerJob.name == "trada" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
+					isNearShop = true
+					IDShopNearBy = i
+					Framework.Functions.DrawText3D(Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z + 1.0, "~g~E~w~ - Tủ bán tự động")
+				
+					if IsControlJustReleased(0, 38) and ShopDistance < 1.0 then
+						Other = {maxweight = 900000, slots = Config.Items.slots}
+						TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_tra_da_"..i, Other)
+						TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_tra_da_"..i)
+					end
+				elseif ShopDistance < 1.5 then
+					isNearShop = true
+					IDShopNearBy = i
+				else
+					if isNearShop then
+						local LastShopDistance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Locations["ShopAuto"][IDShopNearBy], true)
+						if LastShopDistance > 1.5 then
+							isNearShop = false
+							IDShopNearBy = 0
+						end
+					else
+						isNearShop = false
+						IDShopNearBy = 0
+					end
+					
+				end
 			end
 			
 		-- end
@@ -452,9 +511,15 @@ AddEventHandler('pepe-items:client:use:tra-da:drink', function(ItemName, PropNam
 		if not DoingSomething then
 		DoingSomething = true
     	 	Citizen.SetTimeout(1000, function()
+				local anim = "amb@world_human_drinking@coffee@male@idle_a"
+				local dict = "idle_c"
     			exports['pepe-assets']:AddProp(PropName)
-    			exports['pepe-assets']:RequestAnimationDict("amb@world_human_drinking@coffee@male@idle_a")
-    			TaskPlayAnim(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+				if ItemName == "ice-scream" then
+					anim = "stungun@standing"
+					dict = "damage"
+				end
+    			exports['pepe-assets']:RequestAnimationDict(anim)
+    			TaskPlayAnim(PlayerPedId(), anim, dict, 8.0, 1.0, -1, 49, 0, 0, 0, 0)
     	 		Framework.Functions.Progressbar("drink", "Đang uống..", 10000, false, true, {
     	 			disableMovement = false,
     	 			disableCarMovement = false,
@@ -466,7 +531,7 @@ AddEventHandler('pepe-items:client:use:tra-da:drink', function(ItemName, PropNam
 					exports['pepe-assets']:RemoveProp()
 					TriggerEvent('pepe-inventory:client:set:busy', false)	
 					TriggerEvent("pepe-inventory:client:ItemBox", Framework.Shared.Items[ItemName], "remove")
-					StopAnimTask(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 1.0)
+					StopAnimTask(PlayerPedId(), anim, dict, 1.0)
 					TriggerServerEvent("Framework:Server:SetMetaData", "thirst", Framework.Functions.GetPlayerData().metadata["thirst"] + increaseAmount)
 					if ItemName == "fruit-plate" then
 						TriggerServerEvent("Framework:Server:SetMetaData", "hunger", Framework.Functions.GetPlayerData().metadata["hunger"] + math.random(15, 16))
@@ -478,7 +543,7 @@ AddEventHandler('pepe-items:client:use:tra-da:drink', function(ItemName, PropNam
     				exports['pepe-assets']:RemoveProp()
     				TriggerEvent('pepe-inventory:client:set:busy', false)
     	 			Framework.Functions.Notify("Hủy bỏ..", "error")
-    				StopAnimTask(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 1.0)
+    				StopAnimTask(PlayerPedId(), anim, dict, 1.0)
     	 		end)
     	 	end)
 		end
@@ -499,8 +564,8 @@ AddEventHandler('kingwolf-trada:open:autoshop', function(ItemName, PropName)
 				end
 			end
         end
-		TriggerServerEvent("pepe-inventory:server:OpenInventory", "tradashop", "trada", Config.Items)
-    end, "tu_tu_dong_tra_da")
+		TriggerServerEvent("pepe-inventory:server:OpenInventory", "tradashop", "tu_tu_dong_tra_da_"..IDShopNearBy, Config.Items)
+    end, "tu_tu_dong_tra_da_"..IDShopNearBy)
     
 end)
 

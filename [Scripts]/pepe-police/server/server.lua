@@ -13,22 +13,56 @@ local Objects = {}
 
 RegisterServerEvent('pepe-police:server:UpdateBlips')
 AddEventHandler('pepe-police:server:UpdateBlips', function()
-    local src = source
+    -- local src = source
+    -- local dutyPlayers = {}
+    -- for k, v in pairs(Framework.Functions.GetPlayers()) do
+    --     local Player = Framework.Functions.GetPlayer(v)
+    --     ped = GetPlayerPed(v)
+    --     pedCoords = GetEntityCoords(ped)
+    --     if Player ~= nil then 
+    --         if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
+    --             table.insert(dutyPlayers, {
+    --                 source = Player.PlayerData.source,
+    --                 label = Player.PlayerData.metadata["callsign"]..' | '..Player.PlayerData.charinfo.firstname..' '..Player.PlayerData.charinfo.lastname,
+    --                 job = Player.PlayerData.job.name,
+    --                 coords = pedCoords,
+    --                 ped = ped,
+    --             })
+    --         end
+    --     end
+    -- end
+    -- TriggerClientEvent("pepe-police:client:UpdateBlips", -1, dutyPlayers)
+    --no affect when player join
+end)
+
+function updateBlips()
     local dutyPlayers = {}
     for k, v in pairs(Framework.Functions.GetPlayers()) do
         local Player = Framework.Functions.GetPlayer(v)
+        ped = GetPlayerPed(v)
+        pedCoords = GetEntityCoords(ped)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
                 table.insert(dutyPlayers, {
                     source = Player.PlayerData.source,
                     label = Player.PlayerData.metadata["callsign"]..' | '..Player.PlayerData.charinfo.firstname..' '..Player.PlayerData.charinfo.lastname,
                     job = Player.PlayerData.job.name,
+                    coords = pedCoords,
+                    ped = ped,
                 })
             end
         end
     end
-    TriggerClientEvent("pepe-police:client:UpdateBlips", -1, dutyPlayers)
-end)
+
+    for k, v in pairs(Framework.Functions.GetPlayers()) do
+        local Player = Framework.Functions.GetPlayer(v)
+        if Player ~= nil then
+            if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
+                TriggerClientEvent("pepe-police:client:UpdateBlips", Player.PlayerData.source, dutyPlayers)
+            end
+        end
+    end
+end
 
 -- // Loops \\ --
 
@@ -39,6 +73,14 @@ Citizen.CreateThread(function()
     TriggerClientEvent("pepe-police:SetCopCount", -1, CurrentCops)
     Citizen.Wait(1000 * 60 * 10)
   end
+end)
+
+Citizen.CreateThread(function()
+    while true do 
+      Citizen.Wait(0)
+      updateBlips() 
+      Citizen.Wait(1000)
+    end
 end)
 
 -- // Functions \\ --
@@ -892,4 +934,18 @@ AddEventHandler('pepe-police:server:send:weaponrobbery:alert', function(Coords, 
    local AlertData = {title = "Ammunation Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Ammunation is being robbed near "..StreetName}
    TriggerClientEvent("pepe-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('pepe-police:client:send:ammunation:alert', -1, Coords, StreetName)
+end)
+
+RegisterServerEvent('pepe-police:server:send:alert:weed')
+AddEventHandler('pepe-police:server:send:alert:weed', function(Coords, StreetName)
+   local AlertData = {title = "Hái cần sa", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Hái cần sa tại "..StreetName}
+   TriggerClientEvent("pepe-phone:client:addPoliceAlert", -1, AlertData)
+   TriggerClientEvent('pepe-police:client:send:weed:alert', -1, Coords, StreetName)
+end)
+
+RegisterServerEvent('pepe-police:server:send:alert:packweed')
+AddEventHandler('pepe-police:server:send:alert:packweed', function(Coords, StreetName)
+   local AlertData = {title = "Chế cần sa", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Hái cần sa tại "..StreetName}
+   TriggerClientEvent("pepe-phone:client:addPoliceAlert", -1, AlertData)
+   TriggerClientEvent('pepe-police:client:send:packweed:alert', -1, Coords, StreetName)
 end)

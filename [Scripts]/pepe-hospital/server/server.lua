@@ -205,7 +205,8 @@ Framework.Commands.Add("keoxac", "Kéo xác id người chơi nhất định", {
     local Player = Framework.Functions.GetPlayer(source)
     local TargetPlayer = Framework.Functions.GetPlayer(tonumber(args[1]))
 	if TargetPlayer ~= nil then
-		if Player.PlayerData.job.label == "ambulance" then
+		print(Player.PlayerData.job.name)
+		if Player.PlayerData.job.name == "ambulance" then
 			local coolDownBringPed = getCoolDownPed(Player.PlayerData.citizenid)
 			if coolDownBringPed > 0 then
 				local remainingseconds = (coolDownBringPed) / 1000
@@ -218,6 +219,8 @@ Framework.Commands.Add("keoxac", "Kéo xác id người chơi nhất định", {
 				return
 			else
 				TriggerClientEvent('pepe-hospital:client:bring:ped', source, TargetPlayer.PlayerData.source)
+				Citizen.Wait(500)
+				TriggerClientEvent("pepe-police:client:get:escorted", TargetPlayer.PlayerData.source, Player.PlayerData.source)
 				TriggerClientEvent('Framework:Notify', TargetPlayer.PlayerData.source, "Bạn được bác sĩ tìm thấy xác", 'error')
 			end
 		end

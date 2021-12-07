@@ -77,7 +77,7 @@ AddEventHandler('pepe-weapons:server:UpdateWeaponQuality', function(data, Repeat
     local Player = Framework.Functions.GetPlayer(src)
     local WeaponData = Config.WeaponsList[GetHashKey(data.name)]
     local WeaponSlot = Player.PlayerData.items[data.slot]
-    local DecreaseAmount = Config.DurabilityMultiplier[data.name]
+    local DecreaseAmount = Config.DurabilityMultiplier[data.name] and Config.DurabilityMultiplier[data.name] or 0
     if WeaponSlot ~= nil then
         if not IsWeaponBlocked(WeaponData['IdName']) then
             if WeaponSlot.info.quality ~= nil then

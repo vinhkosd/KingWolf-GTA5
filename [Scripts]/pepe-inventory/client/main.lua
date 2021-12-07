@@ -551,9 +551,9 @@ AddEventHandler("pepe-inventory:client:CraftPizzaItems", function(itemName, item
     SendNUIMessage({
         action = "close",
     })
-    local DelaysPizza = 30000
+    local DelaysPizza = 10000
     if(itemName == "pizzachay") then
-        DelaysPizza = 15000
+        DelaysPizza = 5000
     end
     local ad = "amb@prop_human_bbq@male@base"
 	local anim = "base"
@@ -746,6 +746,10 @@ AddEventHandler('pepe-inventory:client:open:anim', function()
   ClearPedSecondaryTask(GetPlayerPed(-1))
 end)
 
+RegisterNetEvent('pepe-inventory:client:reset:drop')
+AddEventHandler('pepe-inventory:client:reset:drop', function()
+    CurrentDrop = nil
+end)
 RegisterNUICallback("GiveItem", function(data, cb)
     local player, distance = GetClosestPlayer()
     if player ~= -1 and distance < 2.5 then

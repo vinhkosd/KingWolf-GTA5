@@ -25,15 +25,17 @@ Config.AllowedSocieties = { -- Allowed societies to open the 'Society Invoices' 
 	'trada',
 	'mechanic',
 	'bennys',
+	'cardealer',
+	'pizza',
 }
 
 -------------------------- DISCORD LOGS
 
 -- To set your Discord Webhook URL go to server.lua, line 5
 
-Config.BotName = 'ServerName' -- Write the desired bot name
+Config.BotName = 'KingWolfCity' -- Write the desired bot name
 
-Config.ServerName = 'ServerName' -- Write your server's name
+Config.ServerName = 'KingWolfCity' -- Write your server's name
 
 Config.IconURL = '' -- Insert your desired image link
 

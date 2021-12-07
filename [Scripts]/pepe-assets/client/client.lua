@@ -46,7 +46,6 @@ AddEventHandler('pepe-assets:client:me:show', function(Text, Source)
       Citizen.Wait(0)
       local SourceCoords = GetEntityCoords(GetPlayerPed(PlayerId))
       local NearCoords = GetEntityCoords(PlayerPedId())
-      print(GetPlayerPed(PlayerId).."="..PlayerPedId())
       local Distance = Vdist2(SourceCoords, NearCoords)
       if Distance < 25.0 then
         DrawText3D(SourceCoords.x, SourceCoords.y, SourceCoords.z + DisplayOffset, Text)

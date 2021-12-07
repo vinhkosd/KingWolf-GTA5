@@ -25,7 +25,7 @@ AddEventHandler('pepe-items:client:drink', function(ItemName, PropName)
     			exports['pepe-assets']:AddProp(PropName)
     			exports['pepe-assets']:RequestAnimationDict("amb@world_human_drinking@coffee@male@idle_a")
     			TaskPlayAnim(GetPlayerPed(-1), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
-    	 		Framework.Functions.Progressbar("drink", "Drinken..", 10000, false, true, {
+    	 		Framework.Functions.Progressbar("drink", "Đang uống..", 10000, false, true, {
     	 			disableMovement = false,
     	 			disableCarMovement = false,
     	 			disableMouse = false,
@@ -59,7 +59,7 @@ AddEventHandler('pepe-items:client:drink:slushy', function()
     			exports['pepe-assets']:RequestAnimationDict("amb@world_human_drinking@coffee@male@idle_a")
     			TaskPlayAnim(GetPlayerPed(-1), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
     			TriggerEvent('pepe-inventory:client:set:busy', true)
-    			Framework.Functions.Progressbar("drink", "Drinken..", 10000, false, true, {
+    			Framework.Functions.Progressbar("drink", "Đang uống..", 10000, false, true, {
     				disableMovement = false,
     				disableCarMovement = false,
     				disableMouse = false,
@@ -94,7 +94,7 @@ AddEventHandler('pepe-items:client:eat', function(ItemName, PropName)
 				TriggerEvent('pepe-inventory:client:set:busy', true)
 				exports['pepe-assets']:RequestAnimationDict("mp_player_inteat@burger")
 				TaskPlayAnim(GetPlayerPed(-1), 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 8.0, 1.0, -1, 49, 0, 0, 0, 0)
- 				Framework.Functions.Progressbar("eat", "Eten..", 10000, false, true, {
+ 				Framework.Functions.Progressbar("eat", "Đang ăn..", 10000, false, true, {
  					disableMovement = false,
  					disableCarMovement = false,
  					disableMouse = false,
@@ -131,7 +131,7 @@ AddEventHandler('pepe-items:client:use:armor', function()
 			local NewArmor = CurrentArmor + 50
 			if CurrentArmor + 33 >= 100 or CurrentArmor >= 100 then NewArmor = 100 end
 			 TriggerEvent('pepe-inventory:client:set:busy', true)
- 		    Framework.Functions.Progressbar("vest", "Vest aantrekken..", 10000, false, true, {
+ 		    Framework.Functions.Progressbar("vest", "Mặc vest..", 10000, false, true, {
  		    	disableMovement = false,
  		    	disableCarMovement = false,
  		    	disableMouse = false,
@@ -160,7 +160,7 @@ AddEventHandler("pepe-items:client:use:heavy", function()
     	  Sex = "Vrouw"
     	end
 		TriggerEvent('pepe-inventory:client:set:busy', true)
-    	Framework.Functions.Progressbar("use_heavyarmor", "Vest aantrekken..", 5000, false, true, {
+    	Framework.Functions.Progressbar("use_heavyarmor", "Mặc vest..", 5000, false, true, {
     	disableMovement = false,
     	disableCarMovement = false,
 			disableMouse = false,
@@ -200,7 +200,7 @@ AddEventHandler("pepe-items:client:reset:armor", function()
 	if not exports['pepe-progressbar']:GetTaskBarStatus() then
     	local ped = GetPlayerPed(-1)
     	if currentVest ~= nil and currentVestTexture ~= nil then 
-    	    Framework.Functions.Progressbar("remove-armor", "Vest uittrekken..", 2500, false, false, {
+    	    Framework.Functions.Progressbar("remove-armor", "Cởi vest..", 2500, false, false, {
     	        disableMovement = false,
     	        disableCarMovement = false,
     	        disableMouse = false,
@@ -243,7 +243,7 @@ AddEventHandler('pepe-items:client:use:repairkit', function()
 				SetVehicleDoorOpen(Vehicle, VehicleDoor, false, false)
 				Citizen.Wait(450)
 				TriggerEvent('pepe-inventory:client:set:busy', true)
-				Framework.Functions.Progressbar("repair_vehicle", "Bezig met sleutelen..", math.random(10000, 20000), false, true, {
+				Framework.Functions.Progressbar("repair_vehicle", "Sửa động cơ..", math.random(10000, 20000), false, true, {
 					disableMovement = true,
 					disableCarMovement = true,
 					disableMouse = false,
@@ -258,7 +258,7 @@ AddEventHandler('pepe-items:client:use:repairkit', function()
 					TriggerEvent('pepe-inventory:client:set:busy', false)
 					SetVehicleDoorShut(Vehicle, VehicleDoor, false)
 					StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
-					Framework.Functions.Notify("Voertuig gemaakt!")
+					Framework.Functions.Notify("Thành công!")
 					SetVehicleEngineHealth(Vehicle, NewHealth) 
 					for i = 1, 6 do
 					 SetVehicleTyreFixed(Vehicle, i)
@@ -266,7 +266,7 @@ AddEventHandler('pepe-items:client:use:repairkit', function()
 				end, function() -- Cancel
 					TriggerEvent('pepe-inventory:client:set:busy', false)
 					StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
-					Framework.Functions.Notify("Mislukt!", "error")
+					Framework.Functions.Notify("Thất bại!", "error")
 					SetVehicleDoorShut(Vehicle, VehicleDoor, false)
 				end)
 			end

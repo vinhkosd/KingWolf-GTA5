@@ -1,16 +1,21 @@
 Framework = nil
 
+TriggerEvent("Framework:GetObject", function(obj) Framework = obj end) 
+
 local weedPlants = {}
 local spawnedweeds = 0
 local DoingSomething = false
+local inWeedZone = true
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(15)
 		local coords = GetEntityCoords(PlayerPedId())
 		if GetDistanceBetweenCoords(coords, Config.WeedFieldsSpawnCoords, true) < 50 then
+            inWeedZone = true
 			SpawnWeeds()
 			Citizen.Wait(500)
 		else
+            inWeedZone = false
             RemoveWeeds()
 			Citizen.Wait(500)
 		end
@@ -89,6 +94,7 @@ Citizen.CreateThread(function()
                             if not Config.WeedLocations['verwerk'][k]['IsBezig'] then
                                 Framework.Functions.TriggerCallback('pepe-wiet:server:has:nugget', function(HasNugget)
                                     if HasNugget then
+                                        PoliceCallPackWeed()
                                         PackagePlant(k)
                                     else
                                         Framework.Functions.Notify("Bạn không có các vật phẩm cần thiết ..", "error")
@@ -143,6 +149,7 @@ AddEventHandler('pepe-wiet:client:use:scissor', function()
                         TriggerEvent('pepe-wiet:client:rod:anim')
                         if not exports['pepe-progressbar']:GetTaskBarStatus() then
                             if not DoingSomething then
+                                PoliceCall()
                                 DoingSomething = true
                                 Framework.Functions.Progressbar("weed", "Đang hái cần sa..", 15000, false, true, {
                                     disableMovement = true,
@@ -230,20 +237,26 @@ function PackagePlant(PackerId)
 end
 
 function SpawnWeeds()
-	while spawnedweeds < Config.MaxWeedsSpawn do
-		Citizen.Wait(5)
-		local weedCoords = GenerateweedCoords()
-            -- lá cocain: prop_fib_plant_02
-            -- lá weed gốc: prop_weed_02
-            -- la weed co chau : bkr_prop_weed_lrg_01a
-        SpawnLocalWeedObject('prop_weed_02', weedCoords, function(obj)
-			PlaceObjectOnGroundProperly(obj)
-			FreezeEntityPosition(obj, true)
-
-			table.insert(weedPlants, obj)
-			spawnedweeds = spawnedweeds + 1
-		end)
-	end
+    Citizen.CreateThread(function()
+        while spawnedweeds < Config.MaxWeedsSpawn do
+            Citizen.Wait(5)
+            
+            if not inWeedZone then
+                break
+            end
+            local weedCoords = GenerateweedCoords()
+                -- lá cocain: prop_fib_plant_02
+                -- lá weed gốc: prop_weed_02
+                -- la weed co chau : bkr_prop_weed_lrg_01a
+            SpawnLocalWeedObject('prop_weed_02', weedCoords, function(obj)
+                PlaceObjectOnGroundProperly(obj)
+                FreezeEntityPosition(obj, true)
+    
+                table.insert(weedPlants, obj)
+                spawnedweeds = spawnedweeds + 1
+            end)
+        end
+    end)
 end
 
 function SpawnLocalWeedObject(model, coords, cb)
@@ -287,12 +300,12 @@ function GenerateweedCoords()
 		local weedCoordX, weedCoordY
 
 		math.randomseed(GetGameTimer())
-		local modX = math.random(-10, 10)
+		local modX = math.random(-30, 30)
 
 		Citizen.Wait(100)
 
 		math.randomseed(GetGameTimer())
-		local modY = math.random(-10, 10)
+		local modY = math.random(-30, 30)
 
 		weedCoordX = Config.WeedFieldsSpawnCoords.x + modX
 		weedCoordY = Config.WeedFieldsSpawnCoords.y + modY
@@ -307,7 +320,7 @@ function GenerateweedCoords()
 end
 
 function GetCoordZ(x, y)
-	local groundCheckHeights = { 486.0, 487.0, 488.0, 489.0, 490.0, 491.0, 492.0, 493.0, 494.0, 495.0, 496.0, 497.0, 498.0, 499.0, 500.0, 501.0, 502.0, 503.0, 504.0 }
+	local groundCheckHeights = { 486.0, 487.0, 488.0, 489.0, 490.0, 491.0, 492.0, 493.0, 494.0, 495.0, 496.0, 497.0, 498.0, 499.0, 500.0, 501.0, 502.0, 503.0, 504.0, 180.0, 181.0, 182.0, 183.0, 184.0, 185.0, 186.0, 187.0, 188.0, 189.0, 190.0, 191.0, 192.0, 193.0, 194.0, 195.0, 196.0, 197.0, 198.0, 199.0, 200.0 }
 
 	for i, height in ipairs(groundCheckHeights) do
 		local foundGround, z = GetGroundZFor_3dCoord(x, y, height)
@@ -323,6 +336,8 @@ end
 function RemoveWeeds() 
     for k, v in pairs(weedPlants) do
         DeleteWeedObject(v)
+        table.remove(weedPlants, k)
+        spawnedweeds = spawnedweeds - 1
     end
 end
 
@@ -330,6 +345,8 @@ AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
 		for k, v in pairs(weedPlants) do
 			DeleteWeedObject(v)
+            table.remove(weedPlants, k)
+            spawnedweeds = spawnedweeds - 1
 		end
 	end
 end)
@@ -337,4 +354,30 @@ end)
 function DeleteWeedObject(object)
 	SetEntityAsMissionEntity(object, false, true)
 	DeleteObject(object)
+end
+
+function PoliceCall()
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local StreetLabel = Framework.Functions.GetStreetLabel()
+    local chance = 75
+    if GetClockHours() >= 1 and GetClockHours() <= 6 then
+        chance = 25
+    end
+    TriggerServerEvent('pepe-police:server:send:alert:weed', GetEntityCoords(GetPlayerPed(-1)), StreetLabel)
+    -- if math.random(1,100) < 40 then        
+       
+    --  end
+end
+
+function PoliceCallPackWeed()
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local StreetLabel = Framework.Functions.GetStreetLabel()
+    local chance = 75
+    if GetClockHours() >= 1 and GetClockHours() <= 6 then
+        chance = 25
+    end
+    TriggerServerEvent('pepe-police:server:send:alert:packweed', GetEntityCoords(GetPlayerPed(-1)), StreetLabel)
+    -- if math.random(1,100) < 40 then        
+       
+    --  end
 end

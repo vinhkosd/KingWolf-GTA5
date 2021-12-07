@@ -547,10 +547,13 @@ AddEventHandler('pepe-police:client:UpdateBlips', function(players)
         DutyBlips = {}
         if players ~= nil then
             for k, data in pairs(players) do
-                local id = GetPlayerFromServerId(data.source)
-                if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= PlayerPedId() then
-                    CreateDutyBlips(id, data.label, data.job)
-                end
+                -- local id = GetPlayerFromServerId(data.source)
+                -- if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= PlayerPedId() then
+                    -- CreateDutyBlips(id, data.label, data.job, data.coords)
+                -- end
+
+                local id = data.ped
+                CreateDutyCoordsBlips(id, data.label, data.job, data.coords)
             end
         end
 	end
@@ -1156,6 +1159,26 @@ function CreateDutyBlips(playerId, playerLabel, playerJob)
         EndTextCommandSetBlipName(blip)
 		table.insert(DutyBlips, blip)
 	end
+end
+
+function CreateDutyCoordsBlips(playerId, playerLabel, playerJob, playerCoords)
+	-- local ped = GetPlayerPed(playerId)
+    -- local blip = GetBlipFromEntity(ped)
+	-- if not DoesBlipExist(blip) then
+		blip = AddBlipForCoord(playerCoords)
+		SetBlipSprite(blip, 480)
+        SetBlipScale(blip, 1.0)
+        if playerJob == "police" then
+            SetBlipColour(blip, 38)
+        else
+            SetBlipColour(blip, 35)
+        end
+        SetBlipAsShortRange(blip, true)
+        BeginTextCommandSetBlipName('STRING')
+        AddTextComponentString(playerLabel)
+        EndTextCommandSetBlipName(blip)
+		table.insert(DutyBlips, blip)
+	-- end
 end
 
 function HandCuffAnimation()

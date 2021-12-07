@@ -30,20 +30,28 @@ Config.Locations = {
       vector3(169.1499, 6639.0341, 31.698947),
       vector3(-2967.752, 392.27902, 15.043313),
       vector3(1707.324, 4928.3901, 42.063644),
+      vector3(-563.3693, -385.9087, 35.067878),
     },
 }
--- 5 QUẢ CAM + 1 NƯỚC ĐÁ -> RA 1 NƯỚC CAM (nước lên 1/3)
--- 3 Râu ngô + 1 giấy cuốn -> 1 THUOC LAO (giảm stress 1/2)
--- 1 NƯỚC SUỐI -> 5 Nước đá
--- 1 NƯỚC SUỐI + 25$ -> 1 NƯỚC SUỐI đóng chai (nước lên 1/5)
--- 1 NƯỚC ĐÁ + 5 cam + 5 nho -> 2 ĐĨA TRÁI CÂY (nước thêm 1/2)
--- 3 cam + 3 nho + 1 nước đá -> 1 kem(hồi 1/3 nước)
-Config.UseItemsConfig = {
-  ["orange-juice"] = 33,
-  ["thuoc-lao"] = 50,
-  ["bottle-water"] = 20,
-  ["fruit-plate"] = 50,
-  ["ice-scream"] = 33,
+--pizza chay 1/5
+--pizza ga 1/3
+--pizza hai san 1/3
+--pizza thap cam 1/2
+--pizza salad 1/3 + 1/6 drink
+Config.HungerGainItems = {
+  ["pizzachay"] = 20,
+  ["pizzaga"] = 33,
+  ["pizzahaisan"] = 33,
+  ["pizzathapcam"] = 50,
+  ["pizzasalad"] = 33,
+}
+
+Config.ThirstGainItems = {
+  ["pizzachay"] = 0,
+  ["pizzaga"] = 0,
+  ["pizzahaisan"] = 0,
+  ["pizzathapcam"] = 0,
+  ["pizzasalad"] = 16,
 }
 
 Config.CarModel = "foodbike"
@@ -57,8 +65,8 @@ Config.CraftingItems = {
         info = {},
         costs = {
           ["botmi"] = 5,
-          ['slaughteredchicken'] = 2,
-          ['cachua'] = 3,
+          ['slaughteredchicken'] = 1,
+          ['cachua'] = 2,
           ['bingo'] = 1,
         },
         type = "item",
@@ -74,7 +82,6 @@ Config.CraftingItems = {
         info = {},
         costs = {
           ["botmi"] = 5,
-          ['bingo'] = 2,
           ['cachua'] = 3,
           ['bapcai'] = 2,
         },
@@ -87,10 +94,10 @@ Config.CraftingItems = {
         name = "pizzachay",--pizza chay
         amount = 50,
         toamount = 1,
-        tostash = false,
+        tostash = true,
         info = {},
         costs = {
-          ["botmi"] = 10,
+          ["botmi"] = 2,
         },
         type = "item",
         slot = 3,
@@ -154,7 +161,7 @@ Config.Items = {
   items = {
     [1] = {
       name = "pizzaga",
-      price = 200,
+      price = 250,
       amount = 0,
       info = {},
       type = "item",
@@ -162,15 +169,15 @@ Config.Items = {
     },
     [2] = {
       name = "pizzasalad",
-      price = 100,
+      price = 200,
       amount = 0,
       info = {},
       type = "item",
       slot = 2,
     },
     [3] = {
-      name = "pizzathapcam",
-      price = 200,
+      name = "pizzahaisan",
+      price = 250,
       amount = 0,
       info = {},
       type = "item",
@@ -178,7 +185,7 @@ Config.Items = {
     },
     [4] = {
       name = "pizzachay",
-      price = 300,
+      price = 100,
       amount = 0,
       info = {},
       type = "item",
@@ -186,7 +193,7 @@ Config.Items = {
     },
     [5] = {
       name = "pizzathapcam",
-      price = 250,
+      price = 350,
       amount = 0,
       info = {},
       type = "item",

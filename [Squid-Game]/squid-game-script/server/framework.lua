@@ -1,4 +1,5 @@
 Framework = {}
+
 function Framework.takeMoney(playerId, amount)
     playerId = tonumber(playerId)
     
@@ -24,12 +25,16 @@ function Framework.takeMoney(playerId, amount)
         else
             return false
         end	
-    elseif Config.Framework == "Your_Framework" then
-        local hasMoney = false
+    elseif Config.Framework == "pepe" then
         -- TODO:
-        error("TODO: Check if player has money", 2)
-        error("TODO: Take money from player", 2)
-        return hasMoney
+        -- error("TODO: Check if player has money", 2)
+        -- error("TODO: Take money from player", 2)
+        local Ply = FrameworkObj.Functions.GetPlayer(playerId)
+		if Ply.PlayerData.money["cash"] >= amount then
+            return Ply.Functions.RemoveMoney("cash", amount, "squid-game-level-1")
+		else
+            return false
+        end
     else
         Framework.showNotification(playerId, _U('removed_money', amount))
         return true
@@ -38,7 +43,8 @@ end
 
 function Framework.giveMoney(playerId, amount)
     playerId = tonumber(playerId)
-
+    amount = math.floor(amount * 0.9)
+    
     if Config.Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(playerId)
         xPlayer.addMoney(amount)
@@ -50,10 +56,11 @@ function Framework.giveMoney(playerId, amount)
         local userId = vRP.getUserId({playerId})
         vRP.giveMoney({userId, amount})
         return true
-    elseif Config.Framework == "Your_Framework" then
+    elseif Config.Framework == "pepe" then
         -- TODO:
-        error("TODO: Give money to player", 2)
-        return true
+        
+        local Ply = FrameworkObj.Functions.GetPlayer(playerId)
+        return Ply.Functions.AddMoney("cash", amount, "squid-game-level-1")
     else
         Framework.showNotification(playerId, _U('received_money', amount))
         return true
@@ -68,9 +75,10 @@ function Framework.showNotification(playerId, message)
     elseif Config.Framework == "vRP" then
         local vRPclient = Tunnel.getInterface("vRP", GetCurrentResourceName())
         vRPclient.notify(playerId, {message})
-    elseif Config.Framework == "Your_Framework" then
+    elseif Config.Framework == "pepe" then
         -- TODO: Add your notifications
-        error("TODO: Add your notifications", 2)
+        -- error("TODO: Add your notifications", 2)
+        TriggerClientEvent('Framework:Notify', playerId, message)
         return true
     else
         TriggerClientEvent("squidgame:notification", playerId, message)
@@ -114,7 +122,7 @@ function Framework.showWinnerMessage(toWhomId, winnerId, rewardAmount)
                 args = {Config.GameName or "Đèn xanh - Đèn đỏ", _U("player_%s_won_%s", winnerName, rewardAmount)}
             })
         end})
-    elseif Config.Framework == "Your_Framework" then
+    elseif Config.Framework == "pepe" then
         TriggerClientEvent('chat:addMessage', toWhomId, {
             color = { 255, 0, 0},
             multiline = true,

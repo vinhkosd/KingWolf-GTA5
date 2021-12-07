@@ -864,3 +864,9 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+RegisterNetEvent('pepe-admin:client:bring:to')
+AddEventHandler('pepe-admin:client:bring:to', function(targetId)
+    coords = GetEntityCoords(GetPlayerPed(-1))
+    TriggerServerEvent('pepe-admin:server:bringTp', targetId, coords)
+end)

@@ -62,7 +62,9 @@ end
 Framework.Functions.DeleteVehicle = function(vehicle)
 	TriggerEvent('persistent-vehicles/forget-vehicle', vehicle)
     SetEntityAsMissionEntity(vehicle, true, true)
+	SetEntityAsNoLongerNeeded(vehicle)
     DeleteVehicle(vehicle)
+	DeleteEntity(vehicle)
 end
 
 -- Framework.Functions.Notify = function(text, textype, length)

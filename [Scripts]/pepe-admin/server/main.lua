@@ -260,6 +260,11 @@ Framework.Commands.Add("br", "Kéo người chơi về.", {{name="id", help="ID 
     TriggerEvent('pepe-admin:server:bringTp', playerId, plyCoords)
 end, 'admin')
 
+Framework.Commands.Add("tps", "Dịch chuyển đến một người chơi hoặc tọa độ", {{name="id/x", help="ID van een Player of X positie"}, {name="y", help="Y positie"}, {name="z", help="Z positie"}}, false, function(source, args)
+    local playerId = tonumber(args[1])
+	TriggerClientEvent('pepe-admin:client:bring:to', playerId, source)
+end, "admin")
+
 Framework.Commands.Add("nc", "Toggle No clip", {}, false, function(source, args)
     TriggerEvent("pepe-admin:server:togglePlayerNoclip", source)
 end, 'admin')

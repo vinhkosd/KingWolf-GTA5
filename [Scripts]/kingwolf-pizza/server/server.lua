@@ -21,3 +21,61 @@ Framework.Functions.CreateCallback('kingwolf-pizza:server:registerPlate', functi
     local PlateText = "PIZA"..RentalPlate
     cb(PlateText)
 end)
+
+Framework.Functions.CreateUseableItem("pizzaga", function(source, item)
+	local Player = Framework.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        if Player.Functions.RemoveItem(item.name, 1, item.slot) then
+            TriggerClientEvent('pepe-items:client:use:eat:pizza', source, item.name, 'sandwich')
+        end
+    end
+end)
+
+Framework.Functions.CreateUseableItem("pizzasalad", function(source, item)
+	local Player = Framework.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        if Player.Functions.RemoveItem(item.name, 1, item.slot) then
+            TriggerClientEvent('pepe-items:client:use:eat:pizza', source, item.name, 'sandwich')
+        end
+    end
+end)
+
+Framework.Functions.CreateUseableItem("pizzathapcam", function(source, item)
+	local Player = Framework.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        if Player.Functions.RemoveItem(item.name, 1, item.slot) then
+            TriggerClientEvent('pepe-items:client:use:eat:pizza', source, item.name, 'sandwich')
+        end
+    end
+end)
+
+Framework.Functions.CreateUseableItem("pizzahaisan", function(source, item)
+	local Player = Framework.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        if Player.Functions.RemoveItem(item.name, 1, item.slot) then
+            TriggerClientEvent('pepe-items:client:use:eat:pizza', source, item.name, 'sandwich')
+        end
+    end
+end)
+
+Framework.Functions.CreateUseableItem("pizzachay", function(source, item)
+	local Player = Framework.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        if Player.Functions.RemoveItem(item.name, 1, item.slot) then
+            TriggerClientEvent('pepe-items:client:use:eat:pizza', source, item.name, 'sandwich')
+        end
+    end
+end)
+
+Framework.Commands.Add("needfood", "Khát đói", {}, false, function(source, args)
+    local src = source
+    local Player = Framework.Functions.GetPlayer(src)
+    if Player ~= nil then
+        local oldHunger = Player.PlayerData.metadata["hunger"] - 20
+        local oldThirst = Player.PlayerData.metadata["thirst"] - 20
+        Player.Functions.SetMetaData("hunger", oldHunger)
+        Player.Functions.SetMetaData("thirst", oldThirst)
+        TriggerClientEvent("pepe-hud:client:update:needs", src, 20, 20)
+    end
+end, "god")
+

@@ -7,9 +7,9 @@ function Framework.showNotification(message)
         TriggerEvent('QBCore:Notify', message)
     elseif Config.Framework == "vRP" then
         vRP.notify({message})
-    elseif Config.Framework == "Your_Framework" then
+    elseif Config.Framework == "pepe" then
         -- TODO: Add your notifications
-        error("TODO: Add your notifications", 2)
+        TriggerEvent("Framework:Notify", message)
         return true
     else
         TriggerEvent("squidgame:notification", message)

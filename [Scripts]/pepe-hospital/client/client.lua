@@ -413,7 +413,7 @@ AddEventHandler('pepe-hospital:client:bring:ped:closest', function()
                     countDeathPlayer = countDeathPlayer + 1
                     local closestPlayer = playersInRange[i]
                     TriggerServerEvent('pepe-admin:server:bringTp', GetPlayerServerId(playersInRange[i]), coords)
-                    TriggerEvent("pepe-police:client:get:escorted", GetPlayerServerId(playersInRange[i]), GetPlayerServerId(PlayerId()))
+                    -- TriggerEvent("pepe-police:client:get:escorted", GetPlayerServerId(PlayerId()))
                 end
             end
         end
@@ -441,7 +441,7 @@ AddEventHandler('pepe-hospital:client:bring:ped', function(targetId)
         else
             TriggerServerEvent('pepe-hospital:server:create:cooldown')
             TriggerServerEvent('pepe-admin:server:bringTp', targetId, coords)
-            TriggerEvent("pepe-police:client:get:escorted", targetId, GetPlayerServerId(PlayerId()))
+            -- TriggerEvent("pepe-police:client:get:escorted", GetPlayerServerId(PlayerId()))
         end
         
     else

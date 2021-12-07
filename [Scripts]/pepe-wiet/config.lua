@@ -14,13 +14,14 @@ Config.Locations = {
 }
 
 Config.Blips = {
-  {title="",scale=0.8, colour=16, id=140, x = -1189.733, y = 3854.7233, z= 490.16574},
+  {title="",scale=0.8, colour=16, id=140, x = 3094.5529, y = 5556.1123, z= 190.27403},
 }
 
 
 -- Config.WeedLocationSpawn = { ['x'] = -1191.905, ['y'] = 3855.8229, ['z'] = 490.15524, ['h'] = 57.111816 }
-Config.WeedFieldsSpawnCoords = vector3(-1189.733, 3854.7233, 490.16574)
-Config.MaxWeedsSpawn  = 20
+Config.WeedFieldsSpawnCoords = vector3(3094.5529, 5556.1123, 190.27403)
+-- { ['x'] = 3094.5529, ['y'] = 5556.1123, ['z'] = 190.27403, ['h'] = 263.52609 }
+Config.MaxWeedsSpawn  = 100
 
 Config.WeedSoorten = {
   'weed_purple-haze',  

@@ -1,7 +1,7 @@
 Framework = nil
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
-local Webhook = ''
+local Webhook = 'https://discord.com/api/webhooks/917681909792923679/leu1XKWXyu9xoKJ5_c1kbPV47x07xSN6VPqf9SPShR7-bk4OSG02TwXcOvsJ-FrV5p9I'
 local limiteTimeHours = Config.LimitDateDays*24
 local hoursToPay = limiteTimeHours
 local whenToAddFees = {}
@@ -108,9 +108,10 @@ AddEventHandler("okokBilling:CreateInvoice", function(data)
 	end
 
 	local webhookData = {}
+	local waiting = true
 
-	Framework.Functions.ExecuteSql(false, "SELECT id FROM okokBilling WHERE id = (SELECT MAX(id) FROM okokBilling)", function(result)
-		local oldId = result[1].id and result[1].id or 0
+	Framework.Functions.ExecuteSql(true, "SELECT id FROM okokBilling WHERE id = (SELECT MAX(id) FROM okokBilling)", function(result)
+		local oldId = tonumber(result[1].id and result[1].id or 0)
         webhookData = {
 			id = oldId + 1,
 			player_name = GetPlayerName(tonumber(data.target)),
@@ -119,7 +120,12 @@ AddEventHandler("okokBilling:CreateInvoice", function(data)
 			society = data.society_name,
 			name = GetPlayerName(src)
 		}
+		waiting = false
     end)
+
+	while waiting do
+		Citizen.Wait(5)
+	end
 
 	if Config.LimitDate then
 		Framework.Functions.ExecuteSql(false, "INSERT INTO okokBilling (receiver_identifier, receiver_name, author_identifier, author_name, society, society_name, item, invoice_value, status, notes, sent_date, limit_pay_date) VALUES ('"..target.PlayerData.citizenid.."', '"..GetPlayerName(tonumber(data.target)).."', '".._source.PlayerData.citizenid.."', '"..GetPlayerName(src).."', '"..data.society.."', '"..data.society_name.."', '"..data.invoice_item.."', '"..data.invoice_value.."', 'unpaid', '"..data.invoice_notes.."', CURRENT_TIMESTAMP(), DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL "..Config.LimitDateDays.." DAY))")
@@ -188,40 +194,82 @@ function checkTimeLeft()
 				}
 
 				if xPlayer == nil then
-					Framework.Functions.ExecuteSql(false, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.receiver_identifier.."'", function(account)
-						if result[1] ~= nil then
-							local moneyInfo = json.decode(result[1].money)
-							moneyInfo.bank = math.floor(moneyInfo.bank - invoice_value)
-							Framework.Functions.ExecuteSql(false, "UPDATE `characters_metadata` SET `money` = '"..json.encode(moneyInfo).."' WHERE `citizenid` = '"..result[1].citizenid.."'")
-							TriggerEvent("pepe-logs:server:SendLog", "playermoney", "RemoveMoney", "red", "**"..result[1].name.. " (citizenid: "..result[1].citizenid..")** €"..invoice_value .. " (bank) đã trừ bank số tiền còn lại: "..moneyInfo.bank.." reason: autopaidinvoice")
-							-- TriggerEvent("pepe-bossmenu:server:addAccountMoney", v.society, invoice_value)
-							local totalMoneyAccountGet = math.floor(invoice_value * ((100 - Config.VATPercentage) / 100))
-							TriggerEvent("pepe-bossmenu:server:addAccountMoney", invoices.society, totalMoneyAccountGet)
-							local bossList = FindBossPlayerByJobName(invoices.society)
-							for _, player in pairs(bossList) do
-								TriggerClientEvent('pepe-phone:client:addNotification', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!")
-								TriggerClientEvent('Framework:Notify', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!", "success")
+					Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.receiver_identifier.."'", function(account)
+						if account[1] ~= nil then
+							local moneyInfo = json.decode(account[1].money)
+
+							local canFund = false
+							local playerMoney = moneyInfo.bank
+							if playerMoney == nil then
+								playerMoney = 0
 							end
-							Framework.Functions.ExecuteSql(false, "UPDATE okokBilling SET status = 'autopaid', paid_date = CURRENT_TIMESTAMP() WHERE id = '"..v.id.."'")
-						else
-							TriggerClientEvent('Framework:Notify', src, "Số tài khoản này không tồn tại", "error")
+					
+							if playerMoney < invoice_value then
+								if moneyInfo.cash > invoice_value then
+									moneyInfo.cash = math.floor(moneyInfo.cash - invoice_value)
+									canFund = true
+								end
+							else
+								moneyInfo.bank = math.floor(moneyInfo.bank - invoice_value)
+								canFund = true
+							end
+
+							if canFund then
+								-- TriggerServerEvent('pepe-phone:server:sendNewMailToOffline', v.receiver_identifier, {
+								-- 	sender = "Thành phố KingWolf",
+								-- 	subject = "Hóa đơn thanh toán tự động",
+								-- 	message = "Chào bạn ,<br/><br />Bạn vừa được thanh toán hóa đơn tự động!<br /><br />Tổng số tiền: <strong>$"..invoice_value.."</strong> <br><br>Cảm ơn bạn đã sử dụng dịch vụ hóa đơn của chúng tôi!<br/><br/>Trân trọng,<br />KingWolf",
+								-- 	button = {}
+								-- })
+
+								Framework.Functions.ExecuteSql(false, "UPDATE `characters_metadata` SET `money` = '"..json.encode(moneyInfo).."' WHERE `citizenid` = '"..account[1].citizenid.."'")
+								TriggerEvent("pepe-logs:server:SendLog", "playermoney", "RemoveMoney", "red", "**"..account[1].name.. " (citizenid: "..account[1].citizenid..")** $"..invoice_value .. " (bank) đã trừ bank số tiền còn lại: "..moneyInfo.bank.." reason: autopaidinvoice")
+
+								local totalMoneyAccountGet = math.floor(invoice_value * ((100 - Config.VATPercentage) / 100))
+								TriggerEvent("pepe-bossmenu:server:addAccountMoney", v.society, totalMoneyAccountGet)
+								local bossList = FindBossPlayerByJobName(v.society)
+								for _, player in pairs(bossList) do
+									TriggerClientEvent('pepe-phone:client:addNotification', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!")
+									TriggerClientEvent('Framework:Notify', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!", "success")
+								end
+								Framework.Functions.ExecuteSql(false, "UPDATE okokBilling SET status = 'autopaid', paid_date = CURRENT_TIMESTAMP() WHERE id = '"..v.id.."'")
+							end
 						end
 					end)
 				else
-					xPlayer.Functions.RemoveMoney('bank', invoice_value, "paid-invoice")
-
-					-- TriggerEvent("pepe-bossmenu:server:addAccountMoney", v.society, invoice_value)
-					local totalMoneyAccountGet = math.floor(invoice_value * ((100 - Config.VATPercentage) / 100))
-					TriggerEvent("pepe-bossmenu:server:addAccountMoney", invoices.society, totalMoneyAccountGet)
-					local bossList = FindBossPlayerByJobName(invoices.society)
-					for _, player in pairs(bossList) do
-						TriggerClientEvent('pepe-phone:client:addNotification', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!")
-						TriggerClientEvent('Framework:Notify', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!", "success")
+					local canFund = false
+					local playerMoney = xPlayer.PlayerData.money.bank
+					if playerMoney == nil then
+						playerMoney = 0
+					end
+			
+					if playerMoney < invoice_value then
+						if xPlayer.PlayerData.money.cash > invoice_value then
+							xPlayer.Functions.RemoveMoney('cash', invoice_value, "paid-invoice")
+							canFund = true
+						end
+					else
+						xPlayer.Functions.RemoveMoney('bank', invoice_value, "paid-invoice")
+						canFund = true
 					end
 
-					Framework.Functions.ExecuteSql(false, "UPDATE okokBilling SET status = 'autopaid', paid_date = CURRENT_TIMESTAMP() WHERE id = '"..v.id.."'")
-					if Webhook ~= '' then
-						autopayInvoiceWebhook(webhookData)
+					if canFund then
+						TriggerClientEvent('Framework:Notify', xPlayer.PlayerData.source, "Hóa đơn $"..invoice_value.." đã được thanh toán!", "error")
+
+						local totalMoneyAccountGet = math.floor(invoice_value * ((100 - Config.VATPercentage) / 100))
+						TriggerEvent("pepe-bossmenu:server:addAccountMoney", v.society, totalMoneyAccountGet)
+						local bossList = FindBossPlayerByJobName(v.society)
+						for _, player in pairs(bossList) do
+							TriggerClientEvent('pepe-phone:client:addNotification', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!")
+							TriggerClientEvent('Framework:Notify', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!", "success")
+						end
+
+						Framework.Functions.ExecuteSql(false, "UPDATE okokBilling SET status = 'autopaid', paid_date = CURRENT_TIMESTAMP() WHERE id = '"..v.id.."'")
+						if Webhook ~= '' then
+							autopayInvoiceWebhook(webhookData)
+						end
+					else
+						TriggerClientEvent('Framework:Notify', xPlayer.PlayerData.source, "Bạn có một hóa đơn $"..invoice_value.." còn nợ cần thanh toán!", "error")
 					end
 				end
 			end
@@ -245,7 +293,7 @@ function payInvoiceWebhook(data)
 				["name"] = Config.ServerName..' - Logs',
 			},
 			["title"] = 'Invoice #'..data.id..' has been paid',
-			["description"] = '**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'€\n**Item:** '..data.item..'\n**Beneficiary Society:** '..data.society,
+			["description"] = '**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'$\n**Item:** '..data.item..'\n**Beneficiary Society:** '..data.society,
 
 			["footer"] = {
 				["text"] = os.date(Config.DateFormat),
@@ -266,7 +314,7 @@ function cancelInvoiceWebhook(data)
 				["name"] = Config.ServerName..' - Logs',
 			},
 			["title"] = 'Invoice #'..data.id..' has been cancelled',
-			["description"] = '**Cancelled by:** '..data.name..'\n\n**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'€\n**Item:** '..data.item..'\n**Society:** '..data.society,
+			["description"] = '**Cancelled by:** '..data.name..'\n\n**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'$\n**Item:** '..data.item..'\n**Society:** '..data.society,
 
 			["footer"] = {
 				["text"] = os.date(Config.DateFormat),
@@ -287,7 +335,7 @@ function createNewInvoiceWebhook(data)
 				["name"] = Config.ServerName..' - Logs',
 			},
 			["title"] = 'Invoice #'..data.id..' has been created',
-			["description"] = '**Created by:** '..data.name..'\n**Society:** '..data.society..'\n\n**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'€\n**Item:** '..data.item,
+			["description"] = '**Created by:** '..data.name..'\n**Society:** '..data.society..'\n\n**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'$\n**Item:** '..data.item,
 
 			["footer"] = {
 				["text"] = os.date(Config.DateFormat),
@@ -308,7 +356,7 @@ function autopayInvoiceWebhook(data)
 				["name"] = Config.ServerName..' - Logs',
 			},
 			["title"] = 'Invoice #'..data.id..' has been autopaid',
-			["description"] = '**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'€\n**Item:** '..data.item..'\n**Beneficiary Society:** '..data.society,
+			["description"] = '**Receiver:** '..data.player_name..'\n**Value:** '..data.value..'$\n**Item:** '..data.item..'\n**Beneficiary Society:** '..data.society,
 
 			["footer"] = {
 				["text"] = os.date(Config.DateFormat),
@@ -332,3 +380,8 @@ function FindBossPlayerByJobName(jobName)
     end
     return bossList
 end
+
+Framework.Commands.Add("billtimeleft", "Check time bill", {}, false, function(source, args)
+    checkTimeLeft()
+end, "god")
+

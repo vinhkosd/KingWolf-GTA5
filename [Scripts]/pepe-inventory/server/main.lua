@@ -1128,7 +1128,7 @@ AddEventHandler('pepe-inventory:server:SetInventoryData', function(fromInventory
 		local price = tonumber((itemData.price*fromAmount))
 		
 		if cashBalance >= price then
-			local status, reason = RemoveStashItems("tu_tu_dong_tra_da", {{ name = itemData.name, amount = fromAmount}})
+			local status, reason = RemoveStashItems(shopType, {{ name = itemData.name, amount = fromAmount}})
 			if status then
 				if Player.Functions.RemoveMoney("cash", price, "trada-itemshop-bought-item") then
 					local bossGetMoney = math.floor(price * 0.9)

@@ -109,7 +109,15 @@ end)
 
 RegisterServerEvent('pepe-garages:server:remove:vehicle:by:plate')
 AddEventHandler('pepe-garages:server:remove:vehicle:by:plate', function(Plate)
-  TriggerClientEvent("pepe-garages:client:remove:vehicle:by:plate", -1, Plate)
+  -- TriggerClientEvent("pepe-garages:client:remove:vehicle:by:plate", -1, Plate)
+  plate = Plate
+    local vehicles = GetAllVehicles()
+    for k, v in pairs(vehicles) do
+        local p = GetVehicleNumberPlateText(v)
+        if plate == p then 
+            DeleteEntity(v)
+        end
+    end
 end)
 
 -- // Server Function \\ --

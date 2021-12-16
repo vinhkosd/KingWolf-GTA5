@@ -153,7 +153,7 @@ Citizen.CreateThread(function()
             })
             radarActive = true
         else
-            DisplayRadar(false)
+            DisplayRadar(true)
             SendNUIMessage({
                 action = "car",
                 show = false,

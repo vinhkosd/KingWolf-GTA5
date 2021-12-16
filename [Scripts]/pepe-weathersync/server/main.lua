@@ -160,7 +160,8 @@ end
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        local newBaseTime = os.time(os.date("!*t"))/2 + 360
+        -- local newBaseTime = os.time(os.date("!*t"))/2 + 360
+        local newBaseTime = (os.time(os.date("!*t")) + 7 * 60 * 60)/2 + 360 -- GMT + 7
         if freezeTime then
             timeOffset = timeOffset + baseTime - newBaseTime			
         end

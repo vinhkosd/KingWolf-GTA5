@@ -625,6 +625,18 @@ AddEventHandler('pepe-inventory:server:SetInventoryData', function(fromInventory
 		end
 	end
 
+	if (Framework.Shared.SplitStr(fromInventory, "-")[1] == "stash") then
+		local stashId = Framework.Shared.SplitStr(fromInventory, "-")[2]
+		local isStashTuDong = Framework.Shared.SplitStr(fromInventory, "tu_tu_dong")[1]
+		if isStashTuDong == "stash-" then
+			if ((Player.PlayerData.job.name == "trada" or Player.PlayerData.job.name == "pizza") and not Player.PlayerData.job.isboss) then
+				TriggerClientEvent('Framework:Notify', src, "Chức vụ của bạn không cho phép lấy đồ ra từ tủ tự động!", "error")
+				TriggerClientEvent("pepe-inventory:client:close:inventory", src)
+				return
+			end
+		end
+	end
+
 	if fromInventory == "player" or fromInventory == "hotbar" then
 		local fromItemData = Player.Functions.GetItemBySlot(fromSlot)
 		local fromAmount = tonumber(fromAmount) ~= nil and tonumber(fromAmount) or fromItemData.amount
@@ -720,6 +732,20 @@ AddEventHandler('pepe-inventory:server:SetInventoryData', function(fromInventory
 					local itemInfo = Framework.Shared.Items[toItemData.name:lower()]
 					local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
 					if toItemData.name ~= fromItemData.name then
+						
+						local isStashTuDong = Framework.Shared.SplitStr(toInventory, "tu_tu_dong")[1]
+						if isStashTuDong == "stash-" then
+							if ((Player.PlayerData.job.name == "trada" or Player.PlayerData.job.name == "pizza") and not Player.PlayerData.job.isboss) then
+								TriggerClientEvent('Framework:Notify', src, "Chức vụ của bạn không cho phép lấy đồ ra từ tủ tự động!", "error")
+								TriggerClientEvent("pepe-inventory:client:close:inventory", src)
+								local itemInfo = Framework.Shared.Items[fromItemData.name:lower()]
+								-- AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
+								-- AddItemToStash(stashId, itemInfo["name"], fromAmount, fromItemData.info)
+								Player.Functions.AddItem(fromItemData.name, fromAmount, fromSlot, fromItemData.info)
+								return
+							end
+						end
+						
 						RemoveFromStash(stashId, fromSlot, itemInfo["name"], toAmount)
 						Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 						TriggerEvent("pepe-logs:server:SendLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
@@ -943,7 +969,7 @@ AddEventHandler('pepe-inventory:server:SetInventoryData', function(fromInventory
 							TriggerClientEvent('Framework:Notify', src, "Chức vụ của bạn không cho phép cất đồ vào tủ!", "error")
 							Player.Functions.AddItem(itemInfo["name"], toAmount, nil, toItemData.info)
 							TriggerClientEvent("pepe-inventory:client:close:inventory", src)
-						else 
+						else
 							AddToStash(stashId, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						end
 						-- AddToStash(stashId, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)

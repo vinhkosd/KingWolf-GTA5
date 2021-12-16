@@ -142,6 +142,56 @@ AddEventHandler("okokBilling:CreateInvoice", function(data)
 	end
 end)
 
+Framework.Functions.CreateCallback("okokBilling:CreateCustomInvoice", function(source, cb, data)
+	local _source = Framework.Functions.GetPlayer(tonumber(data.source))
+    local target = Framework.Functions.GetPlayer(tonumber(data.target))
+	if target == nil then
+		TriggerClientEvent("Framework:Notify", source, "ID Người chơi không hợp lệ" , "error")
+		cb(false)
+		return
+	end
+
+	local webhookData = {}
+	local waiting = true
+
+	Framework.Functions.ExecuteSql(true, "SELECT id FROM okokBilling WHERE id = (SELECT MAX(id) FROM okokBilling)", function(result)
+		oldId = 0
+		if result[1] ~= nil then
+			oldId = tonumber((result[1].id) and result[1].id or 0)
+		end
+        webhookData = {
+			id = oldId + 1,
+			player_name = GetPlayerName(tonumber(data.target)),
+			value = data.invoice_value,
+			item = data.invoice_item,
+			society = data.society_name,
+			name = GetPlayerName(data.source)
+		}
+		waiting = false
+    end)
+
+
+	while waiting do
+		Citizen.Wait(5)
+	end
+
+	if Config.LimitDate then
+		Framework.Functions.ExecuteSql(false, "INSERT INTO okokBilling (receiver_identifier, receiver_name, author_identifier, author_name, society, society_name, item, invoice_value, status, notes, sent_date, limit_pay_date) VALUES ('"..target.PlayerData.citizenid.."', '"..GetPlayerName(tonumber(data.target)).."', '".._source.PlayerData.citizenid.."', '"..GetPlayerName(tonumber(data.source)).."', '"..data.society.."', '"..data.society_name.."', '"..data.invoice_item.."', '"..data.invoice_value.."', 'unpaid', '"..data.invoice_notes.."', CURRENT_TIMESTAMP(), DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL "..Config.LimitDateDays.." DAY))")
+		TriggerClientEvent("Framework:Notify", data.target, "Bạn vừa nhận được hóa đơn" , "error")
+		if Webhook ~= '' then
+			createNewInvoiceWebhook(webhookData)
+		end
+	else
+		Framework.Functions.ExecuteSql(false, "INSERT INTO okokBilling (receiver_identifier, receiver_name, author_identifier, author_name, society, society_name, item, invoice_value, status, notes, sent_date, limit_pay_date) VALUES ('"..target.PlayerData.citizenid.."', '"..GetPlayerName(tonumber(data.target)).."', '".._source.PlayerData.citizenid.."', '"..GetPlayerName(tonumber(data.source)).."', '"..data.society.."', '"..data.society_name.."', '"..data.invoice_item.."', '"..data.invoice_value.."', 'unpaid', '"..data.invoice_notes.."', CURRENT_TIMESTAMP(), DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 0 DAY))")
+		TriggerClientEvent("Framework:Notify", data.target, "Bạn vừa nhận được hóa đơn" , "error")
+		if Webhook ~= '' then
+			createNewInvoiceWebhook(webhookData)
+		end
+	end
+
+	cb(true)
+end)
+
 Framework.Functions.CreateCallback("okokBilling:GetSocietyInvoices", function(source, cb, society)
 	local xPlayer = Framework.Functions.GetPlayer(source)
 

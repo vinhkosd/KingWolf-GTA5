@@ -169,9 +169,7 @@ function EmoteCommandStart(source, args, raw)
       	return
     end
     Framework.Functions.GetPlayerData(function(PlayerData)
-		if PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] then
-
-		else
+		if not PlayerData.metadata["ishandcuffed"] then
 			if #args > 0 then
 				local name = string.lower(args[1])
 				if name == "c" then

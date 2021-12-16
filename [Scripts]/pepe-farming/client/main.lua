@@ -80,12 +80,12 @@ Citizen.CreateThread(function()
 					if orangedis < 1.5 then 
 						Draw3DText(Config.OrangeFarm[i].x, Config.OrangeFarm[i].y, Config.OrangeFarm[i].z, '[E] - Hái cam', 4, 0.08, 0.08, Config.SecondaryColor)
 						if IsControlJustReleased(0, 38) and not oranges then
-							if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 2) then
-								Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 2)", "error")
-							else
+							-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 2) then
+							-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 2)", "error")
+							-- else
 								oranges = true
 								PickOrange()
-							end
+							-- end
 						elseif IsControlJustReleased(0, 38) and oranges then
 							Framework.Functions.Notify('Thao tác quá nhanh, vui lòng chờ cam chín!')
 						end
@@ -210,16 +210,16 @@ Citizen.CreateThread(function()
 			end
 
 			if IsControlJustReleased(0, 38) and not rented then
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
+				-- else
 					if Framework.Functions.IsSpawnPointClear(Config.TractorSpawn, 3.0) then
 						Framework.Functions.Notify('Bạn đã thuê máy kéo!', 'success', 5000) -- [text] = message, [type] = primary | error | success, [length] = time till fadeout.
 						TriggerServerEvent('pepe-farming:server:SpawnTractor')
 					else
 						Framework.Functions.Notify("Khu vực lấy xe đã đầy.", "error")
 					end
-				end
+				-- end
 				
 			end
 			if IsControlJustReleased(0, 38) and rented then
@@ -582,9 +582,9 @@ Citizen.CreateThread(function()
 			end
 
 			if IsControlJustReleased(0, 38) then
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
+				-- else
 					FreezeEntityPosition(GetPlayerPed(-1), true)
 					isPickingUp = true
 					Framework.Functions.Progressbar("track-corn", "Đang cày ruộng..", 10000, false, true, {
@@ -613,7 +613,7 @@ Citizen.CreateThread(function()
 						FreezeEntityPosition(GetPlayerPed(-1), false)
 					end) -- Cancel					
 						-- spawnedCorns = spawnedCorns - 1
-				end
+				-- end
 			end
 		else
 			Citizen.Wait(500)
@@ -643,9 +643,9 @@ Citizen.CreateThread(function()
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 2) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 2)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 2) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 2)", "error")
+				-- else
 					Citizen.Wait(5)
 					if math.random(1,10) > 4 and not isPickingUp then 
 						FreezeEntityPosition(nearbycow, true)
@@ -654,7 +654,7 @@ Citizen.CreateThread(function()
 					else
 						Framework.Functions.Notify('Bạn không lấy được Sữa Bò! Hãy thử lại!')
 					end
-				end
+				-- end
 				
 			end
 		else

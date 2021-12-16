@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
 			local current = Config.objects.locations[i]
             object = GetClosestObjectOfType(PlayerPos, 1.0, GetHashKey(current.objName), false, false, false)
             if object ~= 0 then
-                print("FoundObjects")
+                print("FoundObjects"..current.objName)
                 current.object = object
 			end
 		end
@@ -119,7 +119,7 @@ end
 
 RegisterNetEvent('ChairBedSystem:Client:Animation')
 AddEventHandler('ChairBedSystem:Client:Animation', function(v, coords)
-    local object = v.objName
+    local object = v.object
     local vertx = v.verticalOffsetX
     local verty = v.verticalOffsetY
     local vertz = v.verticalOffsetZ

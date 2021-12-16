@@ -62,9 +62,7 @@ end
 Framework.Functions.DeleteVehicle = function(vehicle)
 	TriggerEvent('persistent-vehicles/forget-vehicle', vehicle)
     SetEntityAsMissionEntity(vehicle, true, true)
-	SetEntityAsNoLongerNeeded(vehicle)
     DeleteVehicle(vehicle)
-	DeleteEntity(vehicle)
 end
 
 -- Framework.Functions.Notify = function(text, textype, length)
@@ -79,10 +77,11 @@ end
 -- end
 
 Framework.Functions.Notify = function(text, textype, length)
-    local ttype = textype ~= nil and textype or "primary"
+    local ttype = textype ~= nil and textype or "info"
     local length = length ~= nil and length or 5000
 
-	exports.pNotify:SendNotification({text = "<b>Hệ thống</b></br>" ..text, timeout = length, sounds = { volume = 0.0 }})
+	-- exports.pNotify:SendNotification({text = "<b>Hệ thống</b></br>" ..text, timeout = length, sounds = { volume = 0.0 }})
+	exports['okokNotify']:Alert("THÔNG BÁO", text, length, textype)
 end
 
 Framework.Functions.TriggerCallback = function(name, cb, ...)

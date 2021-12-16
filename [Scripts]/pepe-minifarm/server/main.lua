@@ -12,10 +12,10 @@ AddEventHandler('pepe-minifarm:HaiBi', function()
 	local RegisterItem = Player.Functions.GetItemByName('farm-register')
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil and RegisterItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil and RegisterItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	if Player.Functions.AddItem('bingo', 3) then
 		TriggerEvent("kingwolf-exp:addXP", src, 3)
@@ -34,10 +34,10 @@ AddEventHandler('pepe-minifarm:HaiCaChua', function()
 	local RegisterItem = Player.Functions.GetItemByName('farm-register')
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil and RegisterItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil and RegisterItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	if Player.Functions.AddItem('cachua', 3) then
 		TriggerEvent("kingwolf-exp:addXP", src, 3)
@@ -56,10 +56,10 @@ AddEventHandler('pepe-minifarm:HaiBapCai', function()
 	local RegisterItem = Player.Functions.GetItemByName('farm-register')
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil and RegisterItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil and RegisterItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	if Player.Functions.AddItem('bapcai', 3) then
 		TriggerEvent("kingwolf-exp:addXP", src, 3)

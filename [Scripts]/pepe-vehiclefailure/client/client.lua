@@ -223,6 +223,7 @@ Citizen.CreateThread(function()
 			if healthEngineCurrent == 1000 then healthEngineLast = 1000.0 end
 			healthEngineNew = healthEngineCurrent
 			healthEngineDelta = healthEngineLast - healthEngineCurrent
+
 			healthEngineDeltaScaled = healthEngineDelta * cfg.damageFactorEngine * cfg.classDamageMultiplier[vehicleClass]
 
 			healthBodyCurrent = GetVehicleBodyHealth(vehicle)

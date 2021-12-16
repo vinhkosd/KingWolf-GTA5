@@ -9,8 +9,8 @@ RegisterServerEvent("Framework:GetSalary")
 AddEventHandler('Framework:GetSalary', function(data)
 	local Player = Framework.Functions.GetPlayer(source)
 	if Player ~= nil and Player.PlayerData.job ~= nil and Player.PlayerData.job.onduty and Player.PlayerData.job.payment > 0 then
-		Player.Functions.AddMoney("cash", Player.PlayerData.job.payment)
-		TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "warning", "Bạn vừa nhận lương ($ "..Player.PlayerData.job.payment..")")
+		Player.Functions.AddMoney("bank", Player.PlayerData.job.payment)
+		-- TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "warning", "Bạn vừa nhận lương ($ "..Player.PlayerData.job.payment..")")
 	end
 end)
 

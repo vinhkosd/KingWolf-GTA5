@@ -4,18 +4,18 @@
 
 /// Config Area ///
 
-var guild = "905682786134941717";
+var guild = "917005609113641020";//old KINGWOLF 905682786134941717
 var botToken = "OTA1Nzg0NDIzNzU1MTg2MjI2.YYPHew.N9JG2AK0jZKzqbZOxH8Gx4EniP4";
 
 var whitelistRoles = [ // Roles by ID that are whitelisted.
-    "905783237547286528"
+    "917006759770619924"//old role - 905783237547286528
 ]
 
 var blacklistRoles = [ // Roles by Id that are blacklisted.
-    "905783410377764866"
+    "919471645238890586"//old role - 905783410377764866
 ]
 
-var notWhitelistedMessage = "Vui lòng truy cập link Discord https://discord.gg/nZEBKxzkQK để được đăng ký whitelist"
+var notWhitelistedMessage = "Vui lòng truy cập link Discord https://discord.gg/DHntjapreK để được đăng ký whitelist. Nếu bạn đã được cấp whitelist, hãy thử tắt FiveM và mở lại Discord trước sau đó mở FiveM để kết nối!"
 var noGuildMessage = "Guild Not Detected. It seems you're not in the guild for this community."
 var blacklistMessage = "Bạn đã bị cấm khỏi máy chủ"
 var debugMode = true
@@ -38,7 +38,7 @@ Blue Console Log === Script Information (error, etc)
 /// CODE DONT TOUCH THIS!!!! ///
 /// CODE DONT TOUCH THIS!!!! ///
 const axios = require('axios').default;
-axios.defaults.baseURL = 'https://discord.com/api/v8';
+// axios.defaults.baseURL = 'https://discord.com/api/v8';
 axios.defaults.headers = {
     'Content-Type': 'application/json',
     Authorization: `Bot ${botToken}`
@@ -61,10 +61,10 @@ on('playerConnecting', (name, setKickReason, deferrals) => {
         deferrals.update(`Checking Whitelist`)
         setTimeout(async function() {
             if(userId) {
-                axios(`/guilds/${guild}/members/${userId}`).then((resDis) => {
+                axios('https://discord.com/api/v8' + `/guilds/${guild}/members/${userId}`).then((resDis) => {
                     if(!resDis.data) {
                         if(debugMode) console.log(`^1'${name}' with ID '${userId}' cannot be found in the assigned guild and was not granted access.^7`);
-                        return deferrals.done(noGuildMessage);
+                        return deferrals.done(notWhitelistedMessage);
                     }
                     const hasRole = typeof whitelistRoles === 'string' ? resDis.data.roles.includes(whitelistRoles) : resDis.data.roles.some((cRole, i) => resDis.data.roles.includes(whitelistRoles[i]));
                     const hasBlackRole = typeof blacklistRoles === 'string' ? resDis.data.roles.includes(blacklistRoles) : resDis.data.roles.some((cRole, i) => resDis.data.roles.includes(blacklistRoles[i]));
@@ -81,10 +81,11 @@ on('playerConnecting', (name, setKickReason, deferrals) => {
                     }
                 }).catch((err) => {
                     if(debugMode) console.log(`^4There was an issue with the Discord API request. Is the guild ID & bot token correct?^7`);
+                    return deferrals.done(notWhitelistedMessage);
                 });
             } else {
                 if(debugMode) console.log(`^1'${name}' was not granted access as a Discord identifier could not be found.^7`);
-                return deferrals.done(`Vui lòng bật discord trước khi khởi động FiveM - https://docs.faxes.zone/c/fivem/debugging-discord`);
+                return deferrals.done(`Vui lòng bật discord trước khi khởi động FiveM - https://docs.faxes.zone/c/fivem/debugging-discord - Discord: https://discord.gg/DHntjapreK`);
             }
         }, 0)
     }, 0)

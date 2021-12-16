@@ -11,7 +11,8 @@ server_scripts {
 }
 
 exports {
-    'IsNearTraDaShop'
+    'IsNearTraDaShop',
+    'GetItems',
 }
 
 server_exports {

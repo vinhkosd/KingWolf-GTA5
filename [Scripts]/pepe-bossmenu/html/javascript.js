@@ -110,6 +110,16 @@ $(document).on('click', '.withdraw', function(e) {
     }));
 });
 
+$(document).on('mouseenter', '.player-box', function (event) {
+    var id = $(this).attr('id');
+    var playerid = id.substring(7);
+    $('.hoster-options#playeroptions-' + playerid).fadeIn();
+}).on('mouseleave', '.player-box',  function(){
+    var id = $(this).attr('id');
+    var playerid = id.substring(7);
+    $('.hoster-options#playeroptions-' + playerid).fadeOut(0);
+});
+
 function openGrades(citizenid, from) {
     choosingGrade = citizenid;
     $('.employees-container').fadeOut(0);

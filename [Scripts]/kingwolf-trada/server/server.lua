@@ -1,10 +1,26 @@
 Framework= nil
-
+local RentalPlate = 100
 TriggerEvent('Framework:GetObject', function(obj) Framework= obj end)
 
 function GetCraftingConfig(ItemId)
     return Config.CraftingItems[ItemId]
 end
+
+RegisterServerEvent('kingwolf-trada:server:CheckRental')
+AddEventHandler('kingwolf-trada:server:CheckRental', function()
+	local src = source
+	local Player = Framework.Functions.GetPlayer(src)
+    local CitizenId = Player.PlayerData.citizenid
+    TriggerClientEvent("kingwolf-trada:client:spawn:vehicle", src)
+end)
+
+Framework.Functions.CreateCallback('kingwolf-trada:server:registerPlate', function(source, cb)
+    local Player = Framework.Functions.GetPlayer(source)
+    local CitizenId = Player.PlayerData.citizenid
+    RentalPlate = RentalPlate + 1
+    local PlateText = "TRADA"..RentalPlate
+    cb(PlateText)
+end)
 
 Framework.Functions.CreateUseableItem("thuoc-lao", function(source, item)
 	local Player = Framework.Functions.GetPlayer(source)

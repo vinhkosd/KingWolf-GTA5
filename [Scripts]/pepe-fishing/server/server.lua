@@ -88,6 +88,7 @@ AddEventHandler('pepe-fishing:server:fish:reward', function(attempt, duration, w
         TriggerClientEvent("Framework:Notify", source, "Bạn đã câu hụt! ", "success", 4000)
         return
     end
+    
     TriggerEvent("kingwolf-exp:addXP", source, 1)
     if attempt <= 3 then -- trúng cá 1, 2, 3
         local randomRewardFish = math.random(1,100)

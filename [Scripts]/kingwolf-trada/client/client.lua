@@ -180,7 +180,7 @@ Citizen.CreateThread(function()
 
 			local SellStashDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"])
 
-			if SellStashDist < 3 and (tonumber(PlayerJob.grade.level) == 0 or PlayerJob.isboss) and onDuty then
+			if SellStashDist < 3 and (tonumber(PlayerJob.grade.level) == 0 or tonumber(PlayerJob.grade.level) == 2 or PlayerJob.isboss) and onDuty then
 				inRange = true
 
 				DrawMarker(2, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
@@ -278,20 +278,20 @@ Citizen.CreateThread(function()
 				local ShopDistance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Locations["ShopAuto"][i], true)
 
 				if ShopDistance < 10.0 then
-					DrawMarker(27, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
+					DrawMarker(1, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 191, 255, 0, 0, 0, 0)
 
 					-- DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
 				end
 
-				if ShopDistance < 3.0 and PlayerJob.name == "trada" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
+				if ShopDistance < 3.0 and PlayerJob.name == "trada" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) >= 1) or PlayerJob.isboss) and onDuty then
 					isNearShop = true
 					IDShopNearBy = i
 					Framework.Functions.DrawText3D(Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z + 1.0, "~g~E~w~ - Tủ bán tự động")
 				
 					if IsControlJustReleased(0, 38) and ShopDistance < 1.0 then
 						Other = {maxweight = 900000, slots = Config.Items.slots}
-						TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_tra_da_"..i, Other)
-						TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_tra_da_"..i)
+						TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_tra_da", Other)
+						TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_tra_da")
 					end
 				elseif ShopDistance < 1.5 then
 					isNearShop = true
@@ -312,6 +312,107 @@ Citizen.CreateThread(function()
 			end
 			
 		-- end
+	end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+	Citizen.Wait(0)
+
+		local plyCoords = GetEntityCoords(GetPlayerPed(-1), false)
+		if isLoggedIn and PlayerJob.name == "trada" and onDuty then
+			if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+				local RentDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"])
+
+				if RentDist < 20.0 then
+					DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				end
+				if RentDist < 1.0 then
+					Framework.Functions.DrawText3D(Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"] + 0.15, "~g~[E]~w~ Lấy xe giao hàng")
+					if IsControlJustReleased(0, Keys["E"]) then
+						TriggerServerEvent("kingwolf-trada:server:CheckRental")
+					end
+				end
+			end
+
+			local UnRentDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"])
+			if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+				local vehModel = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
+
+				-- DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				if vehModel:lower() == Config.CarModel then
+					if UnRentDist < 20.0 then
+					DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+					end
+
+					if UnRentDist < 1.0 then
+						Framework.Functions.DrawText3D(Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"] + 0.15, "~g~[E]~w~ Trả xe giao hàng")
+						if IsControlJustReleased(0, Keys["E"]) then
+							Framework.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+						end
+					end
+				end
+				
+			end
+		end
+	end
+end)
+
+RegisterNetEvent('kingwolf-trada:client:spawn:vehicle')
+AddEventHandler('kingwolf-trada:client:spawn:vehicle', function()
+	local isSpawnPointClear = false
+	for i = 1, #Config.Locations['Spawns'] do
+		if isSpawnPointClear then
+			break
+		end
+		local spawnCoords = Config.Locations['Spawns'][i]
+		local CoordTable = {x = spawnCoords['x'], y = spawnCoords['y'], z = spawnCoords['z'], a = spawnCoords['h']}    
+		if Framework.Functions.IsSpawnPointClear(CoordTable, 3.0) then
+			isSpawnPointClear = true
+			Framework.Functions.TriggerCallback('kingwolf-trada:server:registerPlate', function(plateText)
+				if plateText == nil then
+					Framework.Functions.Notify("Không thể đăng ký thông tin biển số xe..")
+				else
+					Framework.Functions.SpawnVehicle(Config.CarModel, function(Vehicle)
+						if Config.Color1 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, Config.Color1, color2)
+						end
+					
+						if Config.Color2 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, color1, Config.Color2)
+						end
+						TaskWarpPedIntoVehicle(GetPlayerPed(-1), Vehicle, -1)
+						SetVehicleNumberPlateText(Vehicle, plateText)
+						TriggerEvent('persistent-vehicles/register-vehicle', Vehicle)
+						Framework.Functions.TriggerCallback('kingwolf-common:server:registerPlate', function(canReg)
+							if not canReg then
+								Framework.Functions.Notify("Không thể đăng ký thông tin biển số xe.")
+							end
+						end, plateText)
+						Citizen.Wait(25)
+						if Config.Color1 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, Config.Color1, color2)
+						end
+					
+						if Config.Color2 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, color1, Config.Color2)
+						end
+						
+						exports['pepe-vehiclekeys']:SetVehicleKey(plateText, true)
+						exports['pepe-fuel']:SetFuelLevel(Vehicle, plateText, 100, false)
+						Framework.Functions.Notify("Xe thuê của bạn đang ở chỗ đậu", 'info')
+					end, CoordTable, true, false)
+				end
+			end)
+		end
+	end
+
+	if isSpawnPointClear == false then
+		Framework.Functions.Notify('Khu vực lấy xe bị chặn.', 'error')
 	end
 end)
 
@@ -511,15 +612,9 @@ AddEventHandler('pepe-items:client:use:tra-da:drink', function(ItemName, PropNam
 		if not DoingSomething then
 		DoingSomething = true
     	 	Citizen.SetTimeout(1000, function()
-				local anim = "amb@world_human_drinking@coffee@male@idle_a"
-				local dict = "idle_c"
     			exports['pepe-assets']:AddProp(PropName)
-				if ItemName == "ice-scream" then
-					anim = "stungun@standing"
-					dict = "damage"
-				end
-    			exports['pepe-assets']:RequestAnimationDict(anim)
-    			TaskPlayAnim(PlayerPedId(), anim, dict, 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+    			exports['pepe-assets']:RequestAnimationDict("amb@world_human_drinking@coffee@male@idle_a")
+    			TaskPlayAnim(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
     	 		Framework.Functions.Progressbar("drink", "Đang uống..", 10000, false, true, {
     	 			disableMovement = false,
     	 			disableCarMovement = false,
@@ -531,7 +626,7 @@ AddEventHandler('pepe-items:client:use:tra-da:drink', function(ItemName, PropNam
 					exports['pepe-assets']:RemoveProp()
 					TriggerEvent('pepe-inventory:client:set:busy', false)	
 					TriggerEvent("pepe-inventory:client:ItemBox", Framework.Shared.Items[ItemName], "remove")
-					StopAnimTask(PlayerPedId(), anim, dict, 1.0)
+					StopAnimTask(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 1.0)
 					TriggerServerEvent("Framework:Server:SetMetaData", "thirst", Framework.Functions.GetPlayerData().metadata["thirst"] + increaseAmount)
 					if ItemName == "fruit-plate" then
 						TriggerServerEvent("Framework:Server:SetMetaData", "hunger", Framework.Functions.GetPlayerData().metadata["hunger"] + math.random(15, 16))
@@ -543,7 +638,7 @@ AddEventHandler('pepe-items:client:use:tra-da:drink', function(ItemName, PropNam
     				exports['pepe-assets']:RemoveProp()
     				TriggerEvent('pepe-inventory:client:set:busy', false)
     	 			Framework.Functions.Notify("Hủy bỏ..", "error")
-    				StopAnimTask(PlayerPedId(), anim, dict, 1.0)
+    				StopAnimTask(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 1.0)
     	 		end)
     	 	end)
 		end
@@ -564,11 +659,15 @@ AddEventHandler('kingwolf-trada:open:autoshop', function(ItemName, PropName)
 				end
 			end
         end
-		TriggerServerEvent("pepe-inventory:server:OpenInventory", "tradashop", "tu_tu_dong_tra_da_"..IDShopNearBy, Config.Items)
-    end, "tu_tu_dong_tra_da_"..IDShopNearBy)
+		TriggerServerEvent("pepe-inventory:server:OpenInventory", "tradashop", "tu_tu_dong_tra_da", Config.Items)
+    end, "tu_tu_dong_tra_da")
     
 end)
 
 function IsNearTraDaShop()
 	return isNearShop
+end
+
+function GetItems()
+	return Config.Items
 end

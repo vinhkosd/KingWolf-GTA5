@@ -147,10 +147,10 @@ end)
 
 RegisterNetEvent('pepe-fishing:client:use:fishingrod')
 AddEventHandler('pepe-fishing:client:use:fishingrod', function()
-    if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
-        Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
-        return
-    end
+    -- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
+    --     Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
+    --     return
+    -- end
     if not Config.UsingRod then
         if Config.CanFish then
         if not IsPedInAnyVehicle(GetPlayerPed(-1)) then

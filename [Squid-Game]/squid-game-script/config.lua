@@ -3,7 +3,7 @@ Config.Locale = "en" -- Language "en" "ru"
 Config.GameName = "Đèn xanh - Đèn đỏ"
 
 Config.Fee = 1000 -- How much money cost to participate in game
-Config.StartPoint = vector3(-1664.553, -963.25, 7.6979236) -- Lobby point
+Config.StartPoint = vector3(-1644.08, -880.5484, 8.9999914) -- Lobby point
 Config.DollyWatchingRandomTime = {1000, 2000, 3000, 4000, 5000, 6000, 7000} -- Doll watching time in milliseconds (random)
 Config.GameDuration = 2 * 60 * 1000 -- Game duration is 2 minutes
 Config.GameStartInterval = 15 * 1000 -- Game automatically starts every 1 minute
@@ -45,12 +45,12 @@ Config.SpawnCoords = {
         vector3(1170.382, 7154.213, 20.41687),
     },
     GameSuccess = { -- Player won the game. You can use it for teleporting player to next level
-        vector3(-1621.146, -953.074, 8.2855319),
-        vector3(-1623.412, -955.8193, 8.1965322),
+        vector3(-1597.481, -926.1502, 9.4967107),
+        vector3(-1599.548, -929.8125, 9.4967107),
     },
     GameFailed = { -- Player failed the game. You can use it for teleporting player to some limbo or something :P
-        vector3(-1626.639, -964.1682, 7.9682159),
-        vector3(-1628.942, -966.9024, 7.8658714),
+        vector3(-1590.18, -917.3345, 9.7992401),
+        vector3(-1587.685, -913.9578, 9.7992401),
     },
     GuardsNPC = {
         vector3(1143.029, 7252.681, 20.41687),
@@ -236,19 +236,34 @@ Config.PlayerOutfits = {
         -- },
     },
     ["female"] = {
-        {
-            [4] = {66, 0},
-            [6] = {80, 0},
-            [8] = {2, 0},
-            [11] = {147, 0},
+        -- {
+        --     [4] = {66, 0},
+        --     [6] = {80, 0},
+        --     [8] = {2, 0},
+        --     [11] = {147, 0},
             
-            [1] = {0, 0},
-            [2] = {0, 0},
-            [3] = {0, 0},
-            [5] = {0, 0},
-            [7] = {0, 0},
-            [9] = {0, 0},
-            [10] = {0, 0},
+        --     [1] = {0, 0},
+        --     [2] = {0, 0},
+        --     [3] = {0, 0},
+        --     [5] = {0, 0},
+        --     [7] = {0, 0},
+        --     [9] = {0, 0},
+        --     [10] = {0, 0},
+        -- },
+        {
+            [4] = {28, 0},-- Pants
+            [6] = {77, 2},-- Shoes
+            [8] = {28, 5},-- T-Shirt
+            [11] = {240, 11},-- Torso 2
+
+            [1] = {146, 6}, -- MASK: vMenu values 2 and 39
+            [2] = {0, 0},-- Hair
+            [3] = {4, 0},-- Arms
+            [5] = {0, 0},-- Bag
+            [7] = {0, 0},-- Accessory
+            [9] = {0, 0},-- Vest
+            [10] = {0, 0},-- Badge
+            [12] = {23, 0},-- Hat
         },
     }
 }

@@ -92,10 +92,10 @@ AddEventHandler('pepe-farming:CowMilked', function()
 
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	if Player.Functions.AddItem('milk', Config.MilkOutput) then
 		TriggerEvent("kingwolf-exp:addXP", src, Config.MilkOutput)
@@ -113,10 +113,10 @@ AddEventHandler('pepe-farming:ProcessCorn', function()
 
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-		return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+	-- 	return
+	-- end
 
 	local item = Player.Functions.GetItemByName('corn_kernel')
 	if item ~= nil then 
@@ -143,10 +143,10 @@ AddEventHandler('pepe-farming:ProcessOranges', function()
 	local Player = Framework.Functions.GetPlayer(src)
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	local item = Player.Functions.GetItemByName('orange')
 	if item ~= nil then 
@@ -175,10 +175,10 @@ AddEventHandler('pepe-farming:ProcessMilk', function()
 
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	local item = Player.Functions.GetItemByName('milk')
 	if item ~= nil then 
@@ -207,10 +207,10 @@ AddEventHandler('pepe-farming:server:SpawnTractor', function()
 
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	local cashamount = Player.PlayerData.money["cash"]
 
@@ -229,10 +229,10 @@ AddEventHandler('pepe-farming:GiveOranges', function()
 
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-		return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+	-- 	return
+	-- end
 
 	if Player.Functions.AddItem('orange', 3) then
 		TriggerEvent("kingwolf-exp:addXP", src, 3)
@@ -249,10 +249,10 @@ AddEventHandler('Server:UnRentTractor', function()
 	local Player = Framework.Functions.GetPlayer(src)
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-		return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Bạn phải có chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+	-- 	return
+	-- end
 
 	-- Player.Functions.RemoveMoney('bank', 1500, 'tractor')
 	TriggerClientEvent('UnRentTractor', src)

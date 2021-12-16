@@ -382,6 +382,10 @@ end
 
 -- Edit độ khoẻ của xe khi lấy ra khỏi kho phương tiện
 function DoCarDamage1(Vehicle, EngineHealth, BodyHealth)
+  if GetVehicleClass(Vehicle) == 13 then
+    return
+  end
+  
 	SmashWindows = false
 	damageOutside = false
 	damageOutside2 = false 

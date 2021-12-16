@@ -211,7 +211,22 @@ $(document).on('click', '.phone-application', function(e){
                     });
                 } else if (PressedApplication == "meos") {
                     SetupMeosHome();
-                } else if (PressedApplication == "lawyers") {
+                }else if (PressedApplication == "bikefood") {
+                    $.post('http://pepe-phone/OpenBikeFood', JSON.stringify({}), function(data){});
+                    QB.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+                    QB.Phone.Animations.TopSlideUp('.'+QB.Phone.Data.currentApplication+"-app", 400, -160);
+                    CanOpenApp = false;
+                    setTimeout(function(){
+                        QB.Phone.Functions.ToggleApp(QB.Phone.Data.currentApplication, "none");
+                        CanOpenApp = true;
+                    }, 400)
+                    QB.Phone.Functions.HeaderTextColor("white", 300);
+
+                    QB.Phone.Data.currentApplication = null;
+                    QB.Phone.Animations.BottomSlideDown('.container', 500, -90);
+                    QB.Phone.Data.IsOpen = false;
+                }
+                else if (PressedApplication == "lawyers") {
                     $.post('http://pepe-phone/GetCurrentLawyers', JSON.stringify({}), function(data){
                         SetupLawyers(data);
                     });
@@ -441,6 +456,8 @@ QB.Phone.Notifications.Add = function(icon, title, text, color, timeout) {
 }
 
 QB.Phone.Functions.LoadPhoneData = function(data) {
+    console.log(JSON.stringify(data))
+    console.log((data))
     QB.Phone.Data.PlayerData = data.PlayerData;
     QB.Phone.Data.PlayerJob = data.PlayerJob;
     QB.Phone.Data.MetaData = data.PhoneData.MetaData;

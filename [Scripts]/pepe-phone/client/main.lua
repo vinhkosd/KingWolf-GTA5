@@ -1637,6 +1637,38 @@ AddEventHandler('pepe-phone:client:GetCalled', function(CallerNumber, CallId, An
     end
 end)
 
+
+RegisterNetEvent('pepe-phone:client:CallContact')
+AddEventHandler('pepe-phone:client:CallContact', function(CallData, AnonymousCall)
+    local RepeatCount = 0
+    PhoneData.CallData.CallType = "outgoing"
+    PhoneData.CallData.InCall = true
+    PhoneData.CallData.TargetData = CallData
+    PhoneData.CallData.AnsweredCall = false
+    PhoneData.CallData.CallId = GenerateCallId(PhoneData.PlayerData.charinfo.phone, CallData.number)
+
+    TriggerServerEvent('pepe-phone:server:CallContact', PhoneData.CallData.TargetData, PhoneData.CallData.CallId, AnonymousCall)
+    TriggerServerEvent('pepe-phone:server:SetCallState', true)
+    
+    for i = 1, Config.CallRepeats + 1, 1 do
+        if not PhoneData.CallData.AnsweredCall then
+            if RepeatCount + 1 ~= Config.CallRepeats + 1 then
+                if PhoneData.CallData.InCall then
+                    RepeatCount = RepeatCount + 1
+                    TriggerEvent("pepe-sound:client:play", "death", 0.1) 
+                else
+                    break
+                end
+                Citizen.Wait(Config.RepeatTimeout)
+            else
+                CancelCall()
+                break
+            end
+        else
+            break
+        end
+    end
+end)
 RegisterNUICallback('CancelOutgoingCall', function()
     CancelCall()
 end)
@@ -1772,6 +1804,47 @@ RegisterNUICallback('FetchSearchResults', function(data, cb)
     Framework.Functions.TriggerCallback('pepe-phone:server:FetchResult', function(result)
         cb(result)
     end, data.input)
+end)
+
+RegisterNUICallback('GetPizzaItems', function(data, cb)
+    local searchData = {}
+    local ConfigItems = exports['kingwolf-pizza']:GetItems()
+    for i = 1, #ConfigItems.items do
+        local item = ConfigItems.items[i]
+        item.amount = 50
+        local itemInfo = Framework.Shared.Items[item.name:lower()]
+        table.insert(searchData, {
+            label = itemInfo["name"],
+            name = item.name,
+            amount = item.amount,
+            price = item.price
+        })
+    end
+
+    
+    cb(searchData)
+end)
+
+RegisterNUICallback('OpenBikeFood', function(data, cb)
+    if not PhoneData.CallData.InCall then
+        DoPhoneAnimation('cellphone_text_out')
+        SetTimeout(400, function()
+            StopAnimTask(PlayerPedId(), PhoneData.AnimationData.lib, PhoneData.AnimationData.anim, 2.5)
+            deletePhone()
+            PhoneData.AnimationData.lib = nil
+            PhoneData.AnimationData.anim = nil
+        end)
+    else
+        PhoneData.AnimationData.lib = nil
+        PhoneData.AnimationData.anim = nil
+        DoPhoneAnimation('cellphone_text_to_call')
+    end
+    SetNuiFocus(false, false)
+    SetTimeout(150, function()
+        PhoneData.isOpen = false
+    end)
+    TriggerEvent('kingwolf-shopping:client:openMenu')
+    cb({})
 end)
 
 RegisterNUICallback('FetchVehicleResults', function(data, cb)

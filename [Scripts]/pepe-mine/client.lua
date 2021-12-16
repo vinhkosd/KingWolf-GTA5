@@ -64,10 +64,10 @@ Citizen.CreateThread(function()
                                 AttachEntityToEntity(axe, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 57005), 0.09, 0.03, -0.02, -78.0, 13.0, 28.0, false, true, true, true, 0, true)
 
                                 while mining do
-                                    if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-                                        Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-                                        break
-                                    end
+                                    -- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+                                    --     Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+                                    --     break
+                                    -- end
                                     if (Framework.Functions.GetPlayerData().metadata["ishandcuffed"] or Framework.Functions.GetPlayerData().metadata["isdead"]) then break end
                                     Wait(0)
                                     SetCurrentPedWeapon(PlayerPedId(), GetHashKey('WEAPON_UNARMED'))

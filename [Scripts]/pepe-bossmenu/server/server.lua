@@ -76,7 +76,7 @@ AddEventHandler("pepe-bossmenu:server:withdrawMoney", function(amount)
         end
     end)
     -- SaveResourceFile(GetCurrentResourceName(), "./database.json", json.encode(Accounts), -1)
-    TriggerEvent('pepe-logs:server:createLog', 'bossmenu', 'Rút tiền', "Đã rút thành công $" .. amount .. ' (' .. job .. ')', src)
+    TriggerEvent('pepe-logs:server:SendLog', 'bossmenu', 'Rút tiền', "green", "Đã rút thành công $" .. amount .. ' (' .. job .. ')', src)
 end)
 
 RegisterServerEvent("pepe-bossmenu:server:depositMoney")
@@ -105,7 +105,7 @@ AddEventHandler("pepe-bossmenu:server:depositMoney", function(amount)
         end
     end)
     -- SaveResourceFile(GetCurrentResourceName(), "./database.json", json.encode(Accounts), -1)
-    TriggerEvent('pepe-logs:server:createLog', 'bossmenu', 'Tiền đặt cọc', "Đổ xô thành công $" .. amount .. ' (' .. job .. ')', src)
+    TriggerEvent('pepe-logs:server:SendLog', 'bossmenu', 'Tiền đặt cọc', "lightgreen", "Nạp thành công $" .. amount .. ' (' .. job .. ')', src)
 end)
 
 RegisterServerEvent("pepe-bossmenu:server:addAccountMoney")
@@ -197,11 +197,11 @@ AddEventHandler('pepe-bossmenu:server:fireEmployee', function(data)
 
     if xEmployee then
         if xEmployee.Functions.SetJob("unemployed", '0') then
-            TriggerEvent('pepe-logs:server:createLog', 'bossmenu', 'Ontslaan', "Succesvol ontslagen " .. GetPlayerName(xEmployee.PlayerData.source) .. ' (' .. xPlayer.PlayerData.job.name .. ')', src)
+            TriggerEvent('pepe-logs:server:SendLog', 'bossmenu', 'Ontslaan', "red", "Succesvol ontslagen " .. GetPlayerName(xEmployee.PlayerData.source) .. ' (' .. xPlayer.PlayerData.job.name .. ')', src)
 
             TriggerClientEvent('Framework:Notify', src, "Đã loại bỏ thành công!", "success")
             TriggerClientEvent('Framework:Notify', xEmployee.PlayerData.source , "Bạn bị sa thải.", "success")
-
+            xEmployee.Functions.Save()
             Wait(500)
             local employees = {}
             Framework.Functions.ExecuteSql(false, "SELECT * FROM `characters_metadata` WHERE `job` LIKE '%".. xPlayer.PlayerData.job.name .."%'", function(players)
@@ -248,7 +248,7 @@ AddEventHandler('pepe-bossmenu:server:fireEmployee', function(data)
 
                 Framework.Functions.ExecuteSql(false, "UPDATE `characters_metadata` SET `job` = '"..json.encode(job).."' WHERE `citizenid` = '".. data.source .."'")
                 TriggerClientEvent('Framework:Notify', src, "Succesvol ontslagen!", "success")
-                TriggerEvent('pepe-logs:server:createLog', 'bossmenu', 'Fire', "Succesvol ontslagen " .. data.source .. ' (' .. xPlayer.PlayerData.job.name .. ')', src)
+                TriggerEvent('pepe-logs:server:SendLog', 'bossmenu', 'Fire', "red", "Succesvol ontslagen " .. data.source .. ' (' .. xPlayer.PlayerData.job.name .. ')', src)
                 
                 Wait(500)
                 local employees = {}
@@ -297,7 +297,7 @@ AddEventHandler('pepe-bossmenu:server:giveJob', function(data)
             -- Framework.Functions.ExecuteSql(false, "UPDATE `characters_metadata` SET `job` = '"..Framework.EscapeSqli(json.encode(xTarget.PlayerData.job)).."' WHERE `citizenid` = '".. data.source .."'")
             TriggerClientEvent('Framework:Notify', src, "Bạn tuyển dụng. " .. (xTarget.PlayerData.charinfo.firstname .. ' ' .. xTarget.PlayerData.charinfo.lastname) .. " đến " .. xPlayer.PlayerData.job.label .. ".", "success")
             TriggerClientEvent('Framework:Notify', xTarget.PlayerData.source , "Bạn đã được tuyển dụng cho " .. xPlayer.PlayerData.job.label .. ".", "success")
-            TriggerEvent('pepe-logs:server:createLog', 'bossmenu', 'Tuyển dụng', "Tuyển dụng thành công. " .. (xTarget.PlayerData.charinfo.firstname .. ' ' .. xTarget.PlayerData.charinfo.lastname) .. ' (' .. xTarget.PlayerData.job.label .. ')', src)
+            TriggerEvent('pepe-logs:server:SendLog', 'bossmenu', 'Tuyển dụng', "lightgreen", "Tuyển dụng thành công. " .. (xTarget.PlayerData.charinfo.firstname .. ' ' .. xTarget.PlayerData.charinfo.lastname) .. ' (' .. xTarget.PlayerData.job.label .. ')', src)
         end
     else
         TriggerClientEvent('Framework:Notify', src, "Bạn không phải là ông chủ, làm thế nào bạn đến đây??!", "error")
@@ -312,7 +312,7 @@ AddEventHandler('pepe-bossmenu:server:updateGrade', function(data)
 
     if xEmployee then
         if xEmployee.Functions.SetJob(xPlayer.PlayerData.job.name, data.grade) then
-            TriggerClientEvent('Framework:Notify', src, "Quảng bá thành công!", "success")
+            TriggerClientEvent('Framework:Notify', src, "Thăng chức thành công!", "success")
             TriggerClientEvent('Framework:Notify', xEmployee.PlayerData.source , "Bạn vừa được thăng chức [" .. data.grade .."].", "success")
 
             Wait(500)
@@ -353,7 +353,7 @@ AddEventHandler('pepe-bossmenu:server:updateGrade', function(data)
                 local employeejob = json.decode(xEmployee.job)
                 employeejob.grade = job.grades[data.grade]
                 Framework.Functions.ExecuteSql(false, "UPDATE `characters_metadata` SET `job` = '"..json.encode(employeejob).."' WHERE `citizenid` = '".. data.source .."'")
-                TriggerClientEvent('Framework:Notify', src, "Quảng bá thành công!", "success")
+                TriggerClientEvent('Framework:Notify', src, "Thăng chức thành công!", "success")
                 
                 Wait(500)
                 local employees = {}

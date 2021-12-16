@@ -43,12 +43,12 @@ Citizen.CreateThread(function()
 				if grapedis < 1.5 then 
 					Draw3DText(Config.GrapeFarm[i].x, Config.GrapeFarm[i].y, Config.GrapeFarm[i].z, '[E] - Hái nho', 4, 0.08, 0.08, Config.SecondaryColor)
 					if IsControlJustReleased(0, 38) and not availableGrapePicking then
-						if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
-							Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
-						else
+						-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 3) then
+						-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
+						-- else
 							availableGrapePicking = true
 							PickGrape()
-						end
+						-- end
 					elseif IsControlJustReleased(0, 38) and availableGrapePicking then
 						Framework.Functions.Notify('Thao tác quá nhanh, vui lòng chờ nho chín!')
 					end

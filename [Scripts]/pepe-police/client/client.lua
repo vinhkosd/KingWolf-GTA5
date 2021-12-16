@@ -562,15 +562,15 @@ end)
 RegisterNetEvent('pepe-police:client:bill:player')
 AddEventHandler('pepe-police:client:bill:player', function(price)
     SetTimeout(math.random(2500, 3000), function()
-        local gender = "meneer"
+        local gender = "anh"
         if Framework.Functions.GetPlayerData().charinfo.gender == 1 then
-            gender = "mevrouw"
+            gender = "chị"
         end
         local charinfo = Framework.Functions.GetPlayerData().charinfo
         TriggerServerEvent('pepe-phone:server:sendNewMail', {
             sender = "Thành phố KingWolf",
             subject = "Hoá đơn mới",
-            message = "Chào bạn " .. gender .. " " .. charinfo.lastname .. ",<br/><br />Bạn có một hoá đơn chưa thanh toán!<br /><br />Tổng số tiền: <strong>$"..price.."</strong> <br><br>Vui lòng thanh toán số tiền này ngay bây giờ!<br/><br/>Trân trọng,<br />KingWolf",
+            message = "Chào " .. gender .. " " .. charinfo.lastname .. ",<br/><br />Bạn có một hoá đơn chưa thanh toán!<br /><br />Tổng số tiền: <strong>$"..price.."</strong> <br><br>Vui lòng thanh toán số tiền này ngay bây giờ!<br/><br/>Trân trọng,<br />KingWolf",
             button = {}
         })
     end)

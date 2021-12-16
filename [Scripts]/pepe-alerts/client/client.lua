@@ -71,6 +71,38 @@ AddEventHandler('pepe-alerts:client:send:alert', function(data, forBoth)
     end)
 end)
 
+RegisterNetEvent('pepe-alerts:client:send:alert:shopping')
+AddEventHandler('pepe-alerts:client:send:alert:shopping', function(data, forBoth)
+    if (Framework.Functions.GetPlayerData().job.name == "trada" or Framework.Functions.GetPlayerData().job.name == "pizza") and Framework.Functions.GetPlayerData().job.onduty then
+        data.callSign = data.callSign ~= nil and data.callSign or '69-69'
+        data.alertId = math.random(11111, 99999)
+        SendNUIMessage({
+            action = "add",
+            data = data,
+        })
+        if data.priority == 1 then
+            TriggerServerEvent("pepe-sound:server:play:source", "alert-high-prio", 0.2)
+        elseif data.priority == 2 then
+            PlaySoundFrontend(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+            Citizen.Wait(100)
+            PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1)
+            Citizen.Wait(100)
+            PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+            Citizen.Wait(100)
+            PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
+        elseif data.priority == 3 then
+            TriggerServerEvent("pepe-sound:server:play:source", "alert-panic-button", 0.5)
+        else
+            PlaySoundFrontend(-1, "Lose_1st", "GTAO_FM_Events_Soundset", true)
+        end
+    end
+    
+    AlertActive = true
+    SetTimeout(data.timeOut, function()
+        AlertActive = false
+    end)
+end)
+
 RegisterNetEvent('pepe-alerts:client:open:previous:alert')
 AddEventHandler('pepe-alerts:client:open:previous:alert', function(JobName)
     MouseActive, AlertActive = false, false

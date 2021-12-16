@@ -235,16 +235,16 @@ Citizen.CreateThread(function()
 
 		if dist <= 0.5 then
 			if IsControlJustPressed(0, Keys['E']) then -- "E"
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					if isCatching then
 						Framework.Functions.Notify("Vui lòng bắt hết gà!", "error")
 					else
 						TriggerServerEvent("pepe-chickenjob:startChicken")
 						LapChicken()
 					end
-				end
+				-- end
 			end
 		end
 
@@ -301,11 +301,11 @@ Citizen.CreateThread(function()
 		if dist <= 0.5 then
 			
 			if IsControlJustPressed(0, Keys['E']) then -- "E"
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					PortionChicken(1)
-				end
+				-- end
 			end			
 
 		end
@@ -323,11 +323,11 @@ Citizen.CreateThread(function()
 		if dist2 <= 0.5 then
 
 			if IsControlJustPressed(0, Keys['E']) then -- "E"
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					PortionChicken(2)
-				end
+				-- end
 			end			
 
 		end
@@ -351,17 +351,17 @@ Citizen.CreateThread(function()
 		if distP <= 0.5 then
 
 			if IsControlJustPressed(0, Keys['E']) then
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					packingg(1)
-				end
+				-- end
 			elseif IsControlJustPressed(0, Keys['G']) then
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					packed(1)
-				end
+				-- end
 			end			
 
 		end
@@ -385,17 +385,17 @@ Citizen.CreateThread(function()
 		if distP2 <= 0.5 then
 
 			if IsControlJustPressed(0, Keys['E']) then -- "E"
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					packingg(2)
-				end
+				-- end
 			elseif IsControlJustPressed(0, Keys['G']) then
-				if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
-					Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
-				else
+				-- if (Framework.Functions.GetPlayerData().metadata["currentrank"] == nil or Framework.Functions.GetPlayerData().metadata["currentrank"] < 4) then
+				-- 	Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 4)", "error")
+				-- else
 					packed(2)
-				end
+				-- end
 			end		
 
 		end	

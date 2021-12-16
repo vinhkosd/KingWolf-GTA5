@@ -28,7 +28,7 @@ Config.objects = {
 		{objName="prop_off_chair_01", verticalOffsetX=0.0, verticalOffsetY=-0.1, verticalOffsetZ=-0.5, direction=180.0, bed=false},
 		{objName="prop_chair_04b", verticalOffsetX=0.0, verticalOffsetY=-0.1, verticalOffsetZ=-0.5, direction=270.0, bed=false},
 		{objName="v_ilev_m_sofa", verticalOffsetX=0.0, verticalOffsetY=-0.1, verticalOffsetZ=-0.5, direction=270.0, bed=false},
-		{objName="prop_table_01_chr_b", verticalOffsetX=0.0, verticalOffsetY=0.0, verticalOffsetZ=-0.0, direction=0.0, bed=false},
+		{objName="prop_table_01_chr_b", verticalOffsetX=0.0, verticalOffsetY=0.0, verticalOffsetZ=-0.0, direction=-90.0, bed=false},
 	}
 }
 

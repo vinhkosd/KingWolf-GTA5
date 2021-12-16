@@ -12,10 +12,10 @@ AddEventHandler('pepe-mine:getItem', function()
 
     local LicenseItem = xPlayer.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
     local ToolItem = xPlayer.Functions.GetItemByName('mine-pickaxe')
 	

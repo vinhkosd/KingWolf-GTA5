@@ -11,10 +11,10 @@ AddEventHandler('pepe-grape:ProcessGrapes', function()
 
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-		return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+	-- 	return
+	-- end
 
 	local item = Player.Functions.GetItemByName('grape')
 	if item ~= nil then 
@@ -42,10 +42,10 @@ AddEventHandler('pepe-grape:GiveGrapes', function()
 	
 	local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
 	if Player.Functions.AddItem('grape', 3) then
 		TriggerEvent("kingwolf-exp:addXP", src, 3)

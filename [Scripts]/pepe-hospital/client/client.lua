@@ -308,6 +308,11 @@ AddEventHandler('pepe-hospital:client:SetDoctorCount', function(amount)
     doctorCount = amount
 end)
 
+RegisterNetEvent('pepe-hospital:SetDoctorsCount')
+AddEventHandler('pepe-hospital:SetDoctorsCount', function(Amount)
+    doctorCount = Amount
+end)
+
 RegisterNetEvent('pepe-hospital:client:revive')
 AddEventHandler('pepe-hospital:client:revive', function(UseAnim, IsAdmin)
     if Config.IsDeath then
@@ -454,6 +459,19 @@ AddEventHandler('pepe-hospital:client:bring:ped', function(targetId)
     else
         Framework.Functions.Notify("Đã kéo xác "..countDeathPlayer.." người chơi tới vị trí của bạn", "success")
     end
+end)
+
+RegisterNetEvent('pepe-hospital:client:lagxac')
+AddEventHandler('pepe-hospital:client:lagxac', function()
+  if Framework.Functions.GetPlayerData().metadata["isdead"] then
+    -- print("lagxac")
+    -- local x, y, z = table.unpack( GetEntityCoords( playerPed, false ) )
+    -- curLocation = { x = x, y = y, z = z }
+    -- SetEntityCoords(GetPlayerPed(-1), curLocation.x, curLocation.y, curLocation.z + 0.5)
+    TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_GUARD_STAND", 0, true)
+    Citizen.Wait(50)
+    ClearPedTasksImmediately(GetPlayerPed(-1))
+  end
 end)
 
 RegisterNetEvent('pepe-hospital:client:take:blood:closest')

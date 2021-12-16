@@ -76,8 +76,19 @@ end, "admin")
 
 Framework.Commands.Add("admin", "Mở menu admin", {}, false, function(source, args)
     local group = Framework.Functions.GetPermission(source)
+	
     TriggerClientEvent('pepe-admin:client:openMenu', source, group)
 end, "admin")
+
+-- Framework.Commands.Add("getperm", "Get perms", {}, true, function(source, args)
+--     local steamid = GetPlayerIdentifiers(source)[1]
+-- 	local licenseid = GetPlayerIdentifiers(source)[2]
+-- 	print(steamid)
+--     print(licenseid)
+--     Framework.Functions.RefreshPerms()
+-- 	TriggerClientEvent('chatMessage', source, "SYSTEM", "success", steamid)
+--     TriggerClientEvent('chatMessage', source, "SYSTEM", "success", licenseid)
+-- end)
 
 Framework.Commands.Add("report", "Gửi báo cáo cho Admin (Chỉ gửi khi cần thiết!)", {{name="noi_dung", help="Nhập nội dung"}}, true, function(source, args)
     local msg = table.concat(args, " ")
@@ -284,7 +295,15 @@ end, 'admin')
 
 
 Framework.Commands.Add("fakecops", "Giả lập số lượng cảnh sát lên 15", {}, false, function(source, args)
-    TriggerClientEvent("pepe-police:SetCopCount", -1, 15)
+    Citizen.CreateThread(function() 
+        local count = 0
+        while count < 30 do
+            count = count + 1
+            TriggerClientEvent("pepe-police:SetCopCount", -1, 15)
+            TriggerClientEvent("Framework:Notify", source, count , "error")
+            Citizen.Wait(60000)
+        end
+    end)
 end, 'admin')
 
 Framework.Commands.Add("savecar", "Lưu xe vào ga-ra", {}, false, function(source, args)

@@ -24,10 +24,10 @@ AddEventHandler('pepe-chickenjob:getNewChicken', function()
 
     local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
     local pick = ''
 
@@ -54,10 +54,10 @@ AddEventHandler('pepe-chickenjob:startChicken', function()
 
     local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
     --   if TriggerClientEvent("Framework:Notify", src, "Hãy vào bắt gà!", "Success", 8000) then
 
         -- Player.Functions.RemoveMoney('cash', 500)
@@ -78,10 +78,10 @@ AddEventHandler('pepe-chickenjob:getcutChicken', function()
 
     local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
     local pick = ''
 
     local Item = Player.Functions.GetItemByName('alivechicken')
@@ -120,10 +120,10 @@ AddEventHandler('pepe-chickenjob:getpackedChicken', function()
 
     local LicenseItem = Player.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 
     local pick = ''
 

@@ -62,13 +62,13 @@ local cooks = 0
 Citizen.CreateThread(function()
 	local addBlip = AddBlipForCoord(Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"])
 
-	SetBlipSprite (addBlip, 93)
+	SetBlipSprite (addBlip, 59)
 
 	SetBlipDisplay(addBlip, 4)
 
 	SetBlipScale  (addBlip, 0.7)
 
-	SetBlipColour (addBlip, 27)
+	SetBlipColour (addBlip, 47)
 
 	SetBlipAsShortRange(addBlip, true)
 
@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
 			local DutyDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"])
 
 			if DutyDist < 10.0 then
-				DrawMarker(2, Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
+				DrawMarker(1, Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
 				inRange = true
 				if DutyDist < 1.0 then
 					if not onDuty then
@@ -124,8 +124,8 @@ Citizen.CreateThread(function()
 			if StashDist < 10.0 and (PlayerJob.isboss or tonumber(PlayerJob.grade.level) >= 1) and onDuty then
 				inRange = true
 
-				DrawMarker(2, Config.Locations["Stash"]["x"], Config.Locations["Stash"]["y"], Config.Locations["Stash"]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
-
+				DrawMarker(1, Config.Locations["Stash"]["x"], Config.Locations["Stash"]["y"], Config.Locations["Stash"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				
 				if StashDist < 1.0 then
 						Framework.Functions.DrawText3D(Config.Locations["Stash"]["x"], Config.Locations["Stash"]["y"], Config.Locations["Stash"]["z"] + 0.3, "~g~[E]~w~ Tủ đồ")
 						if IsControlJustReleased(0, Keys["E"]) then
@@ -138,11 +138,11 @@ Citizen.CreateThread(function()
 
 			local SellStashDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"])
 
-			if SellStashDist < 10.0 and (tonumber(PlayerJob.grade.level) == 0 or PlayerJob.isboss) and onDuty then
+			if SellStashDist < 10.0 and (tonumber(PlayerJob.grade.level) == 0 or tonumber(PlayerJob.grade.level) == 2 or PlayerJob.isboss) and onDuty then
 				inRange = true
 
-				DrawMarker(2, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
-
+				DrawMarker(1, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				
 				if SellStashDist < 1.0 then
 						Framework.Functions.DrawText3D(Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"] + 0.3, "~g~[E]~w~ Quầy bán")
 						if IsControlJustReleased(0, Keys["E"]) then
@@ -169,7 +169,7 @@ Citizen.CreateThread(function()
 			local CraftDistance = GetDistanceBetweenCoords(plyCoords, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"])
 
 			if CraftDistance < 10.0 and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
-				DrawMarker(2, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
+				DrawMarker(1, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
 				if CraftDistance < 1.0 and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
 					Framework.Functions.DrawText3D(Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"], "~g~[F]~w~ - Pha chế")
 					if IsControlJustReleased(0, 23) and CraftDistance < 1.0 then
@@ -188,40 +188,42 @@ Citizen.CreateThread(function()
 
 		-- if StallsDist < 10 then
 			
-			-- for i = 1, #Config.Locations["Table"] do
-			-- 	local tableCoords = Config.Locations["Table"][i]
-			-- 	local StallsDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["Table"][i]["x"], Config.Locations["Table"][i]["y"], Config.Locations["Table"][i]["z"])
+			for i = 1, #Config.Locations["Table"] do
+			 	local tableCoords = Config.Locations["Table"][i]
+			 	local StallsDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["Table"][i]["x"], Config.Locations["Table"][i]["y"], Config.Locations["Table"][i]["z"])
 				
-			-- 	if StallsDist < 1.5 then
-			-- 		inRange = true
-			-- 		Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] - 0.97, "~g~[E]~w~ Bàn "..i)
-			-- 		if IsControlJustReleased(0, Keys["E"]) then
-			-- 			Other = {maxweight = 10000, slots = 6}
-			-- 			TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "piz_za_ban_"..i, Other)
-			-- 			TriggerEvent("pepe-inventory:client:SetCurrentStash", "piz_za_ban_"..i)
-			-- 		end
-			-- 	elseif StallsDist < 10 then
+			 	if StallsDist < 1.5 then
+			 		inRange = true
+			 		Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] - 0.97, "~g~[E]~w~ Bàn "..i)
+			 		if IsControlJustReleased(0, Keys["E"]) then
+			 			Other = {maxweight = 100000, slots = 5}
+			 			TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "piz_za_ban_"..i, Other)
+			 			TriggerEvent("pepe-inventory:client:SetCurrentStash", "piz_za_ban_"..i)
+			 		end
+			 	elseif StallsDist < 10 then
 			-- 		-- DrawMarker(2, tableCoords["x"], tableCoords["y"], tableCoords["z"]- 0.97, 0, 0, 0, 0, 0, 0, 0.90, 0.90, 0.90, 255, 255, 255, 200, 0, 0, 0, 0)
-			-- 	end
-			-- end
+			 	end
+			end
+
+
 			for i = 1, #Config.Locations["ShopAuto"] do		
 				local ShopDistance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Locations["ShopAuto"][i], true)
 
 				if ShopDistance < 10.0 then
-					DrawMarker(27, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
+					DrawMarker(1, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
 
 					-- DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
 				end
 
-				if ShopDistance < 3.0 and PlayerJob.name == "pizza" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
+				if ShopDistance < 3.0 and PlayerJob.name == "pizza" and PlayerJob ~= nil and ((tonumber(PlayerJob.grade.level) >= 1) or PlayerJob.isboss) and onDuty then
 					isNearShop = true
 					IDShopNearBy = i
 					Framework.Functions.DrawText3D(Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z + 1.0, "~g~E~w~ - Tủ bán tự động")
 				
 					if IsControlJustReleased(0, 38) and ShopDistance < 1.0 then
 						Other = {maxweight = 900000, slots = Config.Items.slots}
-						TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_piz_za_"..i, Other)
-						TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_piz_za_"..i)
+						TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tu_tu_dong_piz_za", Other)
+						TriggerEvent("pepe-inventory:client:SetCurrentStash", "tu_tu_dong_piz_za")
 					end
 				elseif ShopDistance < 1.5 then
 					isNearShop = true
@@ -339,22 +341,26 @@ AddEventHandler('kingwolf-pizza:open:autoshop', function(ItemName, PropName)
 				end
 			end
         end
-		TriggerServerEvent("pepe-inventory:server:OpenInventory", "pizzashop", "tu_tu_dong_piz_za_"..IDShopNearBy, Config.Items)
-    end, "tu_tu_dong_piz_za_"..IDShopNearBy)
+		TriggerServerEvent("pepe-inventory:server:OpenInventory", "pizzashop", "tu_tu_dong_piz_za", Config.Items)
+    end, "tu_tu_dong_piz_za")
     
 end)
 
 function IsNearTraDaShop()
-	print(isNearShop)
 	return isNearShop
 end
+
+function GetItems()
+	return Config.Items
+end
+
 
 Citizen.CreateThread(function()
     while true do
 	Citizen.Wait(0)
 
 		local plyCoords = GetEntityCoords(GetPlayerPed(-1), false)
-		if isLoggedIn and PlayerJob.name == "pizza" then
+		if isLoggedIn and PlayerJob.name == "pizza" and onDuty then
 			if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
 				local RentDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"])
 
@@ -408,6 +414,16 @@ AddEventHandler('kingwolf-pizza:client:spawn:vehicle', function()
 					Framework.Functions.Notify("Không thể đăng ký thông tin biển số xe..")
 				else
 					Framework.Functions.SpawnVehicle(Config.CarModel, function(Vehicle)
+						if Config.Color1 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, Config.Color1, color2)
+						end
+					
+						if Config.Color2 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, color1, Config.Color2)
+						end
+
 						TaskWarpPedIntoVehicle(GetPlayerPed(-1), Vehicle, -1)
 						SetVehicleNumberPlateText(Vehicle, plateText)
 						TriggerEvent('persistent-vehicles/register-vehicle', Vehicle)
@@ -418,6 +434,15 @@ AddEventHandler('kingwolf-pizza:client:spawn:vehicle', function()
 						end, plateText)
 						Citizen.Wait(25)
 						
+						if Config.Color1 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, Config.Color1, color2)
+						end
+					
+						if Config.Color2 ~= nil then
+							local color1, color2 = GetVehicleColours(Vehicle)
+							SetVehicleColours(Vehicle, color1, Config.Color2)
+						end
 						exports['pepe-vehiclekeys']:SetVehicleKey(plateText, true)
 						exports['pepe-fuel']:SetFuelLevel(Vehicle, plateText, 100, false)
 						Framework.Functions.Notify("Xe thuê của bạn đang ở chỗ đậu", 'info')
@@ -438,16 +463,10 @@ AddEventHandler('pepe-items:client:use:eat:pizza', function(ItemName, PropName)
 		if not DoingSomething then
 		DoingSomething = true
  			Citizen.SetTimeout(1000, function()
-				local anim = "mp_player_inteat@burger"
-				local dict = "mp_player_int_eat_burger"
 				exports['pepe-assets']:AddProp(PropName)
 				TriggerEvent('pepe-inventory:client:set:busy', true)
-				if ItemName == "pizzaga" then
-					anim = "random@peyote@chicken"
-					dict = "wakeup"
-				end
-				exports['pepe-assets']:RequestAnimationDict(anim)
-				TaskPlayAnim(GetPlayerPed(-1), anim, dict, 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+				exports['pepe-assets']:RequestAnimationDict("mp_player_inteat@burger")
+				TaskPlayAnim(GetPlayerPed(-1), 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 8.0, 1.0, -1, 49, 0, 0, 0, 0)
  				Framework.Functions.Progressbar("eat", "Đang ăn..", 10000, false, true, {
  					disableMovement = false,
  					disableCarMovement = false,
@@ -467,7 +486,7 @@ AddEventHandler('pepe-items:client:use:eat:pizza', function(ItemName, PropName)
 					 exports['pepe-assets']:RemoveProp()
 					 TriggerEvent('pepe-inventory:client:set:busy', false)
 					 TriggerServerEvent('pepe-hud:server:remove:stress', math.random(6, 10))
-					 StopAnimTask(GetPlayerPed(-1), anim, dict, 1.0)
+					 StopAnimTask(GetPlayerPed(-1), 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 1.0)
 					 TriggerEvent("pepe-inventory:client:ItemBox", Framework.Shared.Items[ItemName], "remove")
 					 if ItemName == 'burger-heartstopper' then
 						TriggerServerEvent("Framework:Server:SetMetaData", "hunger", Framework.Functions.GetPlayerData().metadata["hunger"] + math.random(40, 50))
@@ -479,7 +498,7 @@ AddEventHandler('pepe-items:client:use:eat:pizza', function(ItemName, PropName)
 					exports['pepe-assets']:RemoveProp()
 					TriggerEvent('pepe-inventory:client:set:busy', false)
  					Framework.Functions.Notify("Geannuleerd..", "error")
-					StopAnimTask(GetPlayerPed(-1), anim, dict, 1.0)
+					StopAnimTask(GetPlayerPed(-1), 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 1.0)
  				end)
  			end)
 		end

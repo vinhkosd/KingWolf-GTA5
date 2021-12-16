@@ -221,10 +221,18 @@ Framework.Commands.Add("keoxac", "Kéo xác id người chơi nhất định", {
 				TriggerClientEvent('pepe-hospital:client:bring:ped', source, TargetPlayer.PlayerData.source)
 				Citizen.Wait(500)
 				TriggerClientEvent("pepe-police:client:get:escorted", TargetPlayer.PlayerData.source, Player.PlayerData.source)
+				TriggerClientEvent("pepe-hospital:client:lagxac", TargetPlayer.PlayerData.source)
+				
 				TriggerClientEvent('Framework:Notify', TargetPlayer.PlayerData.source, "Bạn được bác sĩ tìm thấy xác", 'error')
 			end
 		end
-		
+	end
+end)
+
+Framework.Commands.Add("lagxac", "Lag xác", {}, true, function(source, args)
+    local Player = Framework.Functions.GetPlayer(source)
+	if Player ~= nil then
+		TriggerClientEvent("pepe-hospital:client:lagxac", Player.PlayerData.source)
 	end
 end)
 

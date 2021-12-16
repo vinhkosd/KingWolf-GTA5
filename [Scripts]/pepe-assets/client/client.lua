@@ -20,8 +20,8 @@ end)
 -- Pvp Enable
 
 function SetDiscordButtons()
-  SetDiscordRichPresenceAction(0, 'Connecten', 'fivem://connect/game.eclipserp.nl')
-  SetDiscordRichPresenceAction(1, 'Discord', 'https://discord.gg/N4vhate')
+  SetDiscordRichPresenceAction(0, 'Vào server', 'fivem://connect/gx7ojo')
+  SetDiscordRichPresenceAction(1, 'Link Discord', 'https://discord.gg/DHntjapreK')
 end
 
 RegisterNetEvent('pepe-assets:client:seat:shuffle')

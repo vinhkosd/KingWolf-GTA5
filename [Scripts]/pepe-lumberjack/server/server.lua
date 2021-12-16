@@ -11,10 +11,10 @@ AddEventHandler('wood:getItem', function()
 
 	local LicenseItem = xPlayer.Functions.GetItemByName('farm-license')
 	
-	if LicenseItem == nil then
-		TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
-        return
-	end
+	-- if LicenseItem == nil then
+	-- 	TriggerClientEvent('Framework:Notify', source, 'LỖI: Vui lòng đăng ký chứng chỉ nghề trước khi đi farm tại các khu vực này!', "error")
+    --     return
+	-- end
 	
 	if Item == nil then
 		TriggerClientEvent('Framework:Notify', source, 'Bạn không có rìu chặt gỗ, hãy ra cửa hàng dụng cụ để mua rìu chặt gỗ!', "error")

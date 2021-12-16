@@ -31,16 +31,20 @@ var CurrentProx = 0;
                 $(".money-cash").fadeOut(750);
             }, 3500)
         } 
+
+        if(data.type == "bank") {
+            QBHud.ShowBank(data)
+        }
     };
 
     QBHud.ShowBank = function(data) {
         if(data.type == "bank") {
             $(".money-bank").fadeIn(150);
-            $("#bank").html(data.cash);
+            $("#bank").html(data.bank);
             setTimeout(function() {
                 $(".money-bank").fadeOut(750);
             }, 3500)
-        } 
+        }
     };
 
     QBHud.ToggleSeatbelt = function(data) {
@@ -123,6 +127,7 @@ var CurrentProx = 0;
             $('.vida').css("stroke-opacity", "1.0");
         } else {
             $('.vida').css("stroke", "#498949");
+            $('.vida').css("stroke-opacity", "0.5");
         }
         
         // Armor
@@ -143,6 +148,7 @@ var CurrentProx = 0;
             $('.amr').css("stroke-opacity", "1.0");
         } else {
             $('.amr').css("stroke", "#1565ac");
+            $('.amr').css("stroke-opacity", "0.5");
         }
 
         // Hunger
@@ -163,6 +169,7 @@ var CurrentProx = 0;
             $('.fome').css("stroke-opacity", "1.0");
         } else {
             $('.fome').css("stroke", "#e67013");
+			$('.fome').css("stroke-opacity", "0.5");
         }
 
         // Thirst
@@ -183,6 +190,7 @@ var CurrentProx = 0;
             $('.cede').css("stroke-opacity", "1.0");
         } else {
             $('.cede').css("stroke", "#1999d1");
+            $('.cede').css("stroke-opacity", "0.5");
         }
 
         // Stress
@@ -319,6 +327,30 @@ var CurrentProx = 0;
                     $(".plus").fadeOut(750, function() {
                         $(".plus").remove();
                         $(".money-bank").fadeOut(750);
+                    });
+                }, 3500)
+            }
+        }
+
+        if(data.type == "cash") {
+            $(".money-cash").css("display", "block");
+            $("#cash").html(data.cash);
+            if (data.minus) {
+                $(".money-cash").append('<p class="moneyupdate minus">-<span id="cash-symbol">&dollar;&nbsp;</span><span><span id="minus-changeamount">' + data.amount + '</span></span></p>')
+                $(".minus").css("display", "block");
+                setTimeout(function() {
+                    $(".minus").fadeOut(750, function() {
+                        $(".minus").remove();
+                        $(".money-cash").fadeOut(750);
+                    });
+                }, 3500)
+            } else {
+                $(".money-cash").append('<p class="moneyupdate plus">+<span id="cash-symbol">&dollar;&nbsp;</span><span><span id="plus-changeamount">' + data.amount + '</span></span></p>')
+                $(".plus").css("display", "block");
+                setTimeout(function() {
+                    $(".plus").fadeOut(750, function() {
+                        $(".plus").remove();
+                        $(".money-cash").fadeOut(750);
                     });
                 }, 3500)
             }

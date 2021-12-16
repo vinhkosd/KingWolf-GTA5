@@ -203,12 +203,14 @@ end
 function teleport(coords)
 	local xrand = math.random(-1000,1000) / 1000
 	local yrand = math.random(-1000,1000) / 1000
-	SetEntityCoords(PlayerPedId(),coords.x+xrand,coords.y+yrand,coords.z+1)
+	SetEntityCoords(PlayerPedId(),coords.	x+xrand,coords.y+yrand,coords.z+1)
 end
 
 incircle = false
 
 Citizen.CreateThread(function()
+	local shown = false
+	local inRange = false
     while true do
         Citizen.Wait(0)
         local pos = GetEntityCoords(GetPlayerPed(-1), true)
@@ -216,11 +218,20 @@ Citizen.CreateThread(function()
             if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 15.0)then
                 DrawMarker(1, v.x, v.y, v.z - 0.97, 0, 0, 0, 0, 0, 0, 0.90, 0.90, 0.90, 255, 0, 0, 200, 0, 0, 0, 0)
                 if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 1.0)then
+					inRange = true
                     if (incircle == false) then
 						if v.typeM == "create" then
-							DisplayHelpText("Ấn [E] để tạo phòng")
+							if inRange and not shown then
+								shown = true
+								exports['okokTextUI']:Open('Ấn [E] để tạo phòng', 'darkblue', 'left') 
+							end
+							-- DisplayHelpText("Ấn [E] để tạo phòng")
 						else
-							DisplayHelpText("Ấn [E] để tham gia phòng")
+							if inRange and not shown then
+								shown = true
+								exports['okokTextUI']:Open('Ấn [E] để tham gia phòng', 'darkblue', 'left') 
+							end
+							-- DisplayHelpText("Ấn [E] để tham gia phòng")
 						end
                     end
                     incircle = true
@@ -236,11 +247,19 @@ Citizen.CreateThread(function()
                 end
             end
 		end
+
+		if not inRange and shown then
+        	shown = false
+        	exports['okokTextUI']:Close()
+        end
+		inRange = false
     end
 end)
 
 local incircleRed = false
 Citizen.CreateThread(function()
+	local inRange = false
+	local shown = false
     while true do
         Citizen.Wait(0)
         local pos = GetEntityCoords(GetPlayerPed(-1), true)
@@ -248,9 +267,14 @@ Citizen.CreateThread(function()
             if(Vdist(pos.x, pos.y, pos.z, mapRedOutCoords.x, mapRedOutCoords.y, mapRedOutCoords.z) < 5.0)then
                 DrawMarker(3, mapRedOutCoords.x, mapRedOutCoords.y, mapRedOutCoords.z , 0, 0, 0, 0, 0, 0, 1.0001, 1.0001, 1.5001, 1555, 0, 0,165, 0, 0, 0,0)
                 if(Vdist(pos.x, pos.y, pos.z, mapRedOutCoords.x, mapRedOutCoords.y, mapRedOutCoords.z) < 1.0)then
+					inRange = true
                     if (incircleRed == false) then
 						-- if v.typeM == "create" then
-							DisplayHelpText("Ấn [E] để thoát game")
+							-- DisplayHelpText("Ấn [E] để thoát game")
+							if inRange and not shown then
+								shown = true
+								exports['okokTextUI']:Open('Ấn [E] để thoát game', 'darkblue', 'left') 
+							end
 						-- else
 							-- DisplayHelpText("Press sur ~INPUT_CONTEXT~ to join a Lobby.")
 						-- end
@@ -264,11 +288,18 @@ Citizen.CreateThread(function()
                 end
             end
 		-- end
+		if not inRange and shown then
+        	shown = false
+        	exports['okokTextUI']:Close()
+        end
+		inRange = false
     end
 end)
 
 local incircleBlue = false
 Citizen.CreateThread(function()
+	local inRange = false
+	local shown = false
     while true do
         Citizen.Wait(0)
         local pos = GetEntityCoords(GetPlayerPed(-1), true)
@@ -276,10 +307,14 @@ Citizen.CreateThread(function()
             if(Vdist(pos.x, pos.y, pos.z, mapBlueOutCoords.x, mapBlueOutCoords.y, mapBlueOutCoords.z) < 5.0)then
                 DrawMarker(3, mapBlueOutCoords.x, mapBlueOutCoords.y, mapBlueOutCoords.z , 0, 0, 0, 0, 0, 0, 1.0001, 1.0001, 1.5001, 1555, 0, 0,165, 0, 0, 0,0)
                 if(Vdist(pos.x, pos.y, pos.z, mapBlueOutCoords.x, mapBlueOutCoords.y, mapBlueOutCoords.z) < 1.0)then
+					inRange = true
                     if (incircleRed == false) then
 						-- if v.typeM == "create" then
-							DisplayHelpText("Ấn [E] để thoát game")
-							
+							-- DisplayHelpText("Ấn [E] để thoát game")
+							if inRange and not shown then
+								shown = true
+								exports['okokTextUI']:Open('Ấn [E] để thoát game', 'darkblue', 'left') 
+							end
 						-- else
 							-- DisplayHelpText("Press sur ~INPUT_CONTEXT~ to join a Lobby.")
 						-- end
@@ -293,6 +328,11 @@ Citizen.CreateThread(function()
                 end
             end
 		-- end
+		if not inRange and shown then
+        	shown = false
+        	exports['okokTextUI']:Close()
+        end
+		inRange = false
     end
 end)
 
@@ -645,7 +685,7 @@ function startGame(color,idx,manche)
 
 	if not IsModelValid(GunName) then
 		DoScreenFadeIn(1000)
-		TriggerEvent("Framework:Notify", "Lỗi hệ thống, không thề cập nhật dữ liệu vũ khí!" , "success")
+		-- TriggerEvent("Framework:Notify", "Lỗi hệ thống, không thể cập nhật dữ liệu vũ khí!" , "error")
 	end
 
 	GiveWeaponToPed(PlayerPedId(),GetHashKey(GunName),250,false,true)

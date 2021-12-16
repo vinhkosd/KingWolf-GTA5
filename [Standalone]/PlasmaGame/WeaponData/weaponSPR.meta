@@ -135,7 +135,7 @@
       <Infos>
 	    <Item type="CWeaponInfo">
           <Name>WEAPON_PLASMAP</Name>
-          <Model>W_PI_PLASMAPISTOL</Model>
+          <Model>W_PI_PISTOL50</Model>
           <Audio>AUDIO_ITEM_RAYCARBINE</Audio>
           <Slot>SLOT_PLASMA</Slot>
           <DamageType>ELECTRIC</DamageType>

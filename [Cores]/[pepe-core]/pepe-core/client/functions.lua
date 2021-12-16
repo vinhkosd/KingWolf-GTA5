@@ -81,7 +81,7 @@ Framework.Functions.Notify = function(text, textype, length)
     local length = length ~= nil and length or 5000
 
 	-- exports.pNotify:SendNotification({text = "<b>Hệ thống</b></br>" ..text, timeout = length, sounds = { volume = 0.0 }})
-	exports['okokNotify']:Alert("THÔNG BÁO", text, length, textype)
+	exports['okokNotify']:Alert("THÔNG BÁO", text, length, ttype)
 end
 
 Framework.Functions.TriggerCallback = function(name, cb, ...)

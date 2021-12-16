@@ -29,6 +29,7 @@ files {
 	'html/css/gta-ui.ttf',
 	'html/js/*.js',
 	'html/css/pdown.ttf',
+	'html/css/Pricedown.ttf',
 	'html/css/*.css',
 	'html/css/*.ttf',
 	'html/css/*.woff',

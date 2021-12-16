@@ -8,7 +8,7 @@ TriggerEvent('Framework:GetObject', function(obj) Framework= obj end)
 Framework.Commands.Add('cash', 'Check Cash Balance', {}, false, function(source, args)
     local Player = Framework.Functions.GetPlayer(source)
     local cashamount = Player.PlayerData.money.cash
-    TriggerClientEvent('Framework:Notify', source, 'Bạn có $'..cashamount..' tiền mặt','primary', 3700)
+    TriggerClientEvent('Framework:Notify', source, 'Bạn có $'..cashamount..' tiền mặt', 'info', 3700)
 	TriggerClientEvent('hud:client:ShowAccounts', source, 'cash', cashamount)
 
 end)
@@ -16,7 +16,7 @@ end)
 Framework.Commands.Add('bank', 'Check Bank Balance', {}, false, function(source, args)
     local Player = Framework.Functions.GetPlayer(source)
     local bankamount = Player.PlayerData.money.bank
-    TriggerClientEvent('Framework:Notify', source, 'Bạn có $'..bankamount..' ngân hàng','primary', 3700)
+    TriggerClientEvent('Framework:Notify', source, 'Bạn có $'..bankamount..' ngân hàng', 'info', 3700)
 	TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
 end)
  

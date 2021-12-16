@@ -1,0 +1,446 @@
+$(document).on('keydown', function() {
+    switch(event.keyCode) {
+        case 27: // ESC
+            //Inventory.Close();
+            break;
+    }
+});
+
+
+
+var moneyTimeout = null;
+var CurrentProx = 0;
+
+(() => {
+    QBHud = {};
+
+    QBHud.Open = function(data) {
+        $(".money-cash").css("display", "block");
+        $(".money-bank").css("display", "block");
+        $("#cash").html(data.cash);
+        $("#bank").html(data.bank);
+    };
+
+    QBHud.Close = function() {};
+
+    QBHud.Show = function(data) {
+        if(data.type == "cash") {
+            $(".money-cash").fadeIn(150);
+            $("#cash").html(data.cash);
+            setTimeout(function() {
+                $(".money-cash").fadeOut(750);
+            }, 3500)
+        } 
+    };
+
+    QBHud.ShowBank = function(data) {
+        if(data.type == "bank") {
+            $(".money-bank").fadeIn(150);
+            $("#bank").html(data.cash);
+            setTimeout(function() {
+                $(".money-bank").fadeOut(750);
+            }, 3500)
+        } 
+    };
+
+    QBHud.ToggleSeatbelt = function(data) {
+        if (data.seatbelt) {
+            $(".car-seatbelt-info img").fadeOut(750);
+        } else {
+            $(".car-seatbelt-info img").fadeIn(750);
+        }
+    };
+
+    QBHud.ToggleDrunkMode = function(data) {
+        if (data.DrunkMode) {
+            $('.drunk').fadeIn(750);
+        } else {
+            $('.drunk').fadeOut(750);
+        }
+    };
+
+    QBHud.ToggleWeaponMode = function(data) {
+        if (data.WeaponMode) {
+            $('.hweapon').fadeIn(750);
+        } else {
+            $('.hweapon').fadeOut(750);
+        }
+    };
+
+    QBHud.ToggleDevMode = function(data) {
+        if (data.DevMode) {
+            $('.hdev').fadeIn(750);
+        } else {
+            $('.hdev').fadeOut(750);
+        }
+    };
+
+    QBHud.ToggleBugMode = function(data) {
+        if (data.BugMode) {
+            $('.hbug').fadeIn(750);
+        } else {
+            $('.hbug').fadeOut(750); 
+        }
+    };
+
+    QBHud.CarHud = function(data) {
+        if (data.show) {
+            $(".ui-car-container").fadeIn();
+            $(".hnitrous").fadeIn(750);
+        } else {
+            $(".ui-car-container").fadeOut();
+            $('.hnitrous').fadeOut(750);
+
+        }
+    };
+
+    QBHud.UpdateHud = function(data) {
+        var Show = "block";
+        if (data.show) {
+            Show = "none";
+            $(".ui-container").css("display", Show);
+            return;
+        }
+        $(".ui-container").css("display", Show);
+
+        // HP Bar
+        Progress(data.varHealth - 100, ".hp");
+        if (data.setHealOnOff) {
+            $('.hvida').hide();
+
+        } else {
+            $('.hvida').show();
+
+        }
+        if (data.setHealOnOff && data.varHealth <= 195) {
+            $('.hvida').show();
+        }
+        if (data.setHealOnOff && data.varHealth >= 196) {
+            $('.hvida').hide();
+        }
+        if (data.varHealth <= 125) {
+            $('.vida').css("stroke", "red");
+            $('.vida').css("stroke-opacity", "1.0");
+        } else {
+            $('.vida').css("stroke", "#498949");
+        }
+        
+        // Armor
+        Progress(data.varArmor, ".armor");
+        if (data.setArmorOnOff) {
+            $('.harmor').hide();
+        } else {
+            $('.harmor').show();
+        }
+        if (data.setArmorOnOff && data.varArmor <= 95) {
+            $('.harmor').hide();
+        }
+        if (data.setArmorOnOff && data.varArmor >= 96) {
+            $('.harmor').show();
+        }
+        if (data.varArmor <= 25) {
+            $('.amr').css("stroke", "#7894ad");
+            $('.amr').css("stroke-opacity", "1.0");
+        } else {
+            $('.amr').css("stroke", "#1565ac");
+        }
+
+        // Hunger
+        Progress(data.varHunger, ".hunger");
+        if (data.setFoodOnOff) {
+            $('.hhunger').hide();
+        } else {
+            $('.hhunger').show();
+        }
+        if (data.setFoodOnOff && data.varHunger <= 49) {
+            $('.hhunger').show();
+        }
+        if (data.setFoodOnOff && data.varHunger >= 50) {
+            $('.hhunger').hide();
+        }
+        if (data.varHunger <= 25) {
+            $('.fome').css("stroke", "red");
+            $('.fome').css("stroke-opacity", "1.0");
+        } else {
+            $('.fome').css("stroke", "#e67013");
+			$('.fome').css("stroke-opacity", "1.0");
+        }
+
+        // Thirst
+        Progress(data.varThirst, ".thirst");
+        if (data.setWateronOff) {
+            $('.hthirst').hide();
+        } else {
+            $('.hthirst').show();
+        }
+        if (data.setWateronOff && data.varThirst <= 49) {
+            $('.hthirst').show();
+        }
+        if (data.setWateronOff && data.varThirst >= 50) {
+            $('.hthirst').hide();
+        }
+        if (data.varThirst <= 25) {
+            $('.cede').css("stroke", "red");
+            $('.cede').css("stroke-opacity", "1.0");
+        } else {
+            $('.cede').css("stroke", "#1999d1");
+        }
+
+        // Stress
+        Progress(data.varStress, ".stress");
+        if (data.setStressOnOff) {
+            $('.hstress').hide();
+        } else {
+            $('.hstress').show();
+        }
+        if (data.setStressOnOff && data.varStress >= 5) {
+            $('.hstress').show();
+        }
+        if (data.setStressOnOff && data.varStress <= 4) {
+            $('.hstress').hide();
+        }
+
+        // Oxy
+        Progress(data.varOxy, ".oxy");
+        if (data.setOxyOnOff) {
+            $('.hoxy').hide();
+        } else {
+            $('.hoxy').show();
+        }
+        if (data.setOxyOnOff && data.varOxy <= 90) {
+            $('.hoxy').show();
+        }
+        if (data.setOxyOnOff && data.varOxy >= 100) {
+            $('.hoxy').hide();
+        }
+        if (data.varOxy <= 25) {
+            $('.oxy').css("stroke", "red");
+        } else {
+            $('.oxy').css("stroke", "#495A74");
+        }
+
+        // Fuel
+        setProgressFuel(data.fuel.toFixed(0), ".progress-fuel");
+        if (data.fuel.toFixed(0) <= 10) {
+            $('.progress-fuel').css("stroke", "#d31204");
+        }
+        if (data.fuel.toFixed(0) >= 11) {
+            $('.progress-fuel').css("stroke", "#FFF");
+        }
+
+        // Speedometer
+        setProgressSpeed(data.speed, ".progress-speed");
+        if (data.speed <= 99) {
+            $('.progress-speed').css("stroke", "#FFF");
+        }
+        if (data.speed >= 100) {
+            $('.progress-speed').css("stroke", "#d31204");
+        }
+
+        // Nos
+        Progress(data.nivel, ".nitrous");
+        if (data.activo) {
+        $(".nitrous").css("stroke", "#fff");
+        } else {
+        $(".nitrous").css("stroke", "#3467d4");
+        } 
+
+        // Dev
+        if (data.BugMode) {
+            $('.hbug').hide();
+        } 
+        if (data.DevMode) {
+            $('.hdev').hide();
+        } 
+        
+        // Weapon
+        if (data.WeaponMode) {
+            $('.hweapon').hide();
+        } 
+
+        // Drunk
+        if (data.DrunkMode) {
+            $('.drunk').hide();
+        } 
+
+
+        //  Mic
+        Progress(data.varMic, ".mic");
+        if (data.varMic && data.radio) {
+            $(".mic").css({"background-color": "#3467d4"}); 
+        } else if (data.varMic) {
+            $(".mic").css({"background-color": "white"}); 
+        } else {
+            $(".mic").css({"background-color": "rgb(85, 85, 85)"}); 
+        }
+    };
+
+    QBHud.UpdateProximity = function(data) {
+        if (data.prox == 1) {
+            $("[data-voicetype='1']").fadeIn(150);
+            $("[data-voicetype='2']").fadeOut(150);
+            $("[data-voicetype='3']").fadeOut(150);
+        } else if (data.prox == 2) {
+            $("[data-voicetype='1']").fadeIn(150);
+            $("[data-voicetype='2']").fadeIn(150);
+            $("[data-voicetype='3']").fadeOut(150);
+        } else if (data.prox == 3) {
+            $("[data-voicetype='1']").fadeIn(150);
+            $("[data-voicetype='2']").fadeIn(150);
+            $("[data-voicetype='3']").fadeIn(150);
+        }
+        CurrentProx = data.prox;
+    }
+
+    QBHud.SetTalkingState = function(data) {
+        if (!data.IsTalking) {
+            $(".voice-block").animate({"background-color": "rgb(255, 255, 255)"}, 150);
+        } else {
+            $(".voice-block").animate({"background-color": "#fc4e03"}, 150);
+        }
+    }
+
+    QBHud.Update = function(data) {
+        if(data.type == "bank") {
+            $(".money-bank").css("display", "block");
+            $("#bank").html(data.bank);
+            if (data.minus) {
+                $(".money-bank").append('<p class="bankupdate minus">-<span id="cash-symbol">&dollar;&nbsp;</span><span><span id="minus-changeamount">' + data.amount + '</span></span></p>')
+                $(".minus").css("display", "block");
+                setTimeout(function() {
+                    $(".minus").fadeOut(750, function() {
+                        $(".minus").remove();
+                        $(".money-bank").fadeOut(750);
+                    });
+                }, 3500)
+            } else {
+                $(".money-bank").append('<p class="bankupdate plus">+<span id="cash-symbol">&dollar;&nbsp;</span><span><span id="plus-changeamount">' + data.amount + '</span></span></p>')
+                $(".plus").css("display", "block");
+                setTimeout(function() {
+                    $(".plus").fadeOut(750, function() {
+                        $(".plus").remove();
+                        $(".money-bank").fadeOut(750);
+                    });
+                }, 3500)
+            }
+        }
+
+        if(data.type == "cash") {
+            $(".money-cash").css("display", "block");
+            $("#cash").html(data.cash);
+            if (data.minus) {
+                $(".money-cash").append('<p class="moneyupdate minus">-<span id="cash-symbol">&dollar;&nbsp;</span><span><span id="minus-changeamount">' + data.amount + '</span></span></p>')
+                $(".minus").css("display", "block");
+                setTimeout(function() {
+                    $(".minus").fadeOut(750, function() {
+                        $(".minus").remove();
+                        $(".money-cash").fadeOut(750);
+                    });
+                }, 3500)
+            } else {
+                $(".money-cash").append('<p class="moneyupdate plus">+<span id="cash-symbol">&dollar;&nbsp;</span><span><span id="plus-changeamount">' + data.amount + '</span></span></p>')
+                $(".plus").css("display", "block");
+                setTimeout(function() {
+                    $(".plus").fadeOut(750, function() {
+                        $(".plus").remove();
+                        $(".money-cash").fadeOut(750);
+                    });
+                }, 3500)
+            }
+        }
+    };
+    
+
+    function Progress(percent, element) {
+        var circle = document.querySelector(element);
+        var radius = circle.r.baseVal.value;
+        var circumference = radius * 2 * Math.PI;
+      
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = `${circumference}`;
+      
+        const offset = circumference - ((-percent * 100) / 100 / 100) * circumference;
+        circle.style.strokeDashoffset = -offset;
+    }
+
+    function setProgressSpeed(value, element){
+        var circle = document.querySelector(element);
+        var radius = circle.r.baseVal.value;
+        var circumference = radius * 2 * Math.PI;
+        var html = $(element).parent().parent().find('span');
+        var percent = value*100/450;
+    
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = `${circumference}`;
+    
+        const offset = circumference - ((-percent*73)/100) / 100 * circumference;
+        circle.style.strokeDashoffset = -offset;
+    
+        html.text(value);
+      }
+      
+      function setProgressFuel(percent, element) {
+        var circle = document.querySelector(element);
+        var radius = circle.r.baseVal.value;
+        var circumference = radius * 2 * Math.PI;
+        var html = $(element).parent().parent().find("span");
+      
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = `${circumference}`;
+      
+        const offset = circumference - ((-percent * 73) / 100 / 100) * circumference;
+        circle.style.strokeDashoffset = -offset;
+      
+        html.text(Math.round(percent));
+      }
+
+    window.onload = function(e) {
+        window.addEventListener('message', function(event) {
+            switch(event.data.action) {
+                case "open":
+                    QBHud.Open(event.data);
+                    break;
+                case "close":
+                    QBHud.Close();
+                    break;
+                case "update":
+                    QBHud.Update(event.data);
+                    break;
+                case "show":
+                    QBHud.Show(event.data);
+                    break;
+                case "hudtick":
+                    QBHud.UpdateHud(event.data);
+                    break;
+                case "car":
+                    QBHud.CarHud(event.data);
+                    break;
+                case "seatbelt":
+                    QBHud.ToggleSeatbelt(event.data);
+                    break;
+                case "WeaponMode":
+                    QBHud.ToggleWeaponMode(event.data);
+                    break;
+                case "DrunkMode":
+                    QBHud.ToggleDrunkMode(event.data);
+                    break;
+                case "DevMode":
+                    QBHud.ToggleDevMode(event.data);
+                    break; 
+                case "BugMode":
+                    QBHud.ToggleBugMode(event.data);
+                    break;
+                case "nitrous":
+                    QBHud.UpdateNitrous(event.data);
+                    break;
+                case "UpdateProximity":
+                    QBHud.UpdateProximity(event.data);
+                    break;
+                case "talking":
+                    QBHud.SetTalkingState(event.data);
+                    break;
+            }
+        })
+    }
+
+})();

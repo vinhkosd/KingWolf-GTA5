@@ -1,4 +1,6 @@
+Framework = nil
 
+TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
 local timeOutDeleteGame = 3 * 60 -- 5 * 1 minute
 
@@ -42,6 +44,7 @@ end)
 RegisterServerEvent('PaintBall:JoinBlue')
 AddEventHandler('PaintBall:JoinBlue', function(idx)
 	local player = source
+	local xPlayer = Framework.Functions.GetPlayer(player)
 	print("player : "..tostring(player).." ask to join: "..tostring(idx))
 	local nbPlayer = currentPaintBallSession[idx].EquipA
 	local alreadyIn = false
@@ -62,24 +65,39 @@ AddEventHandler('PaintBall:JoinBlue', function(idx)
 	
 	
 	if not alreadyIn then
+		
+		if xPlayer ~= nil then
+			if not xPlayer.Functions.RemoveMoney("cash", 1000, "Join-PlasmaGame") then
+				TriggerClientEvent("Framework:Notify", player, "Không thể tham gia, bạn không đủ tiền mặt" , "error")
+				return
+			else
+				currentPaintBallSession[idx].totalMoney = currentPaintBallSession[idx].totalMoney and currentPaintBallSession[idx].totalMoney or 0
+				currentPaintBallSession[idx].totalMoney = currentPaintBallSession[idx].totalMoney + 1000
+			end
+		else
+			return
+		end
+
 		if #nbPlayer == nil then
 			currentPaintBallSession[idx].EquipA[1] = player
+			TriggerClientEvent("Framework:Notify", player, "Bạn đã tham gia đội XANH, bạn bị mất phí 1000$!" , "info")
 		else
 			if #nbPlayer < tonumber(currentPaintBallSession[idx].nbpersequip) then
 				currentPaintBallSession[idx].EquipA[#nbPlayer+1] = player
-				TriggerEvent("Framework:Notify", "Bạn đã tham gia đội XANH" , "info")
+				TriggerClientEvent("Framework:Notify", player, "Bạn đã tham gia đội XANH, bạn bị mất phí 1000$!" , "info")
 			else
-				TriggerEvent("Framework:Notify", "Đội đã đầy" , "error")
+				TriggerClientEvent("Framework:Notify", player, "Đội đã đầy" , "error")
 			end
 		end
 	else
-		TriggerEvent("Framework:Notify", "Bạn không thể tham gia đội" , "error")
+		TriggerClientEvent("Framework:Notify", player, "Bạn không thể tham gia đội" , "error")
 	end
 end)
 
 RegisterServerEvent('PaintBall:JoinRed')
 AddEventHandler('PaintBall:JoinRed', function(idx)
 	local player = source
+	local xPlayer = Framework.Functions.GetPlayer(player)
 	print("player : "..tostring(player).." ask to join: "..tostring(idx))
 	local nbPlayer = currentPaintBallSession[idx].EquipB
 	local alreadyIn = false
@@ -99,18 +117,31 @@ AddEventHandler('PaintBall:JoinRed', function(idx)
 	end
 	
 	if not alreadyIn then
+		if xPlayer ~= nil then
+			if not xPlayer.Functions.RemoveMoney("cash", 1000, "Join-PlasmaGame") then
+				TriggerClientEvent("Framework:Notify", player, "Không thể tham gia, bạn không đủ tiền mặt" , "error")
+				return
+			else
+				currentPaintBallSession[idx].totalMoney = currentPaintBallSession[idx].totalMoney and currentPaintBallSession[idx].totalMoney or 0
+				currentPaintBallSession[idx].totalMoney = currentPaintBallSession[idx].totalMoney + 1000
+			end
+		else
+			return
+		end
+
 		if #nbPlayer == nil then
 			currentPaintBallSession[idx].EquipB[1] = player
+			TriggerClientEvent("Framework:Notify", player, "Bạn đã tham gia đội ĐỎ, bạn bị mất phí 1000$!" , "info")
 		else
 			if #nbPlayer < tonumber(currentPaintBallSession[idx].nbpersequip) then
 				currentPaintBallSession[idx].EquipB[#nbPlayer+1] = player
-				TriggerEvent("Framework:Notify", "Bạn đã tham gia đội ĐỎ" , "info")
+				TriggerClientEvent("Framework:Notify", player, "Bạn đã tham gia đội ĐỎ, bạn bị mất phí 1000$!" , "info")
 			else
-				TriggerEvent("Framework:Notify", "Đội đã đầy" , "error")
+				TriggerClientEvent("Framework:Notify", player, "Đội đã đầy" , "error")
 			end
 		end
 	else
-		TriggerEvent("Framework:Notify", "Bạn không thể tham gia đội" , "error")
+		TriggerClientEvent("Framework:Notify", player, "Bạn không thể tham gia đội" , "error")
 	end
 end)
 
@@ -259,12 +290,48 @@ function FinManche(idx)
 		end
 		
 		for k,v in pairs(currentPaintBallSession[idx].EquipA) do
+			--EquipA = Doi xanh, EquipB = Doi do
 			TriggerClientEvent("PaintBall:GoToFinMatchMSG",v,winner)
+			local bluePlayer = Framework.Functions.GetPlayer(v)
+			if winner == "blue" then--doi xanh -> lay tien thuong chia cho moi nguoi 1 phan
+				local totalPlayer = #currentPaintBallSession[idx].EquipA
+				local moneyReward = math.floor((currentPaintBallSession[idx].totalMoney / totalPlayer) * 0.9)
+				
+				if bluePlayer ~= nil then
+					bluePlayer.Functions.AddMoney("cash", moneyReward, "PlasmaGame-Reward")
+				end
+			end
+
+			if winner == "tie" then
+				local moneyReward = 900
+				
+				if bluePlayer ~= nil then
+					bluePlayer.Functions.AddMoney("cash", moneyReward, "PlasmaGame-Reward")
+				end
+			end
+
 			SetPlayerRoutingBucket(v,0)
 		end
 		
 		for k,v in pairs(currentPaintBallSession[idx].EquipB) do
 			TriggerClientEvent("PaintBall:GoToFinMatchMSG",v,winner)
+			local redPlayer = Framework.Functions.GetPlayer(v)
+			if winner == "red" then--doi do -> lay tien thuong chia cho moi nguoi 1 phan
+				local totalPlayer = #currentPaintBallSession[idx].EquipB
+				local moneyReward = math.floor((currentPaintBallSession[idx].totalMoney / totalPlayer) * 0.9)
+
+				if redPlayer ~= nil then
+					redPlayer.Functions.AddMoney("cash", moneyReward, "PlasmaGame-Reward")
+				end
+			end
+
+			if winner == "tie" then
+				local moneyReward = 900
+				
+				if redPlayer ~= nil then
+					redPlayer.Functions.AddMoney("cash", moneyReward, "PlasmaGame-Reward")
+				end
+			end
 			SetPlayerRoutingBucket(v,0)
 		end
 		

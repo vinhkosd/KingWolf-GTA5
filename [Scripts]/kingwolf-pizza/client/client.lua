@@ -8,6 +8,7 @@ local isNearShop = false
 local IDShopNearBy = 0
 local PlayerJob = {}
 
+
 Citizen.CreateThread(function()
 
     while Framework == nil do

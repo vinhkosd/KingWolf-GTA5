@@ -67,13 +67,13 @@ AddEventHandler('PaintBall:JoinBlue', function(idx)
 		else
 			if #nbPlayer < tonumber(currentPaintBallSession[idx].nbpersequip) then
 				currentPaintBallSession[idx].EquipA[#nbPlayer+1] = player
-				TriggerClientEvent("PaintBall:Notif",player,"You've joined blue team","info")
+				TriggerEvent("Framework:Notify", "Bạn đã tham gia đội XANH" , "info")
 			else
-				TriggerClientEvent("PaintBall:Notif",player,"Team is full","error")
+				TriggerEvent("Framework:Notify", "Đội đã đầy" , "error")
 			end
 		end
 	else
-		TriggerClientEvent("PaintBall:Notif",player,"You're already in this team","error")
+		TriggerEvent("Framework:Notify", "Bạn không thể tham gia đội" , "error")
 	end
 end)
 
@@ -104,13 +104,13 @@ AddEventHandler('PaintBall:JoinRed', function(idx)
 		else
 			if #nbPlayer < tonumber(currentPaintBallSession[idx].nbpersequip) then
 				currentPaintBallSession[idx].EquipB[#nbPlayer+1] = player
-				TriggerClientEvent("PaintBall:Notif",player,"You've joined red team","info")
+				TriggerEvent("Framework:Notify", "Bạn đã tham gia đội ĐỎ" , "info")
 			else
-				TriggerClientEvent("PaintBall:Notif",player,"Team is full","error")
+				TriggerEvent("Framework:Notify", "Đội đã đầy" , "error")
 			end
 		end
 	else
-		TriggerClientEvent("PaintBall:Notif",player,"You're already in this team","error")
+		TriggerEvent("Framework:Notify", "Bạn không thể tham gia đội" , "error")
 	end
 end)
 
@@ -203,6 +203,7 @@ function sendToPlayerTheStart(idx)
 		
 		cptManche = cptManche - 1
 	end
+	
 end
 
 function sendToPlayerTheNextManche(idx)

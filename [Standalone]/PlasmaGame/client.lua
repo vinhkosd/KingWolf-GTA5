@@ -33,12 +33,12 @@ end, false)
 
 
 local PaintBallShop =  {
-	{name="PaintBall", id=73, x=-2304.902,y=3388.8569,z=31.256523,h=62.354064, typeM = "create"}, 
+	{name="PaintBall", id=73, x=-2306.85,y=3391.6782,z=30.987119,h=210.08784, typeM = "create"},
 	{name="PaintBall", id=73, x=-2290.346,y=3382.5961,z=31.062679,h=241.76245, typeM = "join"},
 	{name="PaintBall", id=73, x=-2294.916,y=3376.2304,z=31.064373,h=230.07446, typeM = "join"},
 }
 
-local outCoords = {x=-2301.534,y=3386.3701,z=31.256525,h=236.18269}
+local outCoords = {x=-2324.017,y=3402.9125,z=30.571779,h=234.33169}
 local blueCoords = {x=-2282.054,y=3350.2604,z=33.017211,h=94.072677} 
 local redCoords = {x=-2400.723,y=3359.165,z=32.832935,h=265.75778}
 
@@ -333,7 +333,7 @@ RegisterNUICallback('validate', function(data, cb)
 	end
 	if reason == "" then
 		TriggerServerEvent("PaintBall:NewSession",data)
-		notification("Tạo phòng thành công!, Sau 3 phút phòng tự động xóa","success")
+		TriggerEvent("Framework:Notify", "Tạo phòng thành công!, Sau 3 phút phòng tự động xóa" , "success")
 		
 	else
 		notification(reason,"error")

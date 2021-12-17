@@ -30,4 +30,4 @@ Config.Locations = {
 
 Config.Radius = 64.5
 
-Config.CarModel = "shifter kar"
+Config.CarModel = "shifter kart"

@@ -568,7 +568,7 @@ AddEventHandler('pepe-hospital:client:spawn:vehicle', function(VehicleName)
       else
         --   local CoordTable = {x = 352.1589, y = -588.5424, z = 74.161727, a = 271.88894}
         -- local CoordTable = {x = 350.96, y = -587.61, z = 74.16, a = 262.49}
-        local CoordTable = { x = -448.0578, y = -310.5629, z = 78.168098, a = 30.527843 }
+        local CoordTable = { x = -453.1113, y = -299.6964, z = 80.303031, a = 30.527843 }
         if Framework.Functions.IsSpawnPointClear(CoordTable, 3.0) then
             Framework.Functions.SpawnVehicle('alifeliner', function(Vehicle)
                 --   Framework.Functions.SpawnVehicle('alifeliner', function(Vehicle)

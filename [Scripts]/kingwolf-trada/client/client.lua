@@ -60,7 +60,7 @@ local Keys = {
 local cooks = 0
 
 Citizen.CreateThread(function()
-	local addBlip = AddBlipForCoord(Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"])
+	local addBlip = AddBlipForCoord(Config.Locations["Quannuoc"]["x"], Config.Locations["Quannuoc"]["y"], Config.Locations["Quannuoc"]["z"])
 
 	SetBlipSprite (addBlip, 93)
 
@@ -74,7 +74,7 @@ Citizen.CreateThread(function()
 
 	BeginTextCommandSetBlipName("STRING")
 
-	AddTextComponentString('Trà đá A Đây Rồi!')
+	AddTextComponentString('Quán Nước A Đây Rồi!')
 
 	EndTextCommandSetBlipName(addBlip)
 

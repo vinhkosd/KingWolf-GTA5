@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
 
 	BeginTextCommandSetBlipName("STRING")
 
-	AddTextComponentString('Pizza!')
+	AddTextComponentString('Pizza Thần Sấm!')
 
 	EndTextCommandSetBlipName(addBlip)
 end)

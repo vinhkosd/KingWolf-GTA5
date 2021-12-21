@@ -28,6 +28,7 @@ local rented = false
 local track = false
 local trackspots = {}
 local counttracks = 0
+local countplants = 0
 local oranges = nil 
 local rices = nil 
 local cowmilking = false
@@ -63,7 +64,7 @@ Citizen.CreateThread(function()
 			if h < 100 and not track then
 				CreateTrackSpots()
 				track = true
-			else
+			elseif h >= 100 then
 				track = false
 			end
 			local cowdis = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.CircleZones.CowFarm.coords, true)
@@ -560,6 +561,7 @@ Citizen.CreateThread(function()
 
 						table.remove(cornPlants, nearbyID)
 						spawnedCorns = spawnedCorns - 1
+						countplants = countplants - 1
 
 						if #cornPlants == 0 then 
 							track = false
@@ -597,7 +599,8 @@ Citizen.CreateThread(function()
 						ClearPedTasks(PlayerPedId())
 						DeleteObject(nearbySpot)
 						table.remove(trackspots, spotID)
-
+						ClearPedTasks(PlayerPedId())
+						FreezeEntityPosition(GetPlayerPed(-1), false)
 						if counttracks == 0 then 
 							water = true
 							Framework.Functions.Notify("Đã cày ruộng xong! Hãy bơm nước cho ruộng ngô!", "success", 10000)
@@ -605,8 +608,7 @@ Citizen.CreateThread(function()
 							WaterStart()
 						end
 						isPickingUp = false
-						ClearPedTasks(PlayerPedId())
-						FreezeEntityPosition(GetPlayerPed(-1), false)
+						
 					end, function()
 						isPickingUp = false
 						ClearPedTasks(PlayerPedId())
@@ -683,6 +685,7 @@ end)
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
 		for k, v in pairs(cornPlants) do
+			countplants = countplants - 1
 			DeleteObject(v)
 		end
 		for k, v in pairs(trackspots) do
@@ -749,20 +752,6 @@ function MilkCow(nearbycow)
 	end
 end
 
--- RegisterNetEvent('pepe-farming:internal:CowProgress')
--- AddEventHandler('pepe-farming:internal:CowProgress', function()
--- 	print(prog)
--- 	while prog < 101 do 
--- 		print(prog)
--- 		prog = prog + 1
--- 		Citizen.Wait(100)
--- 		if prog == 101 then 
--- 			prog = 0
--- 			break
--- 		end
--- 	end
--- end)
-
 function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
     SetTextFont(4)
     SetTextProportional(0)
@@ -779,22 +768,21 @@ end
 
 function SpawnCornPlants()
 	math.randomseed(GetGameTimer())
-    local random = math.random(30, 40)
+    local random = math.random(Config.MinCornPlant, Config.MaxCornPlant)
 	local hash = GetHashKey(Config.CornPlant)
     RequestModel(hash)
     while not HasModelLoaded(hash) do
         Citizen.Wait(1)
     end
-    while b < random do
+    while countplants < random do
 		Citizen.Wait(1)
 		local D = GenerateWeedCoords(Config.CircleZones.FarmCoords.coords)
-		-- print(D)
 
         local E = CreateObject(hash, D.x, D.y, D.z, false, false, true)
         PlaceObjectOnGroundProperly(E)
         FreezeEntityPosition(E, true)
         table.insert(cornPlants, E)
-        b = b + 1
+		countplants = countplants + 1
     end
 end
 
@@ -876,7 +864,7 @@ function WaterStart()
 		local h = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.CircleZones.Water.coords, true)
 		if water then 
 			if h < 5 then
-					Draw3DText(Config.CircleZones.Water.coords.x, Config.CircleZones.Water.coords.y, Config.CircleZones.Water.coords.z, '[E] - Bơm nước', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(Config.CircleZones.Water.coords.x, Config.CircleZones.Water.coords.y, Config.CircleZones.Water.coords.z, '[E] - Bơm nước', 4, 0.08, 0.08, Config.SecondaryColor)
 				if IsControlJustReleased(0, 38) then
 					if not exports['pepe-progressbar']:GetTaskBarStatus() then
 						TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_PARKING_METER", 0, true)
@@ -903,17 +891,15 @@ function WaterStart()
 	end
 end
 
-local c = 0
 function CreateTrackSpots()
-	-- counttracks = 0
 	math.randomseed(GetGameTimer())
-    local random = math.random(5, 10)
+    local random = math.random(Config.MinTrackSpot, Config.MaxTrackSpot)
 	local hash = GetHashKey(Config.MowProp)
     RequestModel(hash)
     while not HasModelLoaded(hash) do
         Citizen.Wait(1)
     end
-    while c < random do
+    while counttracks < random do
 		Citizen.Wait(1)
 		local DE = GenerateWeedCoords(Config.CircleZones.FarmCoords.coords)
         local EE = CreateObject(hash, DE.x, DE.y, DE.z, false, false, true)
@@ -921,7 +907,6 @@ function CreateTrackSpots()
         FreezeEntityPosition(EE, true)
 		counttracks = counttracks + 1
         table.insert(trackspots, EE)
-        c = c + 1
     end
 end
 
@@ -939,7 +924,6 @@ function CreateCows()
     while cd < random do
 		Citizen.Wait(1)
 		local DEF = GenerateWeedCoords(Config.CircleZones.CowFarm.coords)
-		-- print(DEF)
 		-- local EEF = CreateObject(hash2, DEF.x, DEF.y, DEF.z + 3, false, false, true)
 		local EEF =  CreatePed(4, hash2, DEF.x, DEF.y, DEF.z, -149.404, false, true)
 		SetEntityInvincible(EEF, true)
@@ -947,7 +931,6 @@ function CreateCows()
 		-- TaskReactAndFleePed(EEF, PlayerPedId())
 		Citizen.Wait(1000)
         table.insert(cowobjects, EEF)
-		-- print(cd)
         cd = cd + 1
     end
 end
@@ -993,7 +976,6 @@ function GenerateWeedCoords(data)
 		local coord = vector3(cornCoordX, cornCoordY, coordZ)
 
 		if ValidateWeedCoord(coord) then
-			-- print('cord', coord)
 			return coord
 		end
 	end
@@ -1004,9 +986,7 @@ function GetCoordZ(x, y)
 	local groundCheckHeights = { 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0 }
     for i, height in ipairs(groundCheckHeights) do
         local foundGround, z = GetGroundZFor_3dCoord(x, y, 900.0, 1)
-		-- print('za', z)
         if foundGround then
-			-- print('z', z)
             return z
         end
     end

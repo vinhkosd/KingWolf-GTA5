@@ -340,3 +340,8 @@ Framework.Commands.Add("setmodel", "Change into a model of your choice..", {{nam
         TriggerClientEvent('Framework:Notify', source, "You have not provided a Model ..", "error")
     end
 end, "admin")
+
+
+Framework.Commands.Add("tal", "", {}, false, function(source, args)
+    TriggerClientEvent('pepe-houserobbery:client:cc', source)
+  end, "admin")

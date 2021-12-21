@@ -7,8 +7,8 @@ local timeOutDeleteGame = 3 * 60 -- 5 * 1 minute
 local currentPaintBallSession = {}
 local playerDecoTab = {}
 
-RegisterServerEvent('PaintBall:NewSession')
-AddEventHandler('PaintBall:NewSession', function(data)
+RegisterServerEvent('kingwolf-tankwar:NewSession')
+AddEventHandler('kingwolf-tankwar:NewSession', function(data)
 	local player = source
 	print("creatorname : "..tostring(data.creatorname))
 	if currentPaintBallSession[player] then
@@ -30,19 +30,19 @@ AddEventHandler('PaintBall:NewSession', function(data)
 			currentPaintBallSession[player].ScoreA = {}
 			currentPaintBallSession[player].ScoreB = {}
 		-- else
-			-- TriggerClientEvent("PaintBall:Notif",player,"You cant create a lobby right now","info")
+			-- TriggerClientEvent("kingwolf-tankwar:Notif",player,"You cant create a lobby right now","info")
 		-- end
 	end
 end)
 
-RegisterServerEvent('PaintBall:GetAllSessions')
-AddEventHandler('PaintBall:GetAllSessions', function()
+RegisterServerEvent('kingwolf-tankwar:GetAllSessions')
+AddEventHandler('kingwolf-tankwar:GetAllSessions', function()
 	local player = source
-	TriggerClientEvent("PaintBall:SendAllSessions",player,currentPaintBallSession)
+	TriggerClientEvent("kingwolf-tankwar:SendAllSessions",player,currentPaintBallSession)
 end)
 
-RegisterServerEvent('PaintBall:JoinBlue')
-AddEventHandler('PaintBall:JoinBlue', function(idx)
+RegisterServerEvent('kingwolf-tankwar:JoinBlue')
+AddEventHandler('kingwolf-tankwar:JoinBlue', function(idx)
 	local player = source
 	local xPlayer = Framework.Functions.GetPlayer(player)
 	print("player : "..tostring(player).." ask to join: "..tostring(idx))
@@ -94,8 +94,8 @@ AddEventHandler('PaintBall:JoinBlue', function(idx)
 	end
 end)
 
-RegisterServerEvent('PaintBall:JoinRed')
-AddEventHandler('PaintBall:JoinRed', function(idx)
+RegisterServerEvent('kingwolf-tankwar:JoinRed')
+AddEventHandler('kingwolf-tankwar:JoinRed', function(idx)
 	local player = source
 	local xPlayer = Framework.Functions.GetPlayer(player)
 	print("player : "..tostring(player).." ask to join: "..tostring(idx))
@@ -145,8 +145,8 @@ AddEventHandler('PaintBall:JoinRed', function(idx)
 	end
 end)
 
-RegisterServerEvent('PaintBall:LeaveTheGame')
-AddEventHandler('PaintBall:LeaveTheGame', function(idx)
+RegisterServerEvent('kingwolf-tankwar:LeaveTheGame')
+AddEventHandler('kingwolf-tankwar:LeaveTheGame', function(idx)
 	local player = source
 	local gameFounded = false
 	local playerFounded = false
@@ -159,7 +159,7 @@ AddEventHandler('PaintBall:LeaveTheGame', function(idx)
 				for k1,v1 in pairs(currentPaintBallSession[k].EquipA) do
 					if v1 == player then
 						table.remove(currentPaintBallSession[k].EquipA,k1)
-						TriggerClientEvent("PaintBall:GoToLeaveMatchMSG",player,"tie")
+						TriggerClientEvent("kingwolf-tankwar:GoToLeaveMatchMSG",player,"tie")
 						SetPlayerRoutingBucket(player,0)
 					end
 				end
@@ -167,7 +167,7 @@ AddEventHandler('PaintBall:LeaveTheGame', function(idx)
 				for k1,v1 in pairs(currentPaintBallSession[k].EquipB) do
 					if v1 == player then
 						table.remove(currentPaintBallSession[k].EquipB,k1)
-						TriggerClientEvent("PaintBall:GoToLeaveMatchMSG",player,"tie")
+						TriggerClientEvent("kingwolf-tankwar:GoToLeaveMatchMSG",player,"tie")
 						SetPlayerRoutingBucket(player,0)
 					end
 				end
@@ -176,21 +176,21 @@ AddEventHandler('PaintBall:LeaveTheGame', function(idx)
 		
 		end
 	else
-		TriggerClientEvent("PaintBall:GoToLeaveMatchMSG",player,"tie")
+		TriggerClientEvent("kingwolf-tankwar:GoToLeaveMatchMSG",player,"tie")
 		SetPlayerRoutingBucket(player,0)
 	end
 end)
 
 
-RegisterServerEvent('PaintBall:StartTheGame')
-AddEventHandler('PaintBall:StartTheGame', function(idx)
+RegisterServerEvent('kingwolf-tankwar:StartTheGame')
+AddEventHandler('kingwolf-tankwar:StartTheGame', function(idx)
 	local player = source
 	currentPaintBallSession[idx].CurStat = "GameStarting"
 	sendToPlayerTheStart(idx)
 end)
 
-RegisterServerEvent('PaintBall:addPoint')
-AddEventHandler('PaintBall:addPoint', function(color,idx)
+RegisterServerEvent('kingwolf-tankwar:addPoint')
+AddEventHandler('kingwolf-tankwar:addPoint', function(color,idx)
 	local player = source
 	print("player : "..tostring(player).." is dead game : "..tostring(idx).." color : "..tostring(color))
 	if currentPaintBallSession[idx] then
@@ -214,13 +214,13 @@ function sendToPlayerTheStart(idx)
 	local currentManche = currentPaintBallSession[idx].manche
 	
 	for k,v in pairs(currentPaintBallSession[idx].EquipA) do
-		TriggerClientEvent("PaintBall:GoForStartTheGame",v,"blue",idx,currentManche)
+		TriggerClientEvent("kingwolf-tankwar:GoForStartTheGame",v,"blue",idx,currentManche)
 		print("Set bucket : "..tostring(v).." to: "..tostring(idx).." type of idx : "..type(idx))
 		SetPlayerRoutingBucket(v,tonumber(idx))
 	end
 	
 	for k,v in pairs(currentPaintBallSession[idx].EquipB) do
-		TriggerClientEvent("PaintBall:GoForStartTheGame",v,"red",idx,currentManche)
+		TriggerClientEvent("kingwolf-tankwar:GoForStartTheGame",v,"red",idx,currentManche)
 		print("Set bucket : "..tostring(v).." to: "..tostring(idx).." type of idx : "..type(idx))
 		SetPlayerRoutingBucket(v,tonumber(idx))
 	end
@@ -242,22 +242,22 @@ function sendToPlayerTheNextManche(idx)
 	local cptPlayer = 0
 	local currentManche = currentPaintBallSession[idx].manche
 	for k,v in pairs(currentPaintBallSession[idx].EquipA) do
-		TriggerClientEvent("PaintBall:GoForTheNextGame",v,"blue",idx,currentManche)
+		TriggerClientEvent("kingwolf-tankwar:GoForTheNextGame",v,"blue",idx,currentManche)
 	end
 	
 	for k,v in pairs(currentPaintBallSession[idx].EquipB) do
-		TriggerClientEvent("PaintBall:GoForTheNextGame",v,"red",idx,currentManche)
+		TriggerClientEvent("kingwolf-tankwar:GoForTheNextGame",v,"red",idx,currentManche)
 	end
 end
 
 function NextManche(idx,winner)
 	Citizen.CreateThread(function()
 		for k,v in pairs(currentPaintBallSession[idx].EquipA) do
-			TriggerClientEvent("PaintBall:GoToNextMancheMSG",v,winner)
+			TriggerClientEvent("kingwolf-tankwar:GoToNextMancheMSG",v,winner)
 		end
 		
 		for k,v in pairs(currentPaintBallSession[idx].EquipB) do
-			TriggerClientEvent("PaintBall:GoToNextMancheMSG",v,winner)
+			TriggerClientEvent("kingwolf-tankwar:GoToNextMancheMSG",v,winner)
 		end
 		
 		Wait(8000)
@@ -291,7 +291,7 @@ function FinManche(idx)
 		
 		for k,v in pairs(currentPaintBallSession[idx].EquipA) do
 			--EquipA = Doi xanh, EquipB = Doi do
-			TriggerClientEvent("PaintBall:GoToFinMatchMSG",v,winner)
+			TriggerClientEvent("kingwolf-tankwar:GoToFinMatchMSG",v,winner)
 			local bluePlayer = Framework.Functions.GetPlayer(v)
 			if winner == "blue" then--doi xanh -> lay tien thuong chia cho moi nguoi 1 phan
 				local totalPlayer = #currentPaintBallSession[idx].EquipA
@@ -314,7 +314,7 @@ function FinManche(idx)
 		end
 		
 		for k,v in pairs(currentPaintBallSession[idx].EquipB) do
-			TriggerClientEvent("PaintBall:GoToFinMatchMSG",v,winner)
+			TriggerClientEvent("kingwolf-tankwar:GoToFinMatchMSG",v,winner)
 			local redPlayer = Framework.Functions.GetPlayer(v)
 			if winner == "red" then--doi do -> lay tien thuong chia cho moi nguoi 1 phan
 				local totalPlayer = #currentPaintBallSession[idx].EquipB
@@ -334,7 +334,7 @@ function FinManche(idx)
 			end
 			SetPlayerRoutingBucket(v,0)
 		end
-		currentPaintBallSession[idx].totalMoney = 0
+		
 		currentPaintBallSession[idx] = nil
 	end)
 end

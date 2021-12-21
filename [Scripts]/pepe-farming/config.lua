@@ -7,6 +7,11 @@ Config.Delays = {
 }
 
 Config.CornPlant = 'prop_plant_01a'
+Config.MinCornPlant = 30
+Config.MaxCornPlant = 35
+
+Config.MinTrackSpot = 5
+Config.MaxTrackSpot = 9
 Config.CornOutput = math.random(2,4)
 
 Config.MowProp = 'prop_air_lights_02b'

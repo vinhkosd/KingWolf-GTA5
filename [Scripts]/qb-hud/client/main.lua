@@ -18,14 +18,14 @@ local oxyOn = false
 --local isLoggedIn = false
 local isLoggedIn = false
 
-Citizen.CreateThread(function()
-    Citizen.Wait(5000)
-    if not isLoggedIn then
-        isLoggedIn = true
-        Config.Show = true
-        PlayerJob = Framework.Functions.GetPlayerData().job
-    end
-end)
+-- Citizen.CreateThread(function()
+--     Citizen.Wait(5000)
+--     if not isLoggedIn then
+--         isLoggedIn = true
+--         Config.Show = true
+--         PlayerJob = Framework.Functions.GetPlayerData().job
+--     end
+-- end)
 
 RegisterNetEvent('pepe-hud:toggleHud')
 AddEventHandler('pepe-hud:toggleHud', function(toggleHud)
@@ -57,8 +57,6 @@ end)
 
 RegisterNetEvent('hud:client:UpdateVoiceProximity')
 AddEventHandler('hud:client:UpdateVoiceProximity', function(Proximity)
-    
-    print(Proximity)
     SendNUIMessage({
         action = "UpdateProximity",
         prox = Proximity
@@ -339,9 +337,6 @@ Citizen.CreateThread(function()
             if IsPedInAnyVehicle(PlayerPedId(), false) then
                 -- speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 2.236936
                 speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 3.6
-                print(json.encode(speed >= Config.MinimumSpeed))
-                print(speed)
-                print(Config.MinimumSpeed)
                 if speed >= Config.MinimumSpeed then
                     TriggerServerEvent('pepe-hud:server:gain:stress', math.random(1, 2))
                 end

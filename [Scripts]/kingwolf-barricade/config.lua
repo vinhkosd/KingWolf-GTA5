@@ -27,6 +27,10 @@ Config.Objects = {
   [5] = {[1] = 'Concrete Block', [2] = 'prop_mp_barrier_01', [3] = '5.0', [4] = 1, [5] = 0},
   [6] = {[1] = 'Work Barrier', [2] = 'prop_barrier_work06a', [3] = '3.0', [4] = 1, [5] = 0},
   [7] = {[1] = 'Road Work Ahead (small)', [2] = 'prop_barrier_work06b', [3] = '3.0', [4] = 1, [5] = 0},
+  [8] = {[1] = 'prop_trailer_01_new', [2] = 'prop_trailer_01_new', [3] = '3.0', [4] = 1, [5] = 0},
+  [9] = {[1] = 'prop_fbi3_coffee_table', [2] = 'prop_fbi3_coffee_table', [3] = '3.0', [4] = 1, [5] = 0},
+  [10] = {[1] = 'prop_table_01_chr_b', [2] = 'prop_table_01_chr_b', [3] = '3.0', [4] = 1, [5] = 0},
+  [11] = {[1] = 'prop_table_para_comb_03', [2] = 'prop_table_para_comb_03', [3] = '3.0', [4] = 1, [5] = 0}
 }
 
 Config.menu = {

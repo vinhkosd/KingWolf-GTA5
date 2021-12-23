@@ -18,9 +18,9 @@ AddEventHandler('pepe-logs:server:SendLog', function(name, title, color, message
     }
     Citizen.Wait(100)
     if tag then
-      PerformHttpRequest(webHook, function(err, text, headers) end, 'POST', json.encode({ username = "KingWolf Logs", embeds = embedData, content = "@everyone"}), { ['Content-Type'] = 'application/json' })
+      PerformHttpRequest(webHook, function(err, text, headers) end, 'POST', json.encode({ username = "Los Angeles Logs", embeds = embedData, content = "@everyone"}), { ['Content-Type'] = 'application/json' })
     else
-      PerformHttpRequest(webHook, function(err, text, headers) end, 'POST', json.encode({ username = "KingWolf Logs", embeds = embedData}), { ['Content-Type'] = 'application/json' })
+      PerformHttpRequest(webHook, function(err, text, headers) end, 'POST', json.encode({ username = "Los Angeles Logs", embeds = embedData}), { ['Content-Type'] = 'application/json' })
     end
 end)
 

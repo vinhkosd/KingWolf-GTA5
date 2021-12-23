@@ -6,6 +6,13 @@ local bleedingPercentage = 0
 local hunger = 100
 local thirst = 100
 local level = 100
+local setHealOnOff = false
+local setArmorOnOff = false 
+local setFoodOnOff = false
+local setWateronOff = false
+local setOxyOnOff = false
+local setStressOnOff = false
+local onOffHUD = false
 
 function CalculateTimeToDisplay()
 	hour = GetClockHours()
@@ -32,6 +39,11 @@ local toggleHud = true
 RegisterNetEvent('pepe-hud:toggleHud')
 AddEventHandler('pepe-hud:toggleHud', function(toggleHud)
     QBHud.Show = toggleHud
+end)
+
+RegisterNetEvent('pepe-hud:OnOffHud')
+AddEventHandler('pepe-hud:OnOffHud', function()
+    onOffHUD = not onOffHUD
 end)
 
 -- RegisterNetEvent("Framework:Client:OnPlayerLoaded")
@@ -77,18 +89,26 @@ Citizen.CreateThread(function()
             local fuel = exports['pepe-fuel']:GetFuelLevel(Plate)
             local engine = GetVehicleEngineHealth(GetVehiclePedIsIn(PlayerPedId()))
             -- local breath = GetPlayerUnderwaterTimeRemaining(PlayerId()) * 10
-            local breath = GetPlayerUnderwaterTimeRemaining(PlayerId())
-            if exports['pepe-diving'] ~= nil then
-                -- breath = exports['pepe-diving']:GetDivingTime() ~= nil and exports['pepe-diving']:GetDivingTime() or 0
+            local breath = 0
+            if IsEntityInWater(PlayerId()) then
+                breath = GetPlayerUnderwaterTimeRemaining(PlayerId())
+            else
+                breath = GetPlayerSprintTimeRemaining(PlayerId()) * 10
             end
+            
+            if GetResourceState('pepe-diving') == "started" then
+                breath = exports['pepe-diving']:GetDivingTime() ~= nil and exports['pepe-diving']:GetDivingTime() or 0
+            end
+
             -- local breath = SetPedMaxTimeUnderwater(PlayerPedId(), 100.00) * 5
             if hunger < 0 then hunger = 0 end
             if thirst < 0 then thirst = 0 end
             if stress < 0 then stress = 0 end
             if breath < 0 then breath = 0 end
+            
             SendNUIMessage({
                 action = "hudtick",
-                show = IsPauseMenuActive(),
+                show = IsPauseMenuActive() or onOffHUD,
                 health = GetEntityHealth(PlayerPedId()),
                 armor = GetPedArmour(PlayerPedId()),
                 thirst = thirst,
@@ -146,14 +166,19 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
         if IsPedInAnyVehicle(PlayerPedId()) and isLoggedIn and QBHud.Show then
-            DisplayRadar(true)
+            if not onOffHUD then
+                DisplayRadar(true)
+            else
+                DisplayRadar(false)
+            end
             SendNUIMessage({
                 action = "car",
-                show = true,
+                show = true or not onOffHUD,
             })
             radarActive = true
         else
-            DisplayRadar(true)
+            DisplayRadar(false)
+
             SendNUIMessage({
                 action = "car",
                 show = false,
@@ -218,6 +243,64 @@ AddEventHandler('pepe-hud:client:UpdateNitrous', function(toggle, level, IsActiv
         nivel = level
         activo = IsActive
 end)
+
+RegisterNetEvent('hudmenu:set')
+AddEventHandler('hudmenu:set', function(data)
+	setHealOnOff = data['Health']
+	setArmorOnOff = data['Armor']
+	setFoodOnOff = data['Food']
+	setWateronOff = data['Water']
+	setOxyOnOff = data['Oxygen'] 
+	setStressOnOff = data['Stress']
+	setFpsBoost = data["Fps"]
+    setBarrasOnOff = data["Barras"] 
+    setCompassOnOff = data["Compass"]
+
+
+    local Var = false
+    if setCompassOnOff then
+        TriggerEvent("doj:client:OpenCompass")
+        Var = true
+    elseif not setCompassOnOff then
+        TriggerEvent("doj:client:CloseCompass")
+        Var = false
+    end  
+
+    local booston = false
+    if setFpsBoost then
+        SetTimecycleModifier("cinema")
+        booston = true
+    elseif not setFpsBoost then
+        SetTimecycleModifier("default")
+        booston = false
+    end 
+    if setBarrasOnOff then
+        CinematicCamDisplay(true)
+        CinematicCamBool = true
+    elseif not setBarrasOnOff then
+        CinematicCamDisplay(false)
+        CinematicCamBool = false
+    end
+end)
+
+CinematicCamMaxHeight = 0.2
+
+function CinematicCamDisplay(bool) -- [[Handles Displaying Radar, Body Armour and the rects themselves.]]
+    SetRadarBigmapEnabled(true, false)
+    Wait(0)
+    SetRadarBigmapEnabled(false, false)
+    if bool then
+        for i = CinematicCamMaxHeight, 0, -1.0 do
+            Wait(10)
+            w = i
+        end 
+    else
+        for i = 0, CinematicCamMaxHeight, 1.0 do 
+            Wait(10)
+            w = i
+        end
+    end
+end 
 
 local LastHeading = nil
 local Rotating = "left"

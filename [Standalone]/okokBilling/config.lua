@@ -33,9 +33,9 @@ Config.AllowedSocieties = { -- Allowed societies to open the 'Society Invoices' 
 
 -- To set your Discord Webhook URL go to server.lua, line 5
 
-Config.BotName = 'KingWolfCity' -- Write the desired bot name
+Config.BotName = 'LosAngelesCity' -- Write the desired bot name
 
-Config.ServerName = 'KingWolfCity' -- Write your server's name
+Config.ServerName = 'LosAngelesCity' -- Write your server's name
 
 Config.IconURL = '' -- Insert your desired image link
 

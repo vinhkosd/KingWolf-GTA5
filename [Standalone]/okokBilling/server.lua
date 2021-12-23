@@ -1,7 +1,7 @@
 Framework = nil
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
-local Webhook = 'https://discord.com/api/webhooks/917681909792923679/leu1XKWXyu9xoKJ5_c1kbPV47x07xSN6VPqf9SPShR7-bk4OSG02TwXcOvsJ-FrV5p9I'
+local Webhook = 'https://discord.com/api/webhooks/923589924911992873/R27LmoNjKuOrBgw1xgeK7dO5wC2aloxdcJQiChnHSPtbY9lMLNr0priFSL6VTcuTJyjB'
 local limiteTimeHours = Config.LimitDateDays*24
 local hoursToPay = limiteTimeHours
 local whenToAddFees = {}
@@ -25,6 +25,52 @@ Framework.Functions.CreateCallback('okokBilling:GetInvoices', function(source, c
 		end
 
 		cb(invoices)
+    end)
+end)
+
+Framework.Functions.CreateCallback('okokBilling:PayInvoice', function(source, cb, invoice_id)
+    local src = source
+	local xPlayer = Framework.Functions.GetPlayer(src)
+	Framework.Functions.ExecuteSql(false, "SELECT * FROM okokBilling WHERE id = '"..invoice_id.."'", function(result)
+        local invoices = result[1]
+		local playerMoney = xPlayer.PlayerData.money.bank
+		local webhookData = {
+			id = invoices.id,
+			player_name = invoices.receiver_name,
+			value = invoices.invoice_value,
+			item = invoices.item,
+			society = invoices.society_name
+		}
+
+		invoices.invoice_value = math.ceil(invoices.invoice_value)
+
+		if playerMoney == nil then
+			playerMoney = 0
+		end
+
+		if playerMoney < invoices.invoice_value then
+			TriggerClientEvent("Framework:Notify", src, "Bạn không đủ tiền" , "error")
+			cb(false)
+		else
+			xPlayer.Functions.RemoveMoney('bank', invoices.invoice_value, "paid-invoice-"..invoice_id)
+
+			local totalMoneyAccountGet = math.floor(invoices.invoice_value * ((100 - Config.VATPercentage) / 100))
+			TriggerEvent("pepe-bossmenu:server:addAccountMoney", invoices.society, totalMoneyAccountGet)
+
+			local bossList = FindBossPlayerByJobName(invoices.society)
+			for _, player in pairs(bossList) do
+				TriggerClientEvent('pepe-phone:client:addNotification', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!")
+				TriggerClientEvent('Framework:Notify', player.source, "Quỹ vừa nhận được "..totalMoneyAccountGet.."$ từ hoá đơn thanh toán!", "success")
+			end
+
+			Framework.Functions.ExecuteSql(true, "UPDATE okokBilling SET status = 'paid', paid_date = CURRENT_TIMESTAMP WHERE id = '"..invoice_id.."'")
+			TriggerClientEvent("Framework:Notify", src, "Thanh toán hóa đơn thành công" , "error")
+
+			if Webhook ~= '' then
+				payInvoiceWebhook(webhookData)
+			end
+			cb(true)
+		end
     end)
 end)
 
@@ -266,9 +312,9 @@ function checkTimeLeft()
 
 							if canFund then
 								-- TriggerServerEvent('pepe-phone:server:sendNewMailToOffline', v.receiver_identifier, {
-								-- 	sender = "Thành phố KingWolf",
+								-- 	sender = "Thành phố Los Angeles",
 								-- 	subject = "Hóa đơn thanh toán tự động",
-								-- 	message = "Chào bạn ,<br/><br />Bạn vừa được thanh toán hóa đơn tự động!<br /><br />Tổng số tiền: <strong>$"..invoice_value.."</strong> <br><br>Cảm ơn bạn đã sử dụng dịch vụ hóa đơn của chúng tôi!<br/><br/>Trân trọng,<br />KingWolf",
+								-- 	message = "Chào bạn ,<br/><br />Bạn vừa được thanh toán hóa đơn tự động!<br /><br />Tổng số tiền: <strong>$"..invoice_value.."</strong> <br><br>Cảm ơn bạn đã sử dụng dịch vụ hóa đơn của chúng tôi!<br/><br/>Trân trọng,<br />Los Angeles",
 								-- 	button = {}
 								-- })
 

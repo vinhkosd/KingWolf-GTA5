@@ -69,7 +69,7 @@ Citizen.CreateThread(function()
 			local distance = GetDistanceBetweenCoords(coords, TakeVehicle.x, TakeVehicle.y, TakeVehicle.z, true)
 
 			if distance <= 100.0 then
-				DrawMarker(1, TakeVehicle.x, TakeVehicle.y, TakeVehicle.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				DrawMarker(2, TakeVehicle.x, TakeVehicle.y, TakeVehicle.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 			end
 			if distance <= 1.5 then
 				helpText('Nhấn ~g~E~s~ để bắt đầu thi thực hành')
@@ -267,7 +267,7 @@ Citizen.CreateThread(function()
 
 		for k,v in pairs(Config.Zones) do
 			if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-				DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 255, false, true, 2, false, false, false, false)
 			end
 		end
 	end

@@ -59,7 +59,7 @@ AddEventHandler("autopilot:start", function(source)
       blipX = coord.x
       blipY = coord.y
       blipZ = coord.z
-      TaskVehicleDriveToCoordLongrange(player, vehicle, blipX, blipY, blipZ, speed, 319, 2.0)
+      TaskVehicleDriveToCoordLongrange(player, vehicle, blipX, blipY, blipZ, speed, 787244, 2.0)
       autopilotActive = true
   else
       ShowNotification("Vui lòng chọn điểm đến trên bản đồ")
@@ -76,7 +76,7 @@ AddEventHandler("autopilot:stop", function(source)
   playerX = coord.x
   playerY = coord.y
   playerZ = coord.z
-  TaskVehicleDriveToCoordLongrange(player, vehicle, playerX, playerY, playerZ, speed, 319, 2.0)
+  TaskVehicleDriveToCoordLongrange(player, vehicle, playerX, playerY, playerZ, speed, 787244, 2.0)
   ShowNotification("Bạn đã huỷ tự động lái")
   autopilotActive = false
   ClearPedTasks(PlayerPedId())

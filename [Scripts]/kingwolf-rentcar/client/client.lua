@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
 			local RentDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["Rent"]["x"], Config.Locations["Rent"]["y"], Config.Locations["Rent"]["z"])
 
 			if RentDist < 20.0 then
-				DrawMarker(1, Config.Locations["Rent"]["x"], Config.Locations["Rent"]["y"], Config.Locations["Rent"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				DrawMarker(2, Config.Locations["Rent"]["x"], Config.Locations["Rent"]["y"], Config.Locations["Rent"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 			end
 			if RentDist < 1.0 then
 				Framework.Functions.DrawText3D(Config.Locations["Rent"]["x"], Config.Locations["Rent"]["y"], Config.Locations["Rent"]["z"] + 0.15, "~g~[E]~w~ Thuê xe đi làm")
@@ -84,10 +84,10 @@ Citizen.CreateThread(function()
 			if IsPedInAnyVehicle(GetPlayerPed(-1)) then
 				local vehModel = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
 
-				-- DrawMarker(1, Config.Locations["UnRent"]["x"], Config.Locations["UnRent"]["y"], Config.Locations["UnRent"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				-- DrawMarker(2, Config.Locations["UnRent"]["x"], Config.Locations["UnRent"]["y"], Config.Locations["UnRent"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				if vehModel:lower() == Config.CarModel then
 					if UnRentDist < 20.0 then
-					DrawMarker(1, Config.Locations["UnRent"]["x"], Config.Locations["UnRent"]["y"], Config.Locations["UnRent"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+					DrawMarker(2, Config.Locations["UnRent"]["x"], Config.Locations["UnRent"]["y"], Config.Locations["UnRent"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 					end
 
 					if UnRentDist < 1.0 then

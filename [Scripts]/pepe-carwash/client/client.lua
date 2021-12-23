@@ -53,22 +53,22 @@ Citizen.CreateThread(function()
 			  local Gebied = GetDistanceBetweenCoords(Positie.x, Positie.y, Positie.z, Config.CarWashLocations[k]['Coords']['Marker']['X'], Config.CarWashLocations[k]['Coords']['Marker']['Y'], Config.CarWashLocations[k]['Coords']['Marker']['Z'], true)
               if Gebied <= 2.5 then   
                  if Gebied <= 1.5 then
-                     DrawText3D(Config.CarWashLocations[k]['Coords']['Marker']['X'], Config.CarWashLocations[k]['Coords']['Marker']['Y'], Config.CarWashLocations[k]['Coords']['Marker']['Z'], '~g~G~w~ - Carwash €'..Config.CarWashLocations[k]['Price'])
+                     DrawText3D(Config.CarWashLocations[k]['Coords']['Marker']['X'], Config.CarWashLocations[k]['Coords']['Marker']['Y'], Config.CarWashLocations[k]['Coords']['Marker']['Z'], '~g~G~w~ - Rửa xe €'..Config.CarWashLocations[k]['Price'])
                      if IsControlJustReleased(0, Config.Keys['G']) then
                         if not Config.CarWashLocations[k]['Busy'] then
                             Framework.Functions.TriggerCallback("pepe-carwash:server:can:wash", function(CanWash)
                             if CanWash then
                              StartCarWashing(k, GetVehiclePedIsIn(GetPlayerPed(-1), false))
                             else
-                             Framework.Functions.Notify('Je hebt niet genoeg geld voor deze was beurt..', 'error')
+                             Framework.Functions.Notify('Bạn không đủ tiền rửa xe..', 'error')
                             end
                         end, Config.CarWashLocations[k]['Price'])
                         else
-                         Framework.Functions.Notify('De was straat is al in gebruik..', 'error')
+                         Framework.Functions.Notify('Vui lòng chờ tới lượt!..', 'error')
                         end
                      end
                     elseif Gebied <= 2.0 then
-                     DrawText3D(Config.CarWashLocations[k]['Coords']['Marker']['X'], Config.CarWashLocations[k]['Coords']['Marker']['Y'], Config.CarWashLocations[k]['Coords']['Marker']['Z'], 'Carwash')
+                     DrawText3D(Config.CarWashLocations[k]['Coords']['Marker']['X'], Config.CarWashLocations[k]['Coords']['Marker']['Y'], Config.CarWashLocations[k]['Coords']['Marker']['Z'], 'Rửa xe')
                  end
                    DrawMarker(2, Config.CarWashLocations[k]['Coords']['Marker']['X'], Config.CarWashLocations[k]['Coords']['Marker']['Y'], Config.CarWashLocations[k]['Coords']['Marker']['Z'], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)    
                 else

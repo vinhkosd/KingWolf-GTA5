@@ -2,7 +2,7 @@ Config = Config or {}
 Config.CanMeter = true
 
 Config.NeededCops = 8
-Config.CopsNeededs = 5
+Config.CopsNeededs = 2
 
 
 Config.Locale = "en"

@@ -103,7 +103,7 @@ Citizen.CreateThread(function()
 			local DutyDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"])
 
 			if DutyDist < 10.0 then
-				DrawMarker(1, Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				DrawMarker(2, Config.Locations["Duty"]["x"], Config.Locations["Duty"]["y"], Config.Locations["Duty"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				inRange = true
 				if DutyDist < 1.0 then
 					if not onDuty then
@@ -125,7 +125,7 @@ Citizen.CreateThread(function()
 			if StashDist < 10.0 and (PlayerJob.isboss or tonumber(PlayerJob.grade.level) >= 1) and onDuty then
 				inRange = true
 
-				DrawMarker(1, Config.Locations["Stash"]["x"], Config.Locations["Stash"]["y"], Config.Locations["Stash"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				DrawMarker(2, Config.Locations["Stash"]["x"], Config.Locations["Stash"]["y"], Config.Locations["Stash"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				
 				if StashDist < 1.0 then
 						Framework.Functions.DrawText3D(Config.Locations["Stash"]["x"], Config.Locations["Stash"]["y"], Config.Locations["Stash"]["z"] + 0.3, "~g~[E]~w~ Tủ đồ")
@@ -142,7 +142,7 @@ Citizen.CreateThread(function()
 			if SellStashDist < 10.0 and (tonumber(PlayerJob.grade.level) == 0 or tonumber(PlayerJob.grade.level) == 2 or PlayerJob.isboss) and onDuty then
 				inRange = true
 
-				DrawMarker(1, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				DrawMarker(2, Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				
 				if SellStashDist < 1.0 then
 						Framework.Functions.DrawText3D(Config.Locations["SellStash"]["x"], Config.Locations["SellStash"]["y"], Config.Locations["SellStash"]["z"] + 0.3, "~g~[E]~w~ Quầy bán")
@@ -170,7 +170,7 @@ Citizen.CreateThread(function()
 			local CraftDistance = GetDistanceBetweenCoords(plyCoords, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"])
 
 			if CraftDistance < 10.0 and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
-				DrawMarker(1, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				DrawMarker(2, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				if CraftDistance < 1.0 and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
 					Framework.Functions.DrawText3D(Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"], "~g~[F]~w~ - Pha chế")
 					if IsControlJustReleased(0, 23) and CraftDistance < 1.0 then
@@ -211,7 +211,7 @@ Citizen.CreateThread(function()
 				local ShopDistance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Locations["ShopAuto"][i], true)
 
 				if ShopDistance < 10.0 then
-					DrawMarker(1, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
+					DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 0.1, 0.1, 0.05, 255, 255, 255, 255, 0, 0, 0, 0)
 
 					-- DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
 				end
@@ -366,7 +366,7 @@ Citizen.CreateThread(function()
 				local RentDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"])
 
 				if RentDist < 20.0 then
-					DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+					DrawMarker(2, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				end
 				if RentDist < 1.0 then
 					Framework.Functions.DrawText3D(Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"] + 0.15, "~g~[E]~w~ Lấy xe giao hàng")
@@ -380,10 +380,10 @@ Citizen.CreateThread(function()
 			if IsPedInAnyVehicle(GetPlayerPed(-1)) then
 				local vehModel = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
 
-				-- DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				-- DrawMarker(2, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				if vehModel:lower() == Config.CarModel then
 					if UnRentDist < 20.0 then
-					DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+					DrawMarker(2, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 					end
 
 					if UnRentDist < 1.0 then

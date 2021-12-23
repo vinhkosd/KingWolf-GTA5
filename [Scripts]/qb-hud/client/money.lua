@@ -21,7 +21,6 @@ local bankAmount = 0
 
  RegisterNetEvent("pepe-hud:client:money:change")
  AddEventHandler("pepe-hud:client:money:change", function(type, amount, isMinus)
-    print("moneychange")
      Framework.Functions.GetPlayerData(function(PlayerData)
          CashAmount = PlayerData.money["cash"]
          bankAmount = PlayerData.money["bank"]
@@ -34,7 +33,6 @@ local bankAmount = 0
             type = type,
         })
      end)
-      
  end)
 
 --  RegisterNetEvent("pepe-hud:client:money:change")

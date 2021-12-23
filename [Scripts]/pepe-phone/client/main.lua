@@ -1081,11 +1081,10 @@ RegisterNUICallback('CreateInvoice', function(data, cb)
 end)
 
 RegisterNUICallback('PayInvoice', function(data, cb)
-    local sender = data.sender
-    local amount = data.amount
+
     local invoiceId = data.invoiceId
-    local SenderCitizenId = data.SenderCitizenId
-    local injectCharacterFilter = invoiceId
+
+    local injectCharacterFilter = tostring(invoiceId)
     injectCharacterFilter=injectCharacterFilter:gsub("%a", "")
     injectCharacterFilter=(injectCharacterFilter:gsub("%s", ""))
     injectCharacterFilter=(injectCharacterFilter:gsub("%d", ""))
@@ -1106,10 +1105,9 @@ RegisterNUICallback('PayInvoice', function(data, cb)
         return false
 	end
 
-    Framework.Functions.TriggerCallback('pepe-phone:server:PayInvoice', function(CanPay, Invoices)
-        if CanPay then PhoneData.Invoices = Invoices end
+    Framework.Functions.TriggerCallback('okokBilling:PayInvoice', function(CanPay)
         cb(CanPay)
-    end, sender, amount, invoiceId, SenderCitizenId)
+    end, invoiceId)
 end)
 
 RegisterNUICallback('DeclineInvoice', function(data, cb)
@@ -1302,10 +1300,20 @@ RegisterNetEvent('pepe-phone:client:TransferMoney')
 AddEventHandler('pepe-phone:client:TransferMoney', function(amount, newmoney)
     PhoneData.PlayerData.money.bank = newmoney
     if PhoneData.isOpen then
-        print('Tiền ít')
         SendNUIMessage({ action = "UpdateBank", NewBalance = PhoneData.PlayerData.money.bank })
     else
         SendNUIMessage({ action = "PhoneNotification", PhoneNotify = { title = "Ngân hàng", text = "Có $"..amount.." Nhận được!", icon = "fas fa-university", color = "#8c7ae6", }, })
+    end
+end)
+
+RegisterNetEvent("pepe-hud:client:money:change")
+AddEventHandler("pepe-hud:client:money:change", function(type, amount, isMinus)
+    if type == "bank" then
+        Framework.Functions.GetPlayerData(function(PlayerData)
+            bankAmount = PlayerData.money["bank"]
+            PhoneData.PlayerData.money.bank = bankAmount
+            SendNUIMessage({ action = "UpdateBank", NewBalance = PhoneData.PlayerData.money.bank })
+        end)
     end
 end)
 

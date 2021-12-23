@@ -32,3 +32,5 @@ Citizen.CreateThread(function()
 	AddTextEntry('STRING', "<FONT FACE='arial font'>~a~</FONT>")
 	AddTextEntry('CUSTOM_STRING', "<FONT FACE='arial font'>~a~</FONT>")
 end)
+
+exports("GetCoreObject", GetCoreObject)

@@ -18,11 +18,12 @@ RegisterNetEvent('pepe-spawn:client:choose:spawn')
 AddEventHandler('pepe-spawn:client:choose:spawn', function()
     Citizen.SetTimeout(450, function()
       Framework.Functions.GetPlayerData(function(PlayerData)
+        print(PlayerData)
         local InJail = false
         if PlayerData.metadata["jailtime"] > 0 then
             InJail = true
         end
-        print(PlayerData.metadata["jailtime"], InJail)
+        
         SetEntityVisible(GetPlayerPed(-1), false)
         DoScreenFadeOut(250)
         Citizen.Wait(2000)

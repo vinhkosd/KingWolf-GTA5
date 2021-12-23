@@ -160,16 +160,16 @@ Config.PhoneApplications = {
         slot = 9,
         Alerts = 0,
     },
-    ["bikefood"] = {
-        app = "bikefood",
-        color = "#f233dc",
-        icon = "fas fa-utensils",
-        tooltipText = "Bike food",
-        job = false,
-        blockedjobs = {},
-        slot = 13,
-        Alerts = 0,
-    },
+    -- ["bikefood"] = {
+    --     app = "bikefood",
+    --     color = "#f233dc",
+    --     icon = "fas fa-utensils",
+    --     tooltipText = "Bike food",
+    --     job = false,
+    --     blockedjobs = {},
+    --     slot = 13,
+    --     Alerts = 0,
+    -- },
 }
 
 Config.MaxSlots = 20

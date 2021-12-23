@@ -156,32 +156,33 @@ AddEventHandler('pepe-fishing:client:use:fishingrod', function()
         if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
             if not IsEntityInWater(GetPlayerPed(-1)) then
                 FreezeEntityPosition(GetPlayerPed(-1), true)
-                if not exports['pepe-progressbar']:GetTaskBarStatus() then
-                    if not DoingSomething then
-                        DoingSomething = true
-                        TriggerEvent('pepe-inventory:client:set:busy', true)
-                         Citizen.SetTimeout(1000, function()
-                            TriggerEvent('pepe-fishing:client:rod:anim')
-                             Framework.Functions.Progressbar("drink", "Đang câu cá..", 5000, false, true, {
-                                 disableMovement = true,
-                                 disableCarMovement = false,
-                                 disableMouse = false,
-                                 disableCombat = true,
-                             }, {}, {}, {}, function() -- Done
-                                DoingSomething = false
-                                TriggerEvent('pepe-inventory:client:set:busy', false)
-                                CatchFish()
-                             end, function()
-                                DoingSomething = false
-                                exports['pepe-assets']:RemoveProp()
-                                TriggerEvent('pepe-inventory:client:set:busy', false)
-                                Framework.Functions.Notify("Đã hủy bỏ..", "error")
-                                FreezeEntityPosition(GetPlayerPed(-1), false)
-                                StopAnimTask(GetPlayerPed(-1), "amb@world_human_stand_fishing@idle_a", "idle_a", 1.0)
-                             end)
-                         end)
-                    end
-                end
+                CatchFish()
+                -- if not exports['pepe-progressbar']:GetTaskBarStatus() then
+                --     if not DoingSomething then
+                --         DoingSomething = true
+                --         TriggerEvent('pepe-inventory:client:set:busy', true)
+                --          Citizen.SetTimeout(1000, function()
+                --             TriggerEvent('pepe-fishing:client:rod:anim')
+                --              Framework.Functions.Progressbar("drink", "Đang câu cá..", 5000, false, true, {
+                --                  disableMovement = true,
+                --                  disableCarMovement = false,
+                --                  disableMouse = false,
+                --                  disableCombat = true,
+                --              }, {}, {}, {}, function() -- Done
+                --                 DoingSomething = false
+                --                 TriggerEvent('pepe-inventory:client:set:busy', false)
+                --                 CatchFish()
+                --              end, function()
+                --                 DoingSomething = false
+                --                 exports['pepe-assets']:RemoveProp()
+                --                 TriggerEvent('pepe-inventory:client:set:busy', false)
+                --                 Framework.Functions.Notify("Đã hủy bỏ..", "error")
+                --                 FreezeEntityPosition(GetPlayerPed(-1), false)
+                --                 StopAnimTask(GetPlayerPed(-1), "amb@world_human_stand_fishing@idle_a", "idle_a", 1.0)
+                --              end)
+                --          end)
+                --     end
+                -- end
             else
                 Framework.Functions.Notify('Bạn đang bơi.', 'error')
 				FreezeEntityPosition(GetPlayerPed(-1), false)
@@ -238,6 +239,12 @@ function CatchFish()
                         ['minWidth'] = 5,
                         ['maxWidth'] = 6,
                     },
+                    [5] = {
+                        ['minDuration'] = 400,
+                        ['maxDuration'] = 500,
+                        ['minWidth'] = 4,
+                        ['maxWidth'] = 5,
+                    },
                 }
 
                 Framework.Functions.TriggerCallback("pepe-fishing:server:get:attempt", function(NeededAttempts)
@@ -260,7 +267,7 @@ function CatchFish()
                         pos = math.random(10, 30),
                         width = widthRandomValue,
                     }, function()
-                        if SucceededAttempts + 1 >= NeededAttempts then
+                        if SucceededAttempts + 1 >= NeededAttempts + 1 then
                             -- Finish
                         FreezeEntityPosition(GetPlayerPed(-1), false)
                         exports['pepe-assets']:RemoveProp()

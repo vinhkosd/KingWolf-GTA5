@@ -211,7 +211,8 @@ Citizen.CreateThread(function()
 			local CraftDistance = GetDistanceBetweenCoords(plyCoords, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"])
 
 			if CraftDistance < 3.0 and ((tonumber(PlayerJob.grade.level) == 1) or PlayerJob.isboss) and onDuty then
-				Framework.Functions.DrawText3D(Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"] + 1.0, "~g~[F]~w~ - Pha chế")
+				DrawMarker(2, Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
+				Framework.Functions.DrawText3D(Config.Locations["Craft"]["x"], Config.Locations["Craft"]["y"], Config.Locations["Craft"]["z"] + 0.15, "~g~[F]~w~ - Pha chế")
 				if IsControlJustReleased(0, 23) and CraftDistance < 1.0 then
 					ItemsToItemInfo()
 					local Crating = {}
@@ -233,14 +234,14 @@ Citizen.CreateThread(function()
 				
 				if StallsDist < 1.5 then
 					inRange = true
-					Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] - 0.97, "~g~[E]~w~ Bàn "..i)
+					Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] , "~g~[E]~w~ Bàn "..i)
 					if IsControlJustReleased(0, Keys["E"]) then
 						Other = {maxweight = 10000, slots = 6}
 						TriggerServerEvent("pepe-inventory:server:OpenInventory", "stash", "tra_da_ban_"..i, Other)
 						TriggerEvent("pepe-inventory:client:SetCurrentStash", "tra_da_ban_"..i)
 					end
 				elseif StallsDist < 10 then
-					-- DrawMarker(2, tableCoords["x"], tableCoords["y"], tableCoords["z"]- 0.97, 0, 0, 0, 0, 0, 0, 0.90, 0.90, 0.90, 255, 255, 255, 200, 0, 0, 0, 0)
+					-- DrawMarker(2, tableCoords["x"], tableCoords["y"], tableCoords["z"], 0, 0, 0, 0, 0, 0, 0.1, 0.1, 0.05, 255, 255, 255, 255, 0, 0, 0, 0)
 				end
 			end
 
@@ -250,12 +251,12 @@ Citizen.CreateThread(function()
 				
 				if WaterDist < 1.5 then
 					inRange = true
-					Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] - 0.97, "~g~[E]~w~ Lấy nước")
+					Framework.Functions.DrawText3D(tableCoords["x"], tableCoords["y"], tableCoords["z"] , "~g~[E]~w~ Lấy nước")
 					if IsControlJustReleased(0, Keys["E"]) and not isPickingUp then
 						GetWater()
 					end
 				elseif WaterDist < 10 then
-					DrawMarker(1, tableCoords["x"], tableCoords["y"], tableCoords["z"]- 0.97, 0, 0, 0, 0, 0, 0, 0.90, 0.90, 0.90, 255, 255, 255, 200, 0, 0, 0, 0)
+					DrawMarker(2, tableCoords["x"], tableCoords["y"], tableCoords["z"], 0, 0, 0, 0, 0, 0, 0.1, 0.1, 0.05, 255, 255, 255, 255, 0, 0, 0, 0)
 				end
 			end
 
@@ -278,7 +279,7 @@ Citizen.CreateThread(function()
 				local ShopDistance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Locations["ShopAuto"][i], true)
 
 				if ShopDistance < 10.0 then
-					DrawMarker(1, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 191, 255, 0, 0, 0, 0)
+					DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z - 1 , 0, 0, 0, 0, 0, 0, 0.1, 0.1, 0.05, 255, 255, 255, 255, 0, 0, 0, 0)
 
 					-- DrawMarker(2, Config.Locations["ShopAuto"][i].x, Config.Locations["ShopAuto"][i].y, Config.Locations["ShopAuto"][i].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, true, false, false, false)
 				end
@@ -325,7 +326,7 @@ Citizen.CreateThread(function()
 				local RentDist = GetDistanceBetweenCoords(plyCoords, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"])
 
 				if RentDist < 20.0 then
-					DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+					DrawMarker(2, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				end
 				if RentDist < 1.0 then
 					Framework.Functions.DrawText3D(Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"] + 0.15, "~g~[E]~w~ Lấy xe giao hàng")
@@ -339,10 +340,10 @@ Citizen.CreateThread(function()
 			if IsPedInAnyVehicle(GetPlayerPed(-1)) then
 				local vehModel = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
 
-				-- DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+				-- DrawMarker(2, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 				if vehModel:lower() == Config.CarModel then
 					if UnRentDist < 20.0 then
-					DrawMarker(1, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"]-0.97, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 209, 41, 242, 100, false, true, 2, false, false, false, false)
+					DrawMarker(2, Config.Locations["TakeVehicle"]["x"], Config.Locations["TakeVehicle"]["y"], Config.Locations["TakeVehicle"]["z"], 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, true, 2, false, false, false, false)
 					end
 
 					if UnRentDist < 1.0 then
@@ -352,7 +353,6 @@ Citizen.CreateThread(function()
 						end
 					end
 				end
-				
 			end
 		end
 	end

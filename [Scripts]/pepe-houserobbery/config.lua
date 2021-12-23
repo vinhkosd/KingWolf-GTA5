@@ -2,7 +2,7 @@ Config = Config or {}
 
 Config.ZOffSet = 42.0
 
-Config.CopsNeeded = 5
+Config.CopsNeeded = 3
 Config.EnableOpeningHours = true -- Enable opening hours?
 Config.OpenHour = 21 -- From what hour should the pawnshop be open?
 Config.CloseHour = 7 -- From what hour should the pawnshop be closed?

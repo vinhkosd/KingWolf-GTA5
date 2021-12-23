@@ -286,15 +286,15 @@ end)
 RegisterNetEvent('pepe-hospital:client:SendBillEmail')
 AddEventHandler('pepe-hospital:client:SendBillEmail', function(amount)
     SetTimeout(math.random(2500, 4000), function()
-        local gender = "nam"
+        local gender = "anh"
         if Framework.Functions.GetPlayerData().charinfo.gender == 1 then
-            gender = "nữ"
+            gender = "chị"
         end
         local charinfo = Framework.Functions.GetPlayerData().charinfo
         TriggerServerEvent('pepe-phone:server:sendNewMail', {
             sender = "Bệnh viện",
             subject = "Chi phí bệnh viện",
-            message = "Chào bạn " .. gender .. " " .. charinfo.lastname .. ",<br /><br />Bạn sẽ nhận được một e-mail với chi phí của chuyến thăm bệnh viện cuối cùng.<br />Các chi phí cuối cùng : <strong>$"..amount.."</strong><br /><br />Lời chúc tốt nhất!",
+            message = "Chào " .. gender .. " " .. charinfo.lastname .. ",<br /><br />Bạn nhận được thông tin chi phí bệnh viện.<br />Tổng chi phí : <strong>$"..amount.."</strong><br /><br />, Xin chân thành cảm ơn!",
             button = {}
         })
     end)

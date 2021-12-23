@@ -148,7 +148,7 @@ AddEventHandler('pepe-inventory:server:CraftPizzaItems', function(itemName, item
 						end
 					end
 				else
-					TriggerClientEvent('Framework:Notify', src, "Pha chế thành công, thành phẩm được vào quầy bán trà đá!", "success")
+					TriggerClientEvent('Framework:Notify', src, "Pha chế thành công, thành phẩm được vào quầy bán!", "success")
 				end
 			else
 				Player.Functions.AddItem(itemName, CraftToAmount, toSlot)

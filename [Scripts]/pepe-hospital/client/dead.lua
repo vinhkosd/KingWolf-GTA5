@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
                 DrawTxt(0.83, 1.44, 1.0,1.0,0.6, "HỒI SINH SAU: ~r~" .. math.ceil(Config.Timer) .. "~w~ GIÂY", 255, 255, 255, 255)
             elseif not Config.IsInBed then
                 local textMatDo = CurrentDoctors == 0 and 'KHÔNG MẤT ĐỒ, KHÔNG CÓ BS ONLINE' or 'LƯU Ý MẤT ĐỒ SAU KHI NHẤN E'
-                DrawTxt(0.76, 1.44, 1.0, 1.0, 0.6, "~w~ GIỮ ~r~[E] ("..Holding..")~w~ ĐỂ HỒI SINH ~r~($5000)~w~ ~r~("..textMatDo..")~s~", 255, 255, 255, 255)
+                DrawTxt(0.76, 1.44, 1.0, 1.0, 0.6, "~w~ GIỮ ~r~[E] ("..Holding..")~w~ ĐỂ HỒI SINH ~r~($2000)~w~ ~r~("..textMatDo..")~s~", 255, 255, 255, 255)
             end
         else
             Citizen.Wait(450)

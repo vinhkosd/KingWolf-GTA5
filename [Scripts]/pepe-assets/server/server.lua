@@ -37,3 +37,7 @@ end)
 Framework.Commands.Add("id", "Check id của bạn?", {}, false, function(source, args)
     TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "warning", "ID: "..source)
 end)
+
+Framework.Commands.Add("carblacklist", "Bật/Tắt blacklistcar", {}, false, function(source, args)
+    TriggerClientEvent('pepe-assets:client:turnoffblacklist', -1)
+end, "admin")

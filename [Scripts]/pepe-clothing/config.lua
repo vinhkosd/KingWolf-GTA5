@@ -531,7 +531,8 @@ Config.Stores = {
 
 Config.ClothingRooms = {
     [1] = {requiredJob = "police", x = 462.07, y = -999.08, z = 30.68, cameraLocation = {x = 462.02, y = -998.90, z = 30.68, h = 87.96}},
-    [3] = {requiredJob = "ambulance", x = -443.7537, y = -309.9167, z = 34.910541, cameraLocation = {x = -442.3039, y = -312.8988, z = 34.910549, h = 198.897384}},
+    -- [3] = {requiredJob = "ambulance", x = -443.7537, y = -309.9167, z = 34.910541, cameraLocation = {x = -442.3039, y = -312.8988, z = 34.910549, h = 198.897384}},
+    [3] = {requiredJob = "ambulance", x = 300.16, y = -598.93, z = 43.28, cameraLocation = {x = 301.09, y = -596.09, z = 43.28, h = 157.5}},
     -- { x = -443.7537, y = -309.9167, z = 34.910541 }
     -- table = { x = -442.3039, y = -312.8988, z = 34.910549, h = 14.897384 }
     [4] = {requiredJob = "cardealer", x = -803.5434, y = -201.5462, z = 37.15015, cameraLocation = {x = 301.09, y = -596.09, z = 43.28, h = 157.5}},

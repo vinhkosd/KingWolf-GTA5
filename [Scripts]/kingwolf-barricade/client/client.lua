@@ -175,7 +175,11 @@ Citizen.CreateThread(function()
 									DrawLine(plyCoords.x, plyCoords.y, plyCoords.z, coords.x, coords.y, coords.z, color.r, color.g, color.b, color.a)
 									-- DrawMarker(28, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.1, 0.1, 0.1, color.r, color.g, color.b, color.a, false, true, 2, nil, nil, false)
 								end
-								SetEntityCoords(ObjectList[i].object, coords.x, coords.y, coords.z + 0.15)
+								FreezeEntityPosition(ObjectList[i].object, true);
+								SetEntityCollision(ObjectList[i].object, false, false);
+								-- SetEntityVisible(ObjectList[i].object, false, false);
+								SetEntityAlpha(ObjectList[i].object, 80, 0)
+								SetEntityCoords(ObjectList[i].object, coords.x, coords.y, coords.z + 3.0)
 							else
 								ChangeEntityHeading(ObjectList[i].object)
 							end
@@ -252,7 +256,7 @@ function CreateObjectAndAttachToPlayer(objectname)
 		local heading = GetEntityHeading(GetPlayerPed(-1))
 		local forward = GetEntityForwardVector(PlayerPedId())
 		local x, y, z = table.unpack(plyCoords + forward * 0.5)
-		local spawnedObj = CreateObject(objectname, x, y, z, false, false, false)
+		local spawnedObj = CreateObject(objectname, x, y, z, true, true, true)
 		PlaceObjectOnGroundProperly(spawnedObj)
 		SetEntityHeading(spawnedObj, heading)
 
@@ -266,7 +270,7 @@ function CreateObjectAndAttachToPlayer(objectname)
 		Citizen.Wait(5)
 		local dragger = GetPlayerPed(-1)
 		local heading = GetEntityHeading(dragger)
-		SetEntityCoords(spawnedObj, GetOffsetFromEntityInWorldCoords(dragger, 0.0, 1.5, -1.0))
+		SetEntityCoords(spawnedObj, GetOffsetFromEntityInWorldCoords(dragger, 0.0, 1.5, 2.0))
 		-- AttachEntityToEntity(spawnedObj, dragger, 11816, 0.0, 2.5, -1.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
 		objectId = objectId + 1
 	end
@@ -288,6 +292,9 @@ function DetachObj()
 			ClearPedTasks(PlayerPedId())
 			Citizen.Wait(50)
 			FreezeEntityPosition(ObjectList[i].object, true)
+			SetEntityCollision(ObjectList[i].object, true, true);
+			SetEntityVisible(ObjectList[i].object, true, false);
+			ResetEntityAlpha(ObjectList[i].object);
 		end
 	end
 end

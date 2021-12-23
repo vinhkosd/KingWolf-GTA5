@@ -96,29 +96,29 @@ end)
 
 RegisterNetEvent('pepe-hospital:client:use:bandage')
 AddEventHandler('pepe-hospital:client:use:bandage', function()
-  Citizen.SetTimeout(1000, function()
-     exports['pepe-assets']:AddProp('HealthPack')
-     Framework.Functions.Progressbar("use_bandage", "Đang sử dụng băng gạc..", 4000, false, true, {
-        disableMovement = false,
-        disableCarMovement = false,
-     	disableMouse = false,
-     	disableCombat = true,
-     }, {
-     	animDict = "anim@amb@business@weed@weed_inspecting_high_dry@",
-     	anim = "weed_inspecting_high_base_inspector",
-     	flags = 49,
-     }, {}, {}, function() -- Done
-         exports['pepe-assets']:RemoveProp()
-         HealRandomBodyPart()
-         TriggerEvent("pepe-inventory:client:ItemBox", Framework.Shared.Items['bandage'], "remove")
-         StopAnimTask(PlayerPedId(), "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
-         SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 40)
-     end, function() -- Cancel
-         exports['pepe-assets']:RemoveProp()
-         StopAnimTask(PlayerPedId(), "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
-         Framework.Functions.Notify("Thất bại", "error")
-     end)
-  end)
+    Citizen.SetTimeout(1000, function()
+        exports['pepe-assets']:AddProp('HealthPack')
+        Framework.Functions.Progressbar("use_bandage", "Đang sử dụng băng gạc..", 4000, false, true, {
+            disableMovement = false,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        }, {
+            animDict = "anim@amb@business@weed@weed_inspecting_high_dry@",
+            anim = "weed_inspecting_high_base_inspector",
+            flags = 49,
+        }, {}, {}, function() -- Done
+            exports['pepe-assets']:RemoveProp()
+            HealRandomBodyPart()
+            TriggerEvent("pepe-inventory:client:ItemBox", Framework.Shared.Items['bandage'], "remove")
+            StopAnimTask(PlayerPedId(), "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
+            SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 15)
+        end, function() -- Cancel
+            exports['pepe-assets']:RemoveProp()
+            StopAnimTask(PlayerPedId(), "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
+            Framework.Functions.Notify("Thất bại", "error")
+        end)
+    end)
 end)
 
 RegisterNetEvent('pepe-hospital:client:use:health-pack')
@@ -127,7 +127,7 @@ AddEventHandler('pepe-hospital:client:use:health-pack', function()
     local RandomTime = math.random(15000, 20000)
     if Player ~= -1 and Distance < 2.5 then
       if IsTargetDead(GetPlayerServerId(Player)) then
-         Framework.Functions.Progressbar("hospital_revive", "Đang giúp đỡ công dân..", RandomTime, false, true, {
+         Framework.Functions.Progressbar("hospital_revive", "Đang cứu..", RandomTime, false, true, {
              disableMovement = false,
              disableCarMovement = false,
              disableMouse = false,
@@ -146,7 +146,7 @@ AddEventHandler('pepe-hospital:client:use:health-pack', function()
              Framework.Functions.Notify("Thất bại!", "error")
          end)
         else
-            Framework.Functions.Notify("Công dân không bất tỉnh..", "error")
+            Framework.Functions.Notify("Người chơi không bất tỉnh..", "error")
         end
     end
 end)

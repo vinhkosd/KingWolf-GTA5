@@ -4,18 +4,18 @@
 
 /// Config Area ///
 
-var guild = "917005609113641020";//old KINGWOLF 905682786134941717
-var botToken = "OTA1Nzg0NDIzNzU1MTg2MjI2.YYPHew.N9JG2AK0jZKzqbZOxH8Gx4EniP4";
+var guild = "916665114034319441";//old KINGWOLF 905682786134941717
+var botToken = "OTIzNDcyODg2NDYxNzYzNTg0.YcQhJQ.rQEcJWkMnbDnVf0wt_y8KF4PIUs";
 
 var whitelistRoles = [ // Roles by ID that are whitelisted.
-    "917006759770619924"//old role - 905783237547286528
+    "922812371792179221"//old role - 905783237547286528
 ]
 
 var blacklistRoles = [ // Roles by Id that are blacklisted.
-    "919471645238890586"//old role - 905783410377764866
+    "923579749878616115"//old role - 905783410377764866
 ]
 
-var notWhitelistedMessage = "Vui lòng truy cập link Discord https://discord.gg/DHntjapreK để được đăng ký whitelist. Nếu bạn đã được cấp whitelist, hãy thử tắt FiveM và mở lại Discord trước sau đó mở FiveM để kết nối!"
+var notWhitelistedMessage = "Vui lòng truy cập link Discord https://discord.gg/c9J3R3SMZb để được đăng ký whitelist. Nếu bạn đã được cấp whitelist, hãy thử tắt FiveM và mở lại Discord trước sau đó mở FiveM để kết nối!"
 var noGuildMessage = "Guild Not Detected. It seems you're not in the guild for this community."
 var blacklistMessage = "Bạn đã bị cấm khỏi máy chủ"
 var debugMode = true
@@ -85,7 +85,7 @@ on('playerConnecting', (name, setKickReason, deferrals) => {
                 });
             } else {
                 if(debugMode) console.log(`^1'${name}' was not granted access as a Discord identifier could not be found.^7`);
-                return deferrals.done(`Vui lòng bật discord trước khi khởi động FiveM - https://docs.faxes.zone/c/fivem/debugging-discord - Discord: https://discord.gg/DHntjapreK`);
+                return deferrals.done(`Vui lòng bật discord trước khi khởi động FiveM - https://docs.faxes.zone/c/fivem/debugging-discord - Discord: https://discord.gg/c9J3R3SMZb`);
             }
         }, 0)
     }, 0)

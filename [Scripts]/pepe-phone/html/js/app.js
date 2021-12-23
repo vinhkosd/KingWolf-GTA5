@@ -456,8 +456,6 @@ QB.Phone.Notifications.Add = function(icon, title, text, color, timeout) {
 }
 
 QB.Phone.Functions.LoadPhoneData = function(data) {
-    console.log(JSON.stringify(data))
-    console.log((data))
     QB.Phone.Data.PlayerData = data.PlayerData;
     QB.Phone.Data.PlayerJob = data.PlayerJob;
     QB.Phone.Data.MetaData = data.PhoneData.MetaData;

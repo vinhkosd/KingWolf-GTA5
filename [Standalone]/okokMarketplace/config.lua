@@ -76,9 +76,9 @@ Config.BlacklistVehicles = { -- all vehicles that are not allowed to be sold on 
 
 -- To set your Discord Webhook URL go to server.lua, line 2
 
-Config.BotName = 'KingWolf BOT' -- Write the desired bot name
+Config.BotName = 'LosAngelesCity' -- Write the desired bot name
 
-Config.ServerName = 'KINGWOLF CITY' -- Write your server's name
+Config.ServerName = 'LosAngelesCity' -- Write your server's name
 
 Config.IconURL = '' -- Insert your desired image link
 

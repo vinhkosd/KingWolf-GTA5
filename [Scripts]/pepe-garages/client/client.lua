@@ -386,31 +386,21 @@ function DoCarDamage1(Vehicle, EngineHealth, BodyHealth)
     return
   end
   
-	SmashWindows = false
-	damageOutside = false
-	damageOutside2 = false 
+	SmashWindows = true
+	damageOutside = true
+	damageOutside2 = true 
 	local engine = EngineHealth + 0.0
 	local body = BodyHealth + 0.0
 	if engine <= 1000.0 then
-		engine = 110.0
+		engine = 300.0
 	end
 
 	if body <= 1000.0 then
-		body = 110.0
+		body = 300.0
     damageOutside = true
     damageOutside2 = true
 	end
-	-- if body < 950.0 then
-	-- 	SmashWindows = true
-	-- end
 
-	-- if body < 920.0 then
-	-- 	damageOutside = true
-	-- end
-
-	-- if body < 920.0 then
-	-- 	damageOutside2 = true
-	-- end
 	Citizen.Wait(100)
 	SetVehicleEngineHealth(Vehicle, engine)
   SetVehicleBodyHealth(Vehicle, body)

@@ -98,3 +98,7 @@ AddEventHandler('pepe-hud:server:remove:stress', function(Amount)
       TriggerClientEvent("pepe-hud:client:update:stress", Player.PlayerData.source, NewStress)
     end
 end)
+
+Framework.Commands.Add("tathud", "Bật/Tắt HUD", {}, false, function(source, args)
+	TriggerClientEvent('pepe-hud:OnOffHud', source)
+end)

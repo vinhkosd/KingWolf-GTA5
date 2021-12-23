@@ -72,24 +72,24 @@ Framework.Functions.CreateCallback('pepe-phone:server:GetPhoneData', function(so
             end
 
             Framework.Functions.ExecuteSql(false, "SELECT * FROM characters_bills WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(invoices)
-                if invoices[1] ~= nil then
-                    for k, v in pairs(invoices) do
-                        local Ply = Framework.Functions.GetPlayerByCitizenId(v.sender)
-                        if Ply ~= nil then
-                            v.number = Ply.PlayerData.charinfo.phone
-                        else
-                            Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.sender.."'", function(res)
-                                if res[1] ~= nil then
-                                    res[1].charinfo = json.decode(res[1].charinfo)
-                                    v.number = res[1].charinfo.phone
-                                else
-                                    v.number = nil
-                                end
-                            end)
-                        end
-                    end
-                    PhoneData.Invoices = invoices
-                end
+                -- if invoices[1] ~= nil then
+                --     for k, v in pairs(invoices) do
+                --         local Ply = Framework.Functions.GetPlayerByCitizenId(v.sender)
+                --         if Ply ~= nil then
+                --             v.number = Ply.PlayerData.charinfo.phone
+                --         else
+                --             Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.sender.."'", function(res)
+                --                 if res[1] ~= nil then
+                --                     res[1].charinfo = json.decode(res[1].charinfo)
+                --                     v.number = res[1].charinfo.phone
+                --                 else
+                --                     v.number = nil
+                --                 end
+                --             end)
+                --         end
+                --     end
+                --     PhoneData.Invoices = invoices
+                -- end
 
                 Framework.Functions.ExecuteSql(false, "SELECT * FROM characters_vehicles WHERE forSale = '1'", function(cars)
                     if cars ~= nil then
@@ -447,138 +447,61 @@ AddEventHandler('pepe-phone:server:CallContact', function(TargetData, CallId, An
     end
 end)
 
--- Framework.Functions.CreateCallback('pepe-phone:server:PayInvoice', function(source, cb, sender, amount, invoiceId)
---     local src = source
---     local Ply = Framework.Functions.GetPlayer(src)
---         if Ply.PlayerData.money.bank >= amount then
---             Ply.Functions.RemoveMoney('bank', amount, "paid-invoice")
---             TriggerEvent("pepe-bossmenu:server:addAccountMoney", job, amount)
---             Framework.Functions.ExecuteSql(true, "DELETE FROM `characters_bills` WHERE `invoiceid` = '"..invoiceId.."'")
---             cb(true)
---         else
---             cb(false)
---         end
--- end)
 -- Hoa don chuyen tien vao quy doanh nghiep
-Framework.Functions.CreateCallback('pepe-phone:server:PayInvoice', function(source, cb, sender, amount, invoiceId, SenderCitizenId)
-    local src = source
-    local job = sender
-    -- local amount = tonumber(amount)
-    local Ply = Framework.Functions.GetPlayer(src)
-    Framework.Functions.ExecuteSql(false, "SELECT * FROM `characters_bills` WHERE `citizenid` = '"..Ply.PlayerData.citizenid.."' and `invoiceid` = '"..invoiceId.."'", function(invoices)
-        if invoices[1] ~= nil then
-            local invoiceData = invoices[1]
-            local amount = invoiceData.amount
-            if invoiceData.amount ~= nil then
-                if Ply.PlayerData.money.bank >= amount then
-                    Ply.Functions.RemoveMoney('bank', amount, "paid-invoice")
-                    local senderPlayer = Framework.Functions.GetPlayerByCitizenId(SenderCitizenId)
-                    if senderPlayer ~= nil then
-                        TriggerClientEvent('pepe-phone:client:addNotification', senderPlayer.PlayerData.source, "Hoá đơn "..amount.."$ của bạn vừa được trả!")
-                        TriggerClientEvent('Framework:Notify', senderPlayer.PlayerData.source, "Hoá đơn "..amount.."$ của bạn vừa được trả!", "success")
-                    end
-                    local bossList = FindBossPlayerByJobName(job)
-                    for _, player in pairs(bossList) do
-                        TriggerClientEvent('pepe-phone:client:addNotification', player.source, "Quỹ vừa nhận được "..amount.."$ từ hoá đơn thanh toán!")
-                        TriggerClientEvent('Framework:Notify', player.source, "Quỹ vừa nhận được "..amount.."$ từ hoá đơn thanh toán!", "success")
-                    end
-                    TriggerEvent("pepe-bossmenu:server:addAccountMoney", job, amount)
-                    Framework.Functions.ExecuteSql(true, "DELETE FROM `characters_bills` WHERE `invoiceid` = '"..invoiceId.."'")
-                    cb(true)
-                else
-                    cb(false)
-                end
-            else
-                TriggerClientEvent('pepe-phone:client:addNotification', Ply.PlayerData.source, "Không thể thanh toán hoá đơn này, vui lòng liên hệ admin!")
-            end
-        else
-            TriggerClientEvent('pepe-phone:client:addNotification', Ply.PlayerData.source, "Không tìm thấy hoá đơn, vui lòng tắt điện thoại sau đó thử lại!")
-            -- báo lỗi ko tìm thấy hoá đơn
-        end
-    end)
+Framework.Functions.CreateCallback('pepe-phone:server:PayInvoice', function(source, cb, invoiceId)
     
 end)
 
 Framework.Functions.CreateCallback('pepe-phone:server:DeclineInvoice', function(source, cb, sender, amount, invoiceId, SenderCitizenId)
-    local src = source
-    local Ply = Framework.Functions.GetPlayer(src)
-    local Trgt = Framework.Functions.GetPlayerByCitizenId(sender)
-    local Invoices = {}
-    local senderPlayer = Framework.Functions.GetPlayerByCitizenId(SenderCitizenId)
-        if senderPlayer ~= nil then
-            TriggerClientEvent('pepe-phone:client:addNotification', senderPlayer.PlayerData.source, "Hoá đơn "..amount.."$ bạn vừa viết đã bị huỷ!")
-            TriggerClientEvent('Framework:Notify', senderPlayer.PlayerData.source, "Hoá đơn "..amount.."$ bạn vừa viết đã bị huỷ!", "success")
-        end
-    Framework.Functions.ExecuteSql(true, "DELETE FROM `characters_bills` WHERE `invoiceid` = '"..invoiceId.."'")
-    Framework.Functions.ExecuteSql(false, "SELECT * FROM `characters_bills` WHERE `citizenid` = '"..Ply.PlayerData.citizenid.."'", function(invoices)
-        if invoices[1] ~= nil then
-            for k, v in pairs(invoices) do
-                local Target = Framework.Functions.GetPlayerByCitizenId(v.sender)
-                if Target ~= nil then
-                    v.number = Target.PlayerData.charinfo.phone
-                else
-                    Framework.Functions.ExecuteSql(true, "SELECT * FROM `players` WHERE `citizenid` = '"..v.sender.."'", function(res)
-                        if res[1] ~= nil then
-                            res[1].charinfo = json.decode(res[1].charinfo)
-                            v.number = res[1].charinfo.phone
-                        else
-                            v.number = nil
-                        end
-                    end)
-                end
-            end
-            Invoices = invoices
-        end
-        cb(true, invoices)
-    end)
+    
 end)
 
 Framework.Functions.CreateCallback('pepe-phone:server:CreateInvoice', function(source, cb, id, amount, description)
-    local Player = Framework.Functions.GetPlayer(source)
-    local TargetPlayer = Framework.Functions.GetPlayer(tonumber(id))
-    local Amount = tonumber(amount)
-    local description = description
-    local injectCharacterFilter = description
+    -- local Player = Framework.Functions.GetPlayer(source)
+    -- local TargetPlayer = Framework.Functions.GetPlayer(tonumber(id))
+    -- local Amount = tonumber(amount)
+    -- local description = description
+    -- local injectCharacterFilter = description
 
-    injectCharacterFilter=injectCharacterFilter:gsub("%a", "")
-    injectCharacterFilter=(injectCharacterFilter:gsub("%s", ""))
-    injectCharacterFilter=(injectCharacterFilter:gsub("%d", ""))
+    -- injectCharacterFilter=injectCharacterFilter:gsub("%a", "")
+    -- injectCharacterFilter=(injectCharacterFilter:gsub("%s", ""))
+    -- injectCharacterFilter=(injectCharacterFilter:gsub("%d", ""))
 
-    if injectCharacterFilter ~= "" then
-        TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Nội dung không hợp lệ")
-        return false
-	end
-    if TargetPlayer ~= nil then
-       if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "mechanic" or Player.PlayerData.job.name == "cardealer" or Player.PlayerData.job.name == "bennys" or Player.PlayerData.job.name == "trada") then
-         if Amount > 0 then
-          TriggerClientEvent("pepe-police:client:bill:player", TargetPlayer.PlayerData.source, Amount)
-	   	  TriggerEvent('pepe-phone:server:add:invoice', TargetPlayer.PlayerData.citizenid, Amount, Player.PlayerData.job.name, 'invoice', description, Player.PlayerData.citizenid)  
-             TriggerClientEvent("Framework:Notify", source, "Ghi hoá đơn $"..Amount.." thành công" , "success")
-             TriggerClientEvent('pepe-phone:client:addNotification', TargetPlayer.PlayerData.source, "Bạn nhận được hoá đơn "..Amount.."$!")
-            --  TriggerClientEvent("Framework:Notify", TargetPlayer.PlayerData.source, "Hoá đơn $"..Amount.." vừa được thanh toán" , "success")
-            cb(true)
-         else
-             TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Số tiền phải cao hơn 0")
-             cb(false)
-         end
-       elseif Player.PlayerData.job.name == "realestate" then
-            if Amount > 0 then
-               TriggerEvent('pepe-phone:server:add:invoice', TargetPlayer.PlayerData.citizenid, Amount, 'Makelaar', 'realestate', description, Player.PlayerData.citizenid)  
-               cb(true)
-           else
-               TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Số tiền phải cao hơn 0")
-               cb(false)
-           end
-       else
-           TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Lệnh này chỉ dành cho các doanh nghiệp!")
-           cb(false)
-       end
+    -- if injectCharacterFilter ~= "" then
+    --     TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Nội dung không hợp lệ")
+    --     return false
+	-- end
+    -- if TargetPlayer ~= nil then
+    --    if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "mechanic" or Player.PlayerData.job.name == "cardealer" or Player.PlayerData.job.name == "bennys" or Player.PlayerData.job.name == "trada") then
+    --      if Amount > 0 then
+    --       TriggerClientEvent("pepe-police:client:bill:player", TargetPlayer.PlayerData.source, Amount)
+	--    	  TriggerEvent('pepe-phone:server:add:invoice', TargetPlayer.PlayerData.citizenid, Amount, Player.PlayerData.job.name, 'invoice', description, Player.PlayerData.citizenid)  
+    --          TriggerClientEvent("Framework:Notify", source, "Ghi hoá đơn $"..Amount.." thành công" , "success")
+    --          TriggerClientEvent('pepe-phone:client:addNotification', TargetPlayer.PlayerData.source, "Bạn nhận được hoá đơn "..Amount.."$!")
+    --         --  TriggerClientEvent("Framework:Notify", TargetPlayer.PlayerData.source, "Hoá đơn $"..Amount.." vừa được thanh toán" , "success")
+    --         cb(true)
+    --      else
+    --          TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Số tiền phải cao hơn 0")
+    --          cb(false)
+    --      end
+    --    elseif Player.PlayerData.job.name == "realestate" then
+    --         if Amount > 0 then
+    --            TriggerEvent('pepe-phone:server:add:invoice', TargetPlayer.PlayerData.citizenid, Amount, 'Makelaar', 'realestate', description, Player.PlayerData.citizenid)  
+    --            cb(true)
+    --        else
+    --            TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Số tiền phải cao hơn 0")
+    --            cb(false)
+    --        end
+    --    else
+    --        TriggerClientEvent('chatMessage', source, "HỆ THỐNG", "error", "Lệnh này chỉ dành cho các doanh nghiệp!")
+    --        cb(false)
+    --    end
        
-    --    Player.Functions.SetMetaData("lockpickrep", Player.PlayerData.metadata["lockpickrep"]+1)
-    else
-        TriggerClientEvent("Framework:Notify", source, "ID Không hợp lệ hoặc người chơi không online!" , "error")
-        TriggerClientEvent('pepe-phone:client:addNotification', source, "ID Không hợp lệ hoặc người chơi không online!")
-    end
+    -- --    Player.Functions.SetMetaData("lockpickrep", Player.PlayerData.metadata["lockpickrep"]+1)
+    -- else
+    --     TriggerClientEvent("Framework:Notify", source, "ID Không hợp lệ hoặc người chơi không online!" , "error")
+    --     TriggerClientEvent('pepe-phone:client:addNotification', source, "ID Không hợp lệ hoặc người chơi không online!")
+    -- end
 end)
 
 RegisterServerEvent('pepe-phone:server:UpdateHashtags')
@@ -1194,66 +1117,56 @@ Framework.Functions.CreateCallback('pepe-phone:server:GetGarageVehicles', functi
     end)
 end)
 
-
 Framework.Functions.CreateCallback('pepe-phone:server:GetInvoiceData', function(source, cb)
-    local Player = Framework.Functions.GetPlayer(source)
-    local InvoiceData = {}
-    Framework.Functions.ExecuteSql(false, "SELECT * FROM characters_bills WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(invoices)
-        if invoices[1] ~= nil then
-            for k, v in pairs(invoices) do
-                local Ply = Framework.Functions.GetPlayerByCitizenId(v.sender)
-                if Ply ~= nil then
-                    v.number = Ply.PlayerData.charinfo.phone
-                else
-                    Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.sender.."'", function(res)
-                        if res[1] ~= nil then
-                            res[1].charinfo = json.decode(res[1].charinfo)
-                            v.number = res[1].charinfo.phone
-                        else
-                            v.number = nil
-                        end
-                    end)
-                end
-            end
-            InvoiceData = invoices
-        end
-        cb(InvoiceData)
+    local Ply = Framework.Functions.GetPlayer(source)
+
+    Framework.Functions.ExecuteSql(false, 'SELECT * FROM okokBilling WHERE receiver_identifier = "'..Ply.PlayerData.citizenid..'" and status = "unpaid" ORDER BY id DESC'
+	, function(result)
+        local invoices = {}
+
+		if result ~= nil then
+			for i=1, #result, 1 do
+                local item = result[i]
+                item.type = "invoice"
+                item.sender = item.society_name.." - "..item.author_name
+                item.description = item.notes
+                item.amount = item.invoice_value
+                item.invoiceid = item.id
+                item.sendercitizenid = item.author_identifier
+				table.insert(invoices, result[i])
+			end
+		end
+
+		cb(invoices)
     end)
+    -- local Player = Framework.Functions.GetPlayer(source)
+    -- local InvoiceData = {}
+    -- Framework.Functions.ExecuteSql(false, "SELECT * FROM characters_bills WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(invoices)
+    --     if invoices[1] ~= nil then
+    --         for k, v in pairs(invoices) do
+    --             local Ply = Framework.Functions.GetPlayerByCitizenId(v.sender)
+    --             if Ply ~= nil then
+    --                 v.number = Ply.PlayerData.charinfo.phone
+    --             else
+    --                 Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.sender.."'", function(res)
+    --                     if res[1] ~= nil then
+    --                         res[1].charinfo = json.decode(res[1].charinfo)
+    --                         v.number = res[1].charinfo.phone
+    --                     else
+    --                         v.number = nil
+    --                     end
+    --                 end)
+    --             end
+    --         end
+    --         InvoiceData = invoices
+    --     end
+    --     cb(InvoiceData)
+    -- end)
 end)
-
-
-Framework.Functions.CreateCallback('pepe-phone:server:GetInvoiceData', function(source, cb)
-    local Player = Framework.Functions.GetPlayer(source)
-    local InvoiceData = {}
-    Framework.Functions.ExecuteSql(false, "SELECT * FROM characters_bills WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(invoices)
-        if invoices[1] ~= nil then
-            for k, v in pairs(invoices) do
-                local Ply = Framework.Functions.GetPlayerByCitizenId(v.sender)
-                if Ply ~= nil then
-                    v.number = Ply.PlayerData.charinfo.phone
-                else
-                    Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..v.sender.."'", function(res)
-                        if res[1] ~= nil then
-                            res[1].charinfo = json.decode(res[1].charinfo)
-                            v.number = res[1].charinfo.phone
-                        else
-                            v.number = nil
-                        end
-                    end)
-                end
-            end
-            InvoiceData = invoices
-        end
-        cb(InvoiceData)
-    end)
-end)
-
 
 RegisterServerEvent('pepe-phone:server:add:invoice')
 AddEventHandler('pepe-phone:server:add:invoice', function(TargetPlayer, Amount, Sender, Type, Description, SenderCitizenId)
-    local PhoneData = {}
-    local invoiceserie = math.random(111,999)..'-MIL-'..math.random(111,999)
-    Framework.Functions.ExecuteSql(false, "INSERT INTO `characters_bills` (`citizenid`, `amount`, `invoiceid`, `sender`, `type`, `description`, `sendercitizenid`) VALUES ('"..TargetPlayer.."', '"..Amount.."', '"..invoiceserie.."', '"..Sender.."', '"..Type.."', '"..Description.."', '"..SenderCitizenId.."')")
+
 end)
 
 Framework.Functions.CreateCallback('pepe-phone:server:HasPhone', function(source, cb)
@@ -1323,3 +1236,23 @@ Framework.Commands.Add("triggercall", "Gia Lap cuoc goi", {}, false, function(so
     local rndCallId = math.random(100000000, 999999999)
     TriggerClientEvent('pepe-phone:client:GetCalled', Ply.PlayerData.source, Ply.PlayerData.charinfo.phone, rndCallId, false)
 end, 'admin')
+
+Framework.Commands.Add("viethoadon", "Viết hóa đơn", {{name="id", help="ID"},{name="money", help="Số tiền"}}, true, function(source, args)
+    local src = source
+    local Player = Framework.Functions.GetPlayer(source)
+    local TargetPlayer = Framework.Functions.GetPlayer(tonumber(args[1]))
+    if TargetPlayer == nil or tonumber(args[1]) == src then
+		TriggerClientEvent("Framework:Notify", src, "ID Người chơi không hợp lệ" , "error")
+		return
+	end
+    if tonumber(args[2]) > 0 then
+        local data = {}
+        data.society = Player.PlayerData.job.name
+        data.society_name = Player.PlayerData.job.label
+        data.target = tonumber(args[1])
+        data.invoice_value = tonumber(args[2])
+        data.invoice_item = tonumber(args[1])
+        TriggerEvent("okokBilling:CreateInvoice", source, data)
+        TriggerClientEvent("Framework:Notify", src, "Ghi hoá đơn thành công" , "success")
+    end
+end)

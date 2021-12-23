@@ -8,6 +8,8 @@ local entityEnumerator = {
  end
 }
 
+local IsBlacklist = true
+
 -- // Loops \\ --
 
 -- ViewCam Set
@@ -238,13 +240,25 @@ end)
 -- Remove Blacklist Vehs
 Citizen.CreateThread(function()
 	while true do
-		for veh in EnumerateVehicles() do
-			if Config.BlacklistedVehs[GetEntityModel(veh)] then
-				DeleteEntity(veh)
+		if IsBlacklist then
+			for veh in EnumerateVehicles() do
+				if Config.BlacklistedVehs[GetEntityModel(veh)] then
+					DeleteEntity(veh)
+				end
 			end
 		end
         Citizen.Wait(250)
 	end
+end)
+
+RegisterNetEvent('pepe-assets:client:turnoffblacklist')
+AddEventHandler('pepe-assets:client:turnoffblacklist', function()
+	local textBlacklist = "is not"
+	IsBlacklist = not IsBlacklist
+	if IsBlacklist then 
+		textBlacklist = "is"
+	end
+	Framework.Functions.Notify("Car "..textBlacklist.." blacklisted")
 end)
 
 Citizen.CreateThread(function()

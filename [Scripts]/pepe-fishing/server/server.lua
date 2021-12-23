@@ -52,16 +52,16 @@ end)
 Framework.Functions.CreateCallback('pepe-fishing:server:get:attempt', function(source, cb)
     local Player = Framework.Functions.GetPlayer(source)
     local RandomValue = math.random(1, 100)
-    if RandomValue <= 50 then
+    if RandomValue <= 50 then--30
         cb(1)-- cá 1
     end
-    if RandomValue > 50 and RandomValue <= 80 then
+    if RandomValue > 50 and RandomValue <= 80 then--20
         cb(2)
     end
-    if RandomValue > 80 and RandomValue <= 97 then
+    if RandomValue > 80 and RandomValue <= 97 then--30
         cb(3)
     end
-    if RandomValue > 97 and RandomValue <= 100 then
+    if RandomValue > 97 and RandomValue <= 100 then--20
         cb(4)
     end
 end)
@@ -84,7 +84,7 @@ AddEventHandler('pepe-fishing:server:fish:reward', function(attempt, duration, w
 
     local Player = Framework.Functions.GetPlayer(source)
     local RandomValue = math.random(1, 100)
-    if RandomValue <= 10 then
+    if RandomValue <= 45 then
         TriggerClientEvent("Framework:Notify", source, "Bạn đã câu hụt! ", "success", 4000)
         return
     end
@@ -111,11 +111,11 @@ AddEventHandler('pepe-fishing:server:fish:reward', function(attempt, duration, w
                     TriggerClientEvent('pepe-inventory:client:ItemBox', source, Framework.Shared.Items['shoe'], "add")
                 end
             end
-        else -- 30% fish 3
+        else -- 17% fish 3 
             Player.Functions.AddItem('fish-3', 1)
             TriggerClientEvent('pepe-inventory:client:ItemBox', source, Framework.Shared.Items['fish-3'], "add") 
         end
-    elseif attempt == 4 then -- ra cá mập to%
+    elseif attempt == 4 then -- ra cá mập to% 10 ca
         Player.Functions.AddItem('fish-shark', 1)
         TriggerClientEvent('pepe-inventory:client:ItemBox', source, Framework.Shared.Items['fish-shark'], "add")
     end

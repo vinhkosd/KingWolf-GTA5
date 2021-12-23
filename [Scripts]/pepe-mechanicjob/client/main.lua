@@ -187,6 +187,17 @@ Citizen.CreateThread(function()
                                 end
                                 Menu.renderGUI()
                             end
+                        else
+                            if VehicleDistance < 10 then
+                                local InVehicle = IsPedInAnyVehicle(PlayerPedId())
+    
+                                if InVehicle then
+                                    DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, _U("epark"))
+                                    if IsControlJustPressed(0, Keys["E"]) then
+                                        Framework.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                    end
+                                end
+                            end
                         end
                     end
                 end

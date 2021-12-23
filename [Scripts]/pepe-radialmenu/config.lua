@@ -459,7 +459,7 @@ Config.Menu = {
     functionName = "kingwolf-trada:open:autoshop",
     enableMenu = function()
         if not exports['pepe-hospital']:GetDeathStatus() then
-            if exports['kingwolf-trada'] ~= nil and exports['kingwolf-trada']:IsNearTraDaShop() then
+            if GetResourceState('kingwolf-trada') == "started" and exports['kingwolf-trada']:IsNearTraDaShop() then
                 return true
             end
         end
@@ -474,7 +474,7 @@ Config.Menu = {
     functionName = "kingwolf-pizza:open:autoshop",
     enableMenu = function()
         if not exports['pepe-hospital']:GetDeathStatus() then
-            if exports['kingwolf-pizza'] ~= nil and exports['kingwolf-pizza']:IsNearTraDaShop() then
+            if GetResourceState('kingwolf-pizza') == "started" and exports['kingwolf-pizza']:IsNearTraDaShop() then
                 return true
             end
         end

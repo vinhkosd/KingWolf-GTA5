@@ -1,4 +1,4 @@
-local Webhook = 'https://discordapp.com/api/webhooks/919632745582460980/wu64sFbkK2YAzz3zCSYcupP22SNS6D3IeyPtKZ_J7Dxl6RH2ApoJ5OTC3qemzofv9iTE'
+local Webhook = 'https://discord.com/api/webhooks/923589983900663868/TzqtVvT2zkZLXLkMe8DMXZn_-Rlqj3S9YtrdRIfQkNmIZ8Swd-IKDAlZAfxEAvve5ruD'
 Framework = nil
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 

@@ -18,9 +18,9 @@ Config.Vehicles = {
 Config.Zones = {
 	DMVSchool = {
 		Pos   = {x = 240.02688, y = -1380.107, z = 33.741722-1.01},
-		Size  = {x = 1.5, y = 1.5, z = 1.5},
-		Color = {r = 209, g = 41, b = 242},
-		Type  = 1
+		Size  = {x = 0.1, y = 0.1, z = 0.05},
+		Color = {r = 255, g = 255, b = 255},
+		Type  = 2
 	},
 
 }

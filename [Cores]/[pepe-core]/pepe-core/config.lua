@@ -11,7 +11,7 @@ Config.DefaultSpawn = {x=-1035.71,y=-2731.87,z=12.86,a=0.0}
 Config.Money.MoneyTypes = {['cash'] = 5000, ['bank'] = 5000, ['crypto'] = 0 }
 Config.Money.DontAllowMinus = {'cash', 'crypto'}
 Config.Server.whitelist = false 
-Config.Server.discord = "KingWolf City"
+Config.Server.discord = "Los Angeles City"
 Config.Player.MaxWeight = 125000
 Config.Player.MaxInvSlots = 25
 

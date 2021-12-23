@@ -21,18 +21,18 @@ $(document).on('click', '.bank-app-header-button', function(e){
         var PreviousObject = $(".bank-app-header").find('[data-headertype="'+CurrentTab+'"]');
 
         if (PressedTab == "invoices") {
-            $.post('http://pepe-phone/OpenInvoiceMenu', JSON.stringify({}));
-            // $(".bank-app-"+CurrentTab).animate({
-            //     left: -30+"vh"
-            // }, 250, function(){
-            //     $(".bank-app-"+CurrentTab).css({"display":"none"})
-            // });
-            // $(".bank-app-"+PressedTab).css({"display":"block"}).animate({
-            //     left: 0+"vh"
-            // }, 250);
-            QB.Phone.Animations.BottomSlideDown('.container', 500, -90);
-            QB.Phone.Data.IsOpen = false;
-            return;
+            // $.post('http://pepe-phone/OpenInvoiceMenu', JSON.stringify({}));
+            $(".bank-app-"+CurrentTab).animate({
+                left: -30+"vh"
+            }, 250, function(){
+                $(".bank-app-"+CurrentTab).css({"display":"none"})
+            });
+            $(".bank-app-"+PressedTab).css({"display":"block"}).animate({
+                left: 0+"vh"
+            }, 250);
+            // QB.Phone.Animations.BottomSlideDown('.container', 500, -90);
+            // QB.Phone.Data.IsOpen = false;
+            // return;
         } else if (PressedTab == "accounts") {
             $(".bank-app-"+CurrentTab).animate({
                 left: 30+"vh"
@@ -132,8 +132,8 @@ $(document).on('click', '#accept-transfer', function(e){
 						$("#bank-transfer-iban").val("");
 						$("#bank-transfer-amount").val("");
 						data.NewAmount = (data.NewAmount).toFixed();
-						$(".bank-app-account-balance").html("&dollar; "+data.NewAmount);
-						$(".bank-app-account-balance").data('balance', data.NewAmount);
+						// $(".bank-app-account-balance").html("&dollar; "+data.NewAmount);
+						// $(".bank-app-account-balance").data('balance', data.NewAmount);
 						QB.Phone.Notifications.Add("fas fa-university", "Bank", "Bạn đã chuyển $"+amount+",-!", "#badc58", 1500);
 					} else {
 						QB.Phone.Notifications.Add("fas fa-university", "Bank", "Không đủ số dư. ", "#badc58", 1500);
@@ -216,11 +216,12 @@ $(document).on('click', '.pay-invoice', function(event){
                         $("#"+InvoiceId).remove();
                     }, 100);
                 });
+                
                 QB.Phone.Notifications.Add("fas fa-university", "Bank", "Bạn đã thanh toán hoá đơn &dollar;"+InvoiceData.amount+"!", "#badc58", 1500);
-                var amountData = $(".bank-app-account-balance").data('balance');
-                var NewAmount = (amountData - InvoiceData.amount).toFixed();
-                $("#bank-transfer-amount").val(NewAmount);
-                $(".bank-app-account-balance").data('balance', NewAmount);
+                // var amountData = $(".bank-app-account-balance").data('balance');
+                // var NewAmount = (amountData - InvoiceData.amount).toFixed();
+                // $("#bank-transfer-amount").val(NewAmount);
+                // $(".bank-app-account-balance").data('balance', NewAmount);
             } else {
                 QB.Phone.Notifications.Add("fas fa-university", "Bank", "Bạn không đủ tiền để thanh toán hoá đơn này. ", "#badc58", 1500);
             }
@@ -268,12 +269,12 @@ QB.Phone.Functions.LoadBankInvoices = function(invoices) {
                     </span>
                 </div>
                 <div class="bank-app-invoice-amount">
-                    &dollar; ${invoice.amount}, ${invoice.description || 'Không có nội dung'}
+                    &dollar; ${invoice.amount}, ${limitCharacter(invoice.description, 15) || 'Không có nội dung'}
                 </div>
-                <div class="bank-app-invoice-buttons">
+                ${invoice.status == "unpaid" && `<div id="actioninvoiceid-${i}" class="bank-app-invoice-buttons">
                     <i class="fas fa-check-circle pay-invoice"></i>
                     <i class="fas fa-times-circle decline-invoice"></i>
-                </div>
+                </div>`}
             </div>`;
 
             $(".bank-app-invoices-list").append(Elem);
@@ -329,3 +330,17 @@ $(document).on('click', '.bank-app-my-contact', function(e){
     }
     QB.Phone.Animations.TopSlideUp(".bank-app-my-contacts", 400, -100);
 });
+
+const limitCharacter = (str, max, suffix = '...') => {
+    if (!str) return '';
+    if (str.length <= max) return str;
+    
+    let strGioiHan ='';
+    if(typeof(max) === 'number'){
+      strGioiHan = str.substr(0,max);
+    }
+    else{
+      strGioiHan = str.substr(0,30);
+    }
+    return strGioiHan + suffix;
+  };

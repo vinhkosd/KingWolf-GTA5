@@ -1,7 +1,8 @@
 Framework = nil
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
-local Webhook = 'https://discord.com/api/webhooks/923589924911992873/R27LmoNjKuOrBgw1xgeK7dO5wC2aloxdcJQiChnHSPtbY9lMLNr0priFSL6VTcuTJyjB'
+-- local Webhook = 'https://discord.com/api/webhooks/923589924911992873/R27LmoNjKuOrBgw1xgeK7dO5wC2aloxdcJQiChnHSPtbY9lMLNr0priFSL6VTcuTJyjB'
+local Webhook = ''
 local limiteTimeHours = Config.LimitDateDays*24
 local hoursToPay = limiteTimeHours
 local whenToAddFees = {}

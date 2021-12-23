@@ -34,3 +34,21 @@ RegisterServerEvent('pepe-carwash:server:stop:water')
 AddEventHandler('pepe-carwash:server:stop:water', function(WaterId)
  TriggerClientEvent('pepe-carwash:client:stop:water', -1, WaterId)
 end)
+
+RegisterServerEvent("pepe-carwash:server:SaveVehicleProps")
+AddEventHandler("pepe-carwash:server:SaveVehicleProps", function(vehicleProps)
+	local src = source
+    if IsVehicleOwned(vehicleProps.plate) then
+        Framework.Functions.ExecuteSql(false, "UPDATE `characters_vehicles` SET `mods` = '"..json.encode(vehicleProps).."' WHERE `plate` = '"..vehicleProps.plate.."'")
+    end
+end)
+
+function IsVehicleOwned(plate)
+    local retval = false
+    Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+        if result[1] ~= nil then
+            retval = true
+        end
+    end)
+    return retval
+end

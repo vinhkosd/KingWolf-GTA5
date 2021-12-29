@@ -19,9 +19,12 @@ RegisterNetEvent("Framework:Client:OnPlayerLoaded")
 AddEventHandler("Framework:Client:OnPlayerLoaded", function()
     Citizen.SetTimeout(750, function()
         TriggerEvent("Framework:GetObject", function(obj) Framework = obj end)    
-        SetRandomLocation()
+
         Citizen.Wait(250)
         LoggedIn = true
+        Framework.Functions.TriggerCallback("pepe-fishing:server:getFishLocation", function(fishLocations)
+            DrawFishBlips(fishLocations)
+        end)
     end)
 end)
 
@@ -31,16 +34,6 @@ AddEventHandler('Framework:Client:OnPlayerUnload', function()
 end)
 
 -- Code
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(4)
-        if LoggedIn then
-          SetRandomLocation()
-          Citizen.Wait(1000 * 60 * 35)
-        end
-    end
-end)
 
 Citizen.CreateThread(function()
     Citizen.Wait(15000)
@@ -345,6 +338,34 @@ function SetRandomLocation()
     else
         SetRandomLocation()
     end
+end
+
+RegisterNetEvent('pepe-fishing:client:changeFishLocation')
+AddEventHandler('pepe-fishing:client:changeFishLocation', function(RandomLocation)
+    if CurrentBlip ~= nil and CurrentRadiosBlip ~= nil then
+        RemoveBlip(CurrentBlip)
+        RemoveBlip(CurrentRadiosBlip)
+    end
+    DrawFishBlips(RandomLocation)
+end)
+
+function DrawFishBlips(RandomLocation)
+    Citizen.SetTimeout(250, function()
+        CurrentRadiosBlip = AddBlipForRadius(RandomLocation['Coords']['X'], RandomLocation['Coords']['Y'], RandomLocation['Coords']['Z'], 75.0)        
+        SetBlipRotation(CurrentRadiosBlip, 0)
+        SetBlipColour(CurrentRadiosBlip, 19)
+    
+        CurrentBlip = AddBlipForCoord(RandomLocation['Coords']['X'], RandomLocation['Coords']['Y'], RandomLocation['Coords']['Z'])
+        SetBlipSprite(CurrentBlip, 68)
+        SetBlipDisplay(CurrentBlip, 4)
+        SetBlipScale(CurrentBlip, 0.7)
+        SetBlipColour(CurrentBlip, 0)
+        SetBlipAsShortRange(CurrentBlip, true)
+        BeginTextCommandSetBlipName('STRING')
+        AddTextComponentSubstringPlayerName('Khu vực đánh cá')
+        EndTextCommandSetBlipName(CurrentBlip)
+        CurrentLocation = RandomLocation
+    end)
 end
 
 function SpawnFishBoat()

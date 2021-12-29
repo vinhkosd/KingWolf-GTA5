@@ -62,10 +62,11 @@ Citizen.CreateThread(function()
 		if not f then
 			local h = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.CircleZones.FarmCoords.coords, true)
 			if h < 100 and not track then
-				CreateTrackSpots()
 				track = true
+				CreateTrackSpots()
 			elseif h >= 100 then
 				track = false
+				ClearCornObject()
 			end
 			local cowdis = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.CircleZones.CowFarm.coords, true)
 			if cowdis < 100 and not cowmilking then
@@ -697,6 +698,24 @@ AddEventHandler('onResourceStop', function(resource)
 	end
 end)
 
+function ClearCornObject()
+	for k, v in pairs(cornPlants) do
+		countplants = countplants - 1
+		DeleteObject(v)
+	end
+	for k, v in pairs(trackspots) do
+		counttracks = counttracks -1
+		DeleteObject(v)
+	end
+	if counttracks < 0 then
+		counttracks = 0
+	end
+
+	if countplants < 0 then
+		countplants = 0
+	end
+end
+
 function Draw3DText(x,y,z,textInput,fontId,scaleX,scaleY,color)
     local px,py,pz=table.unpack(GetGameplayCamCoords())
     local dist = GetDistanceBetweenCoords(px,py,pz, x,y,z, 1)
@@ -775,6 +794,9 @@ function SpawnCornPlants()
         Citizen.Wait(1)
     end
     while countplants < random do
+		if not track then
+			break
+		end
 		Citizen.Wait(1)
 		local D = GenerateWeedCoords(Config.CircleZones.FarmCoords.coords)
 
@@ -900,6 +922,9 @@ function CreateTrackSpots()
         Citizen.Wait(1)
     end
     while counttracks < random do
+		if not track then
+			break
+		end
 		Citizen.Wait(1)
 		local DE = GenerateWeedCoords(Config.CircleZones.FarmCoords.coords)
         local EE = CreateObject(hash, DE.x, DE.y, DE.z, false, false, true)

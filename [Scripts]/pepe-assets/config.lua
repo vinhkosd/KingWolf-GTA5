@@ -637,7 +637,7 @@ Config.BlacklistedVehs = {
    [`BULLET`] = true,
    [`BANSHEE2`] = true,
    [`AUTARCH`] = true,
-   [`ADDER`] = true,
+--    [`ADDER`] = true,
    --Sport Classic
    [`TOREADOR`] = true,
    [`CHEBUREK`] = true,
@@ -681,7 +681,7 @@ Config.BlacklistedVehs = {
 --    [`COQUETTE2`] = true,
    [`CHEETAH2`] = true,
    [`CASCO`] = true,
-   [`BTYPE3`] = true,
+--    [`BTYPE3`] = true,
    [`BTYPE2`] = true,
    [`BTYPE`] = true,
    [`ARDENT`] = true,
@@ -958,6 +958,15 @@ Config.BlacklistedVehs = {
     [`RIPLEY`] = true,
     --xe bai da
     [`DUMP`] = true,
+    --aircraft
+    [`SWIFT`] = true,
+    [`SWIFT2`] = true,
+    [`VALKYRIE`] = true,
+    [`VALKYRIE2`] = true,
+    [`VOLATUS`] = true,
+    [`SUPERVOLITO`] = true,
+    [`SUPERVOLITO2`] = true,
+    [`SKYLIFT`] = true,
 }
 
 Config.BlacklistedPeds = {

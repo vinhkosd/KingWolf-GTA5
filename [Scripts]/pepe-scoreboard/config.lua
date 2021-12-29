@@ -15,28 +15,36 @@ Config = Config or {}
 Config.OpenKey = Keys["HOME"]
 
 -- Max Server Players
-Config.MaxPlayers = GetConvarInt('sv_maxclients', 64) -- It returnes 64 if it cant find the Convar Int
+Config.MaxPlayers = GetConvarInt('sv_maxclients', 140) -- It returnes 64 if it cant find the Convar Int
 
 -- Minimum Police for Actions
 Config.IllegalActions = {
     ["storerobbery"] = {
-        minimum = 2,
-        busy = false,
-    },
-    ["ammunation"] = {
-        minimum = 4,
+        minimum = 6,
         busy = false,
     },
     ["bankrobbery"] = {
-        minimum = 4,
+        minimum = 8,
         busy = false,
     },
     ["jewellery"] = {
-        minimum = 4,
+        minimum = 3,
+        busy = false,
+    },
+    ["humanelabs"] = {
+        minimum = 6,
         busy = false,
     },
     ["pacific"] = {
         minimum = 6,
+        busy = false,
+    },
+    ["meter"] = {
+        minimum = 2,
+        busy = false,
+    },
+    ["houserob"] = {
+        minimum = 3,
         busy = false,
     },
 }

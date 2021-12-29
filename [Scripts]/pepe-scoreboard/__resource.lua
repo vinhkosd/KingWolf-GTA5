@@ -15,4 +15,3 @@ server_scripts {
 files {
     "html/*"
 }
-

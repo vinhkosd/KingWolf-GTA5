@@ -17,13 +17,55 @@ local Keys = {
     ["ESC"] = 322, ["BACKSPACE"] = 177, ["E"] = 38, ["ENTER"] = 18, ["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173
 }
 local _isRolling = false
+local NearNpc = false
+Config = {}
+
+Config.PedInteraction = {
+    [1] = {
+        ['Name'] = 'Casino',
+        ['Model'] = 's_m_m_highsec_04',
+        ['Animation'] = "WORLD_HUMAN_GUARD_STAND",
+        ['InteractAnimation'] = {
+            ['AnimDict'] = 'mp_ped_interaction',
+            ['AnimName'] = 'handshake_guy_a',
+        },
+        ['Coords'] = {
+            ['X'] = 926.82,
+            ['Y'] = 53.0,
+            ['Z'] = 81.1,
+            ['H'] = 56.02,
+        },
+        ['CurrentPedNumber'] = nil,
+    },
+}
+
+local blips = {
+    {title="Casino", colour=1, id=89, x = 925.63342285156, y = 43.972846984863, z = 80.900802612305},
+}
+
+Citizen.CreateThread(function()
+    for _, info in pairs(blips) do
+      info.blip = AddBlipForCoord(info.x, info.y, info.z)
+      SetBlipSprite(info.blip, info.id)
+      SetBlipDisplay(info.blip, 4)
+      SetBlipScale(info.blip, 0.9)
+      SetBlipColour(info.blip, info.colour)
+      SetBlipAsShortRange(info.blip, true)
+	  BeginTextCommandSetBlipName("STRING")
+      AddTextComponentString(info.title)
+      EndTextCommandSetBlipName(info.blip)
+    end
+end)
+
 
 RegisterNetEvent('Framework:Client:OnPlayerLoaded')
 AddEventHandler('Framework:Client:OnPlayerLoaded', function()
 	isLoggedIn = true
     local model = GetHashKey('vw_prop_vw_luckywheel_02a')
     -- local baseWheelModel = GetHashKey('vw_prop_vw_luckywheel_01a')
-
+    Citizen.Wait(350)
+    SpawnNpcs()
+    LoggedIn = true
     Citizen.CreateThread(function()
         -- RequestModel(baseWheelModel)
         -- while not HasModelLoaded(baseWheelModel) do
@@ -49,6 +91,12 @@ AddEventHandler('Framework:Client:OnPlayerLoaded', function()
     end)
 end)
 
+RegisterNetEvent('Framework:Client:OnPlayerUnload')
+AddEventHandler('Framework:Client:OnPlayerUnload', function()
+    DespawnNpcs()
+    isLoggedIn = false
+end)
+
 Citizen.CreateThread(function()
     while true do
         if carRewardEntity ~= nil then
@@ -58,6 +106,38 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(5)
     end
+end)
+
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(4)
+        if isLoggedIn then
+            NearNpc = false
+            for k, v in pairs(Config.PedInteraction) do
+                local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
+                local Distance = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['Coords']['X'], v['Coords']['Y'], v['Coords']['Z'], true)
+                if Distance < 2 then
+                    NearNpc, CurrentNpc = true, k
+                end
+            end
+            if not NearNpc then
+                Citizen.Wait(1500)
+                CurrentNpc = nil
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('kingwolf-luckywheel:client:talk')
+AddEventHandler('kingwolf-luckywheel:client:talk', function()
+    Citizen.SetTimeout(150, function()
+        if NearNpc then
+            PlayAmbientSpeech1(Config.PedInteraction[CurrentNpc]['CurrentPedNumber'], "GENERIC_HI", "SPEECH_PARAMS_FORCE_NORMAL")
+            TaskStartScenarioInPlace(Config.PedInteraction[CurrentNpc]['CurrentPedNumber'], Config.PedInteraction[CurrentNpc]['Animation'], 0, true)
+            TriggerServerEvent('kingwolf-luckywheel:server:getTicket')
+        end
+    end)
 end)
 
 RegisterNetEvent("kingwolf_luckywheel:doRoll")
@@ -105,6 +185,26 @@ AddEventHandler("kingwolf_luckywheel:rollFinished", function()
     _isRolling = false
 end)
 
+function SpawnNpcs()
+    for k, v in pairs(Config.PedInteraction) do
+        exports['pepe-assets']:RequestModelHash(v['Model'])
+        NpcPed = CreatePed(4, v['Model'], v['Coords']['X'], v['Coords']['Y'], v['Coords']['Z'] - 0.95, v['Coords']['H'], false, false)
+        FreezeEntityPosition(NpcPed, true)
+        SetEntityInvincible(NpcPed, true)
+        SetBlockingOfNonTemporaryEvents(NpcPed, true)
+        SetPedConfigFlag(NpcPed, 410, true)
+        if v['Animation'] ~= nil then
+            TaskStartScenarioInPlace(NpcPed, v['Animation'], 0, true)
+        end
+        v['CurrentPedNumber'] = NpcPed
+    end
+end
+
+function DespawnNpcs()
+    for k, v in pairs(Config.PedInteraction) do
+        DeleteEntity(v['CurrentPedNumber'])
+    end
+end
 
 function doRoll()
     if not _isRolling then
@@ -157,7 +257,6 @@ Citizen.CreateThread(function()
 end)
 
 function spawnRewardVehicle()
-    print("spawnRewardVehicle")
     local carmodel = GetHashKey('nero2')
     RequestModel(carmodel)
     while not HasModelLoaded(carmodel) do

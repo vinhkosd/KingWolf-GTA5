@@ -1,9 +1,10 @@
-local scoreboardOpen = false
 Framework = nil
+
+TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(10)
+        Citizen.Wait(600)
         if Framework == nil then
             TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
             Citizen.Wait(200)
@@ -16,11 +17,15 @@ end)
 RegisterNetEvent('Framework:Client:OnPlayerLoaded')
 AddEventHandler('Framework:Client:OnPlayerLoaded', function()
     isLoggedIn = true
+
     Framework.Functions.TriggerCallback('pepe-scoreboard:server:GetConfig', function(config)
         Config.IllegalActions = config
     end)
 end)
 
+local scoreboardOpen = false
+
+local PlayerOptin = {}
 DrawText3D = function(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
@@ -40,7 +45,7 @@ GetClosestPlayer = function()
     local closestPlayers = Framework.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then
@@ -73,7 +78,7 @@ GetPlayersFromCoords = function(coords, distance)
     local closePlayers = {}
 
     if coords == nil then
-		coords = GetEntityCoords(GetPlayerPed(-1))
+		coords = GetEntityCoords(PlayerPedId())
     end
     if distance == nil then
         distance = 5.0
@@ -95,20 +100,18 @@ Citizen.CreateThread(function()
     while true do
         if IsControlJustPressed(0, Config.OpenKey) then
             if not scoreboardOpen then
-                    Framework.Functions.TriggerCallback('pepe-scoreboard:server:GetActiveCops', function(cops)
-                        Framework.Functions.TriggerCallback('pepe-scoreboard:server:GetActiveEms', function(ambulance)
-                        PlayerOptin = playerList
-                        Config.CurrentCops = cops
-                        SendNUIMessage({
-                            action = "open",
-                            players = GetCurrentPlayers(),
-                            maxPlayers = Config.MaxPlayers,
-                            requiredCops = Config.IllegalActions,
-                            currentCops = Config.CurrentCops,
-                            currentAmbulance = ambulance
-                        })
-                        scoreboardOpen = true
-                    end)
+                Framework.Functions.TriggerCallback('pepe-scoreboard:server:GetActiveCops', function(cops, playersOnline)
+                    Config.CurrentCops = cops
+
+                    SendNUIMessage({
+                        action = "open",
+                        -- players = GetCurrentPlayers(),
+                        players = playersOnline,
+                        maxPlayers = Config.MaxPlayers,
+                        requiredCops = Config.IllegalActions,
+                        currentCops = Config.CurrentCops,
+                    })
+                    scoreboardOpen = true
                 end)
             end
         end
@@ -123,13 +126,15 @@ Citizen.CreateThread(function()
         end
 
         if scoreboardOpen then
-            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(GetPlayerPed(-1)), 10.0)) do
+            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 10.0)) do
                 local PlayerId = GetPlayerServerId(player)
                 local PlayerPed = GetPlayerPed(player)
                 local PlayerName = GetPlayerName(player)
                 local PlayerCoords = GetEntityCoords(PlayerPed)
 
-                DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+               -- if not PlayerOptin[PlayerId].permission then
+                    DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                --end
             end
         end
 

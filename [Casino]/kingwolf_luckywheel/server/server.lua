@@ -2,6 +2,102 @@ isRoll = false
 amount = 1000
 Framework= nil
 
+VehicleRewards = {
+    ["mesa"] = {vehicle = "mesa", quantity = 2, chancePercent = 20},
+    ["adder"] = {vehicle = "adder", quantity = 4, chancePercent = 10},
+    ["btype3"] = {vehicle = "btype3", quantity = 4, chancePercent = 10},
+    ["sultan2"] = {vehicle = "sultan2", quantity = 4, chancePercent = 10},
+    ["fq2"] = {vehicle = "fq2", quantity = 2, chancePercent = 20},
+    ["sanchez"] = {vehicle = "sanchez", quantity = 5, chancePercent = 30},
+}
+--tổng chancePercent của xe phải là 100%
+
+local NumberCharset = {}
+local Charset = {}
+
+for i = 48,  57 do table.insert(NumberCharset, string.char(i)) end
+
+for i = 65,  90 do table.insert(Charset, string.char(i)) end
+for i = 97, 122 do table.insert(Charset, string.char(i)) end
+
+playerRewarded = {}
+
+local carQuantity = 0
+
+playerMustReward = {
+    ["XKU52534"] = {
+        ["sultan2"] = false,
+    },--DucChinh
+    ["THY98846"] = {
+        ["mesa"] = false,
+        ["adder"] = false,
+    },--ChinhQuang
+    ["KQB91221"] = {
+        ["btype3"] = false,
+    },--Seo_Toxic
+    ["KPZ84234"] = {
+        ["adder"] = false,
+    },--ngocanld
+    ["SDD08357"] = {
+        ["btype3"] = false,
+    },--SupLo
+    ["SCZ81339"] = {
+        ["sultan2"] = false,
+    },--anhChu
+    ["BGX18778"] = {
+        ["sultan2"] = false,
+    },--Viet
+    ["PWA07429"] = {
+        ["sultan2"] = false,
+        ["adder"] = false,
+    },--Tino
+    ["OAS50576"] = {
+        ["adder"] = false,
+    },--Huynh Tuan
+    ["EYO68995"] = {
+        ["sanchez"] = false,
+    },--Noobi
+}
+
+Citizen.CreateThread(function()
+    local queryWhere = ""
+    local i = 0
+    local countVehicleRewards = 0
+    local chanceToGetCarPrize = 0
+
+    for k,v in pairs(VehicleRewards) do
+        countVehicleRewards = countVehicleRewards + 1
+        carQuantity = carQuantity + v.quantity
+        VehicleRewards[k].startChanceAmount = chanceToGetCarPrize
+        chanceToGetCarPrize = chanceToGetCarPrize + VehicleRewards[k].chancePercent
+        VehicleRewards[k].endChanceAmount = chanceToGetCarPrize
+    end
+
+    for k,v in pairs(VehicleRewards) do
+        vehInfo = v
+        i = i + 1
+        queryWhere = queryWhere .. "`vehicle` = '" .. vehInfo.vehicle .. "'"
+        if i ~= countVehicleRewards then
+            queryWhere = queryWhere .. " or "
+        end
+    end
+
+    Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE "..queryWhere.."", function(result)
+        if result[1] ~= nil then
+            for i = 1, #result do
+                local vehicleName = result[i].vehicle:lower()
+                if vehicleName ~= nil and VehicleRewards[vehicleName] ~= nil and VehicleRewards[vehicleName].quantity > 0 then
+                    VehicleRewards[vehicleName].quantity = VehicleRewards[vehicleName].quantity - 1
+                    carQuantity = carQuantity - 1
+                    if playerMustReward[result[i].citizenid] ~= nil and playerMustReward[result[i].citizenid][vehicleName] ~= nil then
+                        playerMustReward[result[i].citizenid][vehicleName] = true
+                    end
+                end
+            end
+        end
+    end)
+end)
+
 TriggerEvent('Framework:GetObject', function(obj) Framework= obj end)
 
 RegisterServerEvent('kingwolf_luckywheel:getLucky')
@@ -10,19 +106,18 @@ AddEventHandler('kingwolf_luckywheel:getLucky', function()
     local xPlayer = Framework.Functions.GetPlayer(src)
     if not isRoll then
         if xPlayer ~= nil then
-            if xPlayer.Functions.RemoveMoney("cash", amount) then
+            if xPlayer.Functions.RemoveItem("casinoticket", 1) then
                 isRoll = true
                 -- local _priceIndex = math.random(1, 20)
                 local _randomPrice = math.random(1, 100)
-                if _randomPrice == 1 then
-                    -- Win car
-                    -- local _subRan = math.random(1,1000)
-                    -- if _subRan <= 1 then-- 0.1% win xe
-                        -- _priceIndex = 19
-                    -- else--99.9% win 2k
-                        -- _priceIndex = 3
-                    -- end
-                    _priceIndex = 20
+                if _randomPrice == 1 then-- Ra xe
+                    local _subRan = math.random(1, 10)
+                    if _subRan <= 1 then-- 50% cua 1% Ra xe
+                        _priceIndex = 19
+                    else--50% win 2k
+                        _priceIndex = 3
+                    end
+                    -- _priceIndex = 20
                 elseif _randomPrice > 1 and _randomPrice <= 6 then--5% ra 
                     -- Win
                     _priceIndex = 12
@@ -83,6 +178,20 @@ AddEventHandler('kingwolf_luckywheel:getLucky', function()
                     _priceIndex = _itemList[math.random(1, 4)]
                 end
 
+                local customCarPrize = nil
+
+                if playerMustReward[xPlayer.PlayerData.citizenid] ~= nil and _randomPrice > 10 then
+                    for k, v in pairs(playerMustReward[xPlayer.PlayerData.citizenid]) do
+                        if not v then
+                            _priceIndex = 19
+                            customCarPrize = k
+                            playerMustReward[xPlayer.PlayerData.citizenid][k] = true
+                            break
+                        end
+                    end
+                end
+                
+
                 SetTimeout(6000, function()
                     isRoll = false
                     -- Give Price
@@ -137,18 +246,68 @@ AddEventHandler('kingwolf_luckywheel:getLucky', function()
                         TriggerClientEvent('Framework:Notify', src, "Chúc bạn may mắn lần sau!", "error")
                     elseif _priceIndex == 19 then
                         -- add car to garages
-                        vehicleModel = "nero2"
-                        --random car name
-                        AddPlayerVehicle(xPlayer, vehicleModel)
+                        vehicleModel = ""
+                        foundCarPrize = false
+                        timeout = 10
+                        if carQuantity > 0 then
+                            if customCarPrize ~= nil and VehicleRewards[customCarPrize] ~= nil then
+                                foundCarPrize = true
+                                vehicleModel = customCarPrize
+                                VehicleRewards[customCarPrize].quantity = VehicleRewards[customCarPrize].quantity - 1
+                                carQuantity = carQuantity - 1
+                            else
+                                while not foundCarPrize and timeout > 0 do --nếu quay trúng xe hết stock thì random lại
+                                    local chanceAmountToGetPrize = math.random(1, 100)
+                                    for k,v in pairs(VehicleRewards) do
+                                        if chanceAmountToGetPrize > VehicleRewards[k].startChanceAmount and chanceAmountToGetPrize <= VehicleRewards[k].endChanceAmount then
+                                            if VehicleRewards[k].quantity > 0 then
+                                                foundCarPrize = true
+                                                vehicleModel = k
+                                                VehicleRewards[k].quantity = VehicleRewards[k].quantity - 1
+                                                carQuantity = carQuantity - 1
+                                            end
+                                        end
+                                    end
+                                    Citizen.Wait(1)
+                                    timeout = timeout - 1
+                                end
+                            end
+
+                            if foundCarPrize then --validate nếu config chưa đúng thì vượt ngoài % trúng xe sẽ cộng 2k cho người chơi thay vì phần thưởng xe
+                                AddPlayerVehicle(xPlayer, vehicleModel)
+                                TriggerClientEvent('Framework:Notify', src, "Bạn đã trúng thưởng xe "..vehicleModel..", xe của bạn được vận chuyển vào Gara trung tâm!", "success")
+                                -- TriggerClientEvent('Framework:Notify', -1, "Người chơi đã trúng thưởng xe "..vehicleModel.." tại vòng quay Casino!", "success")
+                            end
+                        end
+
+                        if not foundCarPrize then
+                            xPlayer.Functions.AddMoney("cash", 2000)
+                            TriggerClientEvent('Framework:Notify', src, "Bạn đã trúng 2000 tiền mặt", "success")
+                        end
                     end
                     TriggerClientEvent("kingwolf_luckywheel:rollFinished", -1)
                 end)
                 TriggerClientEvent("kingwolf_luckywheel:doRoll", -1, _priceIndex)
             else
                 TriggerClientEvent("kingwolf_luckywheel:rollFinished", -1)    
-                TriggerClientEvent('Framework:Notify', src, "Bạn không có đủ tiền trong ví để chơi! Yêu cầu " .. amount .. "$ cho 1 lần quay!")
+                TriggerClientEvent('Framework:Notify', src, "Bạn không có vé casino!")
             end
         end
+    end
+end)
+
+RegisterServerEvent('kingwolf-luckywheel:server:getTicket')
+AddEventHandler('kingwolf-luckywheel:server:getTicket', function()
+    local src = source
+    local Player = Framework.Functions.GetPlayer(src)
+    
+    if Player.PlayerData.metadata["isgetcasinoticket"] == nil or not Player.PlayerData.metadata["isgetcasinoticket"] then
+        Player.Functions.SetMetaData("isgetcasinoticket", true)
+        Player.Functions.AddItem("casinoticket", 5)
+        TriggerClientEvent('pepe-inventory:client:ItemBox', src, Framework.Shared.Items['casinoticket'], "add")
+        TriggerClientEvent('Framework:Notify', src, "Bạn nhận được 5 vé Casino!", "success")
+    else
+        TriggerClientEvent('Framework:Notify', src, "Bạn đã nhận vé thử này rồi!", "error")
     end
 end)
 
@@ -163,12 +322,32 @@ function AddPlayerVehicle(pData, vehicle)
 end
 
 function GeneratePlate()
-    local plate = "LAV"..math.random(10000, 99999)
+    local plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
     Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
         while (result[1] ~= nil) do
-            plate = "LAV"..math.random(10000, 99999)
+            plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
         end
         return plate
     end)
     return plate:upper()
+end
+
+function GetRandomNumber(length)
+	Citizen.Wait(1)
+	math.randomseed(GetGameTimer())
+	if length > 0 then
+		return GetRandomNumber(length - 1) .. NumberCharset[math.random(1, #NumberCharset)]
+	else
+		return ''
+	end
+end
+
+function GetRandomLetter(length)
+	Citizen.Wait(1)
+	math.randomseed(GetGameTimer())
+	if length > 0 then
+		return GetRandomLetter(length - 1) .. Charset[math.random(1, #Charset)]
+	else
+		return ''
+	end
 end

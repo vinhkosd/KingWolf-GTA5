@@ -91,7 +91,7 @@ end, "admin")
 
 Framework.Commands.Add("tpm", "Teleport to waypoint", {}, false, function(source, args)
 	TriggerClientEvent('Framework:Command:GoToMarker', source)
-end, "admin")
+end, "god")
 
 Framework.Commands.Add("tpmh", "Teleport to waypoint with high landing", {}, false, function(source, args)
 	TriggerClientEvent('Framework:Command:GoToMarkerHighLanding', source)

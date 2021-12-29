@@ -141,6 +141,14 @@ Config.ObjectOptions = {
             ['EventName'] = 'pepe-illegal:client:talk:to:npc',
         },
     },
+    [GetHashKey('s_m_m_highsec_04')] = {
+        [1] = {
+            ['Name'] = 'Vé quay thử vòng quay may mắn',
+            ['EventType'] = 'Client',
+            ['Logo'] = '<i class="fas fa-comments"></i>',
+            ['EventName'] = 'kingwolf-luckywheel:client:talk',
+        },
+    },
     [GetHashKey('s_m_y_ammucity_01')] = {
         [1] = {
             ['Name'] = 'Bắt đầu săn bắn',

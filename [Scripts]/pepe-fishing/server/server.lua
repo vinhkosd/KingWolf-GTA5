@@ -2,7 +2,20 @@ Framework = nil
 
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
+local CurrentLocation = {
+    ['Name'] = 'Fish1',
+    ['Coords'] = {['X'] = 241.00, ['Y'] = 3993.00, ['Z'] = 30.40},
+}
+
 local ServerPrice = {}
+
+Citizen.CreateThread(function()
+    while true do
+        SetRandomLocation()
+        TriggerClientEvent('pepe-fishing:client:changeFishLocation', -1, CurrentLocation)
+        Citizen.Wait(1000 * 60 * 35)
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do
@@ -13,6 +26,10 @@ Citizen.CreateThread(function()
         Citizen.Wait(30 * 60 * 1000) -- 30 p doi gia 1 lan
 		-- Citizen.Wait(20 * 1 * 1000) -- 30 p doi gia 1 lan
     end
+end)
+
+Framework.Functions.CreateCallback('pepe-fishing:server:getFishLocation', function(source, cb)
+    cb(CurrentLocation)
 end)
 
 Framework.Functions.CreateCallback('pepe-fishing:server:can:pay', function(source, cb)
@@ -165,3 +182,12 @@ AddEventHandler('pepe-fishing:server:sell:items', function()
         
     end
 end)
+
+function SetRandomLocation()
+    RandomLocation = Config.FishLocations[math.random(1, #Config.FishLocations)]
+    if CurrentLocation['Name'] ~= RandomLocation['Name'] then
+        CurrentLocation = RandomLocation
+    else
+        SetRandomLocation()
+    end
+end

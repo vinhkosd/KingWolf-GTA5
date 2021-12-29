@@ -1,19 +1,19 @@
-QBScoreboard = {}
+Pepes = {}
 
 $(document).ready(function(){
     window.addEventListener('message', function(event) {
         switch(event.data.action) {
             case "open":
-                QBScoreboard.Open(event.data);
+                Pepes.Open(event.data);
                 break;
             case "close":
-                QBScoreboard.Close();
+                Pepes.Close();
                 break;
         }
     })
 });
 
-QBScoreboard.Open = function(data) {
+Pepes.Open = function(data) {
     $(".scoreboard-block").fadeIn(150);
     $("#total-players").html("<p>"+data.players+"/"+data.maxPlayers+"</p>");
 
@@ -29,19 +29,9 @@ QBScoreboard.Open = function(data) {
         } else {
             $(status).html('<i class="fas fa-times"></i>');
         }
-
-        if (data.currentAmbulance > 0) {
-            var Abeam = $(".scoreboard-info").find('[data-type="ambulance"]');
-            var Astatus = $(Abeam).find(".info-beam-status");
-            $(Astatus).html('<i class="fas fa-check"></i>');
-        } else {
-            var Abeam = $(".scoreboard-info").find('[data-type="ambulance"]');
-            var Astatus = $(Abeam).find(".info-beam-status");
-            $(Astatus).html('<i class="fas fa-times"></i>');
-        }
     });
 }
 
-QBScoreboard.Close = function() {
+Pepes.Close = function() {
     $(".scoreboard-block").fadeOut(150);
 }

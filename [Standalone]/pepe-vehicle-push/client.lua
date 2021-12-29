@@ -13,6 +13,7 @@ Config.MaxWidth = 5.0 -- Will complete soon
 Config.MaxHeight = 5.0
 Config.MaxLength = 5.0
 Config.CanPush = true
+isLoggedIn = false
 
 local Keys = {
   ["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
@@ -25,6 +26,12 @@ local Keys = {
   ["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
   ["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
+
+RegisterNetEvent('Framework:Client:OnPlayerLoaded')
+AddEventHandler('Framework:Client:OnPlayerLoaded', function()
+	isLoggedIn = true
+end)
+
 
 local First = vector3(0.0, 0.0, 0.0)
 local Second = vector3(5.0, 5.0, 5.0)
@@ -56,10 +63,13 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        if (Framework.Functions.GetPlayerData().metadata["ishandcuffed"] or Framework.Functions.GetPlayerData().metadata["isdead"]) then
-            Config.CanPush = false
-        else
-            Config.CanPush = true
+        if isLoggedIn then
+            Citizen.Wait(4)
+            if (Framework.Functions.GetPlayerData().metadata["ishandcuffed"] or Framework.Functions.GetPlayerData().metadata["isdead"]) then
+                Config.CanPush = false
+            else
+                Config.CanPush = true
+            end
         end
         Citizen.Wait(5000)
     end
@@ -72,13 +82,14 @@ Citizen.CreateThread(function()
             Citizen.Wait(5)
             local ped = PlayerPedId()
             if Vehicle.Vehicle ~= nil then
-    
-                    if IsVehicleSeatFree(Vehicle.Vehicle, -1) and GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded then
-                        Framework.Functions.DrawText3D(Vehicle.Coords.x, Vehicle.Coords.y, Vehicle.Coords.z, 'Giữ [~g~SHIFT~w~] + [~g~E~w~] để đẩy xe', 0.4)
-                    end
+                local Plate = GetVehicleNumberPlateText(Vehicle.Vehicle)
+                vehicleFuel = exports['pepe-fuel']:GetFuelLevel(Plate)
+                if IsVehicleSeatFree(Vehicle.Vehicle, -1) and (GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded or vehicleFuel < 5) then
+                    Framework.Functions.DrawText3D(Vehicle.Coords.x, Vehicle.Coords.y, Vehicle.Coords.z, 'Giữ [~g~SHIFT~w~] + [~g~E~w~] để đẩy xe', 0.4)
+                end
         
 
-                if IsControlPressed(0, Keys["LEFTSHIFT"]) and IsVehicleSeatFree(Vehicle.Vehicle, -1) and not IsEntityAttachedToEntity(ped, Vehicle.Vehicle) and IsControlJustPressed(0, Keys["E"])  and GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded then
+                if IsControlPressed(0, Keys["LEFTSHIFT"]) and IsVehicleSeatFree(Vehicle.Vehicle, -1) and not IsEntityAttachedToEntity(ped, Vehicle.Vehicle) and IsControlJustPressed(0, Keys["E"])  and (GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded or vehicleFuel < 5) then
                     NetworkRequestControlOfEntity(Vehicle.Vehicle)
                     local coords = GetEntityCoords(ped)
                     if Vehicle.IsInFront then    

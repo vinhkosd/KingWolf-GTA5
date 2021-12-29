@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
     local CurrentCops = GetCurrentCops()
     TriggerClientEvent("pepe-police:SetCopCount", -1, CurrentCops)
-    Citizen.Wait(1000 * 60 * 10)
+    Citizen.Wait(1000 * 60 * 1)
   end
 end)
 
@@ -401,7 +401,7 @@ Framework.Commands.Add("boei", "Phao ai đó (Quản trị viên.)", {{name="id"
          TriggerClientEvent("pepe-police:client:get:cuffed", TargetPlayer.PlayerData.source, Player.PlayerData.source)
        end
     end
-end, "admin")
+end, "god")
 
 Framework.Commands.Add("zethogecommando", "Zet iemand zijn hoge commando status", {{name="id", help="Speler ID"}, {name="status", help="True / False"}}, true, function(source, args)
   if args ~= nil then
@@ -621,12 +621,12 @@ Framework.Commands.Add("112r", "Stuur een bericht terug naar een melding", {{nam
     local message = table.concat(args, " ")
     if Player.PlayerData.job.name == "police" then
         if OtherPlayer ~= nil then
-            TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(POLITIE) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
+            TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(CẢNH SÁT) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
             TriggerClientEvent("pepe-police:client:call:anim", source)
         end
     elseif Player.PlayerData.job.name == "ambulance" then
         if OtherPlayer ~= nil then 
-            TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(AMBULANCE) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
+            TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(BÁC SĨ) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
             TriggerClientEvent("pepe-police:client:call:anim", source)
         end
     else
@@ -634,14 +634,14 @@ Framework.Commands.Add("112r", "Stuur een bericht terug naar een melding", {{nam
     end
 end)
 
-Framework.Commands.Add("112a", "Stuur een anonieme melding naar hulpdiensten (geeft geen locatie)", {{name="melding", help="De melding die je anoniem wilt sturen"}}, true, function(source, args)
+Framework.Commands.Add("112a", "Gửi tin nhắn nặc danh (không gửi vị trí)", {{name="melding", help="De melding die je anoniem wilt sturen"}}, true, function(source, args)
     local Message = table.concat(args, " ")
     local Player = Framework.Functions.GetPlayer(source)
     if Player.Functions.GetItemByName("phone") ~= nil then
         TriggerClientEvent("pepe-police:client:call:anim", source)
         TriggerClientEvent('pepe-police:client:send:alert', -1, Message, true)
     else
-        TriggerClientEvent('Framework:Notify', source, 'Je hebt geen telefoon...', 'error')
+        TriggerClientEvent('Framework:Notify', source, 'Bạn không có điện thoại...', 'error')
     end
 end)
 

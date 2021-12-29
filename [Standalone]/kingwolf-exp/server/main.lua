@@ -197,7 +197,7 @@ Framework.Commands.Add("esxp_give", "Give EXP cho người chơi", {{name="id", 
     end
 
     UpdatePlayer(playerId, tonumber(CurrentXP) + xp)
-end, 'admin')
+end, 'god')
 
 Framework.Commands.Add("esxp_take", "Xóa EXP cho người chơi", {{name="id", help="ID người chơi"}, {name="exp", help="EXP"}}, false, function(source, args)
     local playerId = tonumber(args[1])
@@ -216,7 +216,7 @@ Framework.Commands.Add("esxp_take", "Xóa EXP cho người chơi", {{name="id", 
     end    
     
     UpdatePlayer(playerId, tonumber(CurrentXP) - xp)
-end, 'admin')
+end, 'god')
 
 Framework.Commands.Add("esxp_set", "Give EXP cho người chơi", {{name="id", help="ID người chơi"}, {name="exp", help="EXP"}}, false, function(source, args)
     local playerId = tonumber(args[1])
@@ -233,7 +233,7 @@ Framework.Commands.Add("esxp_set", "Give EXP cho người chơi", {{name="id", h
     end  
 
     UpdatePlayer(playerId, xp)
-end, 'admin')
+end, 'god')
 
 Framework.Commands.Add("esxp_rank", "Give EXP cho người chơi", {{name="id", help="ID người chơi"}, {name="rank", help="Cấp bậc"}}, false, function(source, args)
     local playerId = tonumber(args[1])
@@ -256,7 +256,7 @@ Framework.Commands.Add("esxp_rank", "Give EXP cho người chơi", {{name="id", 
     local xp = Config.Ranks[goalRank].XP
 
     UpdatePlayer(playerId, xp)
-end, 'admin')
+end, 'god')
 
 -- RegisterCommand("esxp_give", function(source, args, rawCommand)
     -- local playerId = tonumber(args[1])

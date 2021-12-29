@@ -8,6 +8,7 @@ Stashes = {}
 ShopItems = {}
 PlateWeight = {}
 PlateSlots = {}
+IsOpenState = {}
 
 RegisterServerEvent("pepe-inventory:server:LoadDrops")
 AddEventHandler('pepe-inventory:server:LoadDrops', function()
@@ -433,6 +434,8 @@ AddEventHandler('pepe-inventory:server:OpenInventory', function(name, id, other)
 					secondInv.slots = 0
 				end
 			end
+			Player.Functions.SetMetaData("currentinvname", id)
+			Player.Functions.SetMetaData("currentinvtype", name)
 			TriggerClientEvent("pepe-inventory:client:OpenInventory", src, Player.PlayerData.items, secondInv)
 		else
 			TriggerClientEvent("pepe-inventory:client:OpenInventory", src, Player.PlayerData.items)
@@ -440,27 +443,38 @@ AddEventHandler('pepe-inventory:server:OpenInventory', function(name, id, other)
 end)
 
 RegisterServerEvent("pepe-inventory:server:SaveInventory")
-AddEventHandler('pepe-inventory:server:SaveInventory', function(type, id)
-	if type == "trunk" then
+AddEventHandler('pepe-inventory:server:SaveInventory', function(invType, id)
+	local src = source
+	
+	if invType == "trunk" then
 		if (IsVehicleOwned(id)) then
 			SaveOwnedVehicleItems(id, Trunks[id].items)
 		else
 			Trunks[id].isOpen = false
 		end
-	elseif type == "glovebox" then
+	elseif invType == "glovebox" then
 		if (IsVehicleOwned(id)) then
 			SaveOwnedGloveboxItems(id, Gloveboxes[id].items)
 		else
 			Gloveboxes[id].isOpen = false
 		end
-	elseif type == "stash" then
+	elseif invType == "stash" then
 		SaveStashItems(id, Stashes[id].items)
-	elseif type == "drop" then
+	elseif invType == "drop" then
 		if Drops[id] ~= nil then
 			Drops[id].isOpen = false
 			if Drops[id].items == nil or next(Drops[id].items) == nil then
 				Drops[id] = nil
 				TriggerClientEvent("pepe-inventory:client:RemoveDropItem", -1, id)
+			end
+		end
+	end
+	if (type(src) == "number") then
+		local Player = Framework.Functions.GetPlayer(src)
+		if Player ~= nil then
+			if Player.PlayerData.metadata["currentinvname"] ~= nil and Player.PlayerData.metadata["currentinvtype"] ~= nil then
+				Player.Functions.SetMetaData("currentinvname", nil)
+				Player.Functions.SetMetaData("currentinvtype", nil)
 			end
 		end
 	end
@@ -2108,7 +2122,7 @@ Framework.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{nam
 	else
 		TriggerClientEvent('Framework:Notify', source,  "Argumenten niet juist ingevuld..", "error")
 	end
-end, "admin")
+end, "god")
 
 Framework.Commands.Add("giveitem", "Geef een item aan een speler", {{name="id", help="Speler ID"},{name="item", help="Naam van het item (geen label)"}, {name="amount", help="Aantal items"}}, true, function(source, args)
 	local Player = Framework.Functions.GetPlayer(tonumber(args[1]))
@@ -2151,7 +2165,7 @@ Framework.Commands.Add("giveitem", "Geef een item aan een speler", {{name="id", 
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
 	end
-end, "admin")
+end, "god")
 
 Framework.Functions.CreateUseableItem("id-card", function(source, item)
 	local Player = Framework.Functions.GetPlayer(source)
@@ -2217,3 +2231,54 @@ function FindBossPlayerByJobName(jobName)
     end
     return bossList
 end
+
+RegisterServerEvent("pepe-inventory:server:CloseInventory")
+AddEventHandler('pepe-inventory:server:CloseInventory', function(name, id)
+	local src = source
+	if name ~= nil and id ~= nil then
+		local secondInv = {}
+		if name == "stash" then
+			if Stashes[id] ~= nil then
+				if Stashes[id].isOpen then
+					local Target = Framework.Functions.GetPlayer(Stashes[id].isOpen)
+					if Target ~= nil then
+						TriggerClientEvent('pepe-inventory:client:CheckOpenState', Stashes[id].isOpen, name, id, Stashes[id].label)
+					else
+						Stashes[id].isOpen = false
+					end
+				end
+			end
+		elseif name == "trunk" then
+			if Trunks[id] ~= nil then
+				if Trunks[id].isOpen then
+					local Target = Framework.Functions.GetPlayer(Trunks[id].isOpen)
+					if Target ~= nil then
+						TriggerClientEvent('pepe-inventory:client:CheckOpenState', Trunks[id].isOpen, name, id, Trunks[id].label)
+					else
+						Trunks[id].isOpen = false
+					end
+				end
+			end
+		elseif name == "glovebox" then
+			if Gloveboxes[id] ~= nil then
+				if Gloveboxes[id].isOpen then
+					local Target = Framework.Functions.GetPlayer(Gloveboxes[id].isOpen)
+					if Target ~= nil then
+						TriggerClientEvent('pepe-inventory:client:CheckOpenState', Gloveboxes[id].isOpen, name, id, Gloveboxes[id].label)
+					else
+						Gloveboxes[id].isOpen = false
+					end
+				end
+			end
+		elseif name == "drop" then
+			if Drops[id] ~= nil and Drops[id].isOpen then
+				local Target = Framework.Functions.GetPlayer(Drops[id].isOpen)
+				if Target ~= nil then
+					TriggerClientEvent('pepe-inventory:client:CheckOpenState', Drops[id].isOpen, name, id, Drops[id].label)
+				else
+					Drops[id].isOpen = false
+				end
+			end
+		end
+	end
+end)

@@ -1,6 +1,7 @@
 local DisplayCount = 0
 DisableSeatShuff = true
 Framework = nil
+TriggerEvent("Framework:GetObject", function(obj) Framework = obj end) 
 
 LoggedIn = false
 
@@ -20,8 +21,8 @@ end)
 -- Pvp Enable
 
 function SetDiscordButtons()
-  SetDiscordRichPresenceAction(0, 'Vào server', 'fivem://connect/gx7ojo')
-  SetDiscordRichPresenceAction(1, 'Link Discord', 'https://discord.gg/DHntjapreK')
+  SetDiscordRichPresenceAction(0, 'Vào server', 'fivem://connect/k6pl66')
+  SetDiscordRichPresenceAction(1, 'Link Discord', 'https://discord.gg/SQpdSm8p2v')
 end
 
 RegisterNetEvent('pepe-assets:client:seat:shuffle')
@@ -76,7 +77,6 @@ AddEventHandler('pepe-assets:client:display:chatme', function(Text, coords, Sour
       Citizen.Wait(0)
       local SourceCoords = GetEntityCoords(GetPlayerPed(PlayerId))
       local NearCoords = GetEntityCoords(PlayerPedId())
-      print(GetPlayerPed(PlayerId).."="..PlayerPedId())
       local Distance = Vdist2(coords, NearCoords)
       if Distance < 25.0 then
         DrawText3D(SourceCoords.x, SourceCoords.y, SourceCoords.z + DisplayOffset, Text)

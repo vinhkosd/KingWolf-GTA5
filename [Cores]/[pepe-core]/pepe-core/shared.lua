@@ -332,7 +332,7 @@ Shared.Items = {
 	["spray"] 				 		= {["name"] = "spray", 			 	["label"] = "Sơn xe", 		["weight"] = 1000, 		["type"] = "item", 		["image"] = "son-xe.png", 		["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil, ["expire"] = 14,   ["description"] = "Bình xịt sơn xe"},
 	["water-bucket"] 		        = {["name"] = "water-bucket", 			            ["label"] = "Xô nước", 	                	["weight"] = 1000, 		["type"] = "item", 		["image"] = "water-bucket.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Xô nước"},
 	["mine-pickaxe"] 		        = {["name"] = "mine-pickaxe", 			            ["label"] = "Cuốc đá", 	                	["weight"] = 1000, 		["type"] = "item", 		["image"] = "pickaxe.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Cuốc đào đá"},
-	["wood-hachet"] 		        = {["name"] = "wood-hachet", 			            ["label"] = "Rìu chặt gỗ", 	                ["weight"] = 1000, 		["type"] = "item", 		["image"] = "hatchet.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Rìu chặt gỗ"},
+	["wood-hachet"] 		        = {["name"] = "wood-hachet", 			            ["label"] = "Rìu chặt gỗ", 	                ["weight"] = 1000, 		["type"] = "item", 		["image"] = "axe.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Rìu chặt gỗ"},
 	-- hai nho
 	["grape"] 		                = {["name"] = "grape", 			        ["label"] = "Nho", 	                ["weight"] = 1000, 			["type"] = "item", 		["image"] = "grape.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Quả nho"},
 	["grape_box"] 		            = {["name"] = "grape_box", 			    ["label"] = "Nho lên men", 	    	["weight"] = 10000, 		["type"] = "item", 		["image"] = "grape_box.png", 	        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Nho lên men"},
@@ -369,9 +369,10 @@ Shared.Items = {
 Shared.StarterItems = {
   ["phone"] = {amount = 1, item = "phone"},
 --   ["id-card"] = {amount = 1, item = "id-card"},
-  ["water"] = {amount = 2, item = "water"},
-  ["sandwich"] = {amount = 2, item = "sandwich"},
+  ["water"] = {amount = 5, item = "water"},
+  ["sandwich"] = {amount = 5, item = "sandwich"},
   ["lockpick"] = {amount = 5, item = "lockpick"},
+--   ["ciggy"] = {amount = 5, item = "ciggy"},
 }
 
 -- // VEHICLES // --

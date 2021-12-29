@@ -5,7 +5,7 @@ TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
 Framework.Commands.Add("skin", "Ooohja toch", {}, false, function(source, args)
 	TriggerClientEvent("pepe-clothing:client:openMenu", source)
-end, "admin")
+end, "god")
 
 RegisterServerEvent("pepe-clothing:saveSkin")
 AddEventHandler('pepe-clothing:saveSkin', function(model, skin)

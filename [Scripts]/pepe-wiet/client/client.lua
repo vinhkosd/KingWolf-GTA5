@@ -94,7 +94,7 @@ Citizen.CreateThread(function()
                             if not Config.WeedLocations['verwerk'][k]['IsBezig'] then
                                 Framework.Functions.TriggerCallback('pepe-wiet:server:has:nugget', function(HasNugget)
                                     if HasNugget then
-                                        PoliceCallPackWeed()
+                                        -- PoliceCallPackWeed()
                                         PackagePlant(k)
                                     else
                                         Framework.Functions.Notify("Bạn không có các vật phẩm cần thiết ..", "error")
@@ -149,7 +149,7 @@ AddEventHandler('pepe-wiet:client:use:scissor', function()
                         TriggerEvent('pepe-wiet:client:rod:anim')
                         if not exports['pepe-progressbar']:GetTaskBarStatus() then
                             if not DoingSomething then
-                                PoliceCall()
+                                -- PoliceCall()
                                 DoingSomething = true
                                 Framework.Functions.Progressbar("weed", "Đang hái cần sa..", 15000, false, true, {
                                     disableMovement = true,

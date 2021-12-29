@@ -131,7 +131,7 @@ AddEventHandler('pepe-items:client:use:lockpick', function(IsAdvanced)
         end
     elseif NearSafe then
         local Distance = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Config.Safes[CurrentSafe]['X'], Config.Safes[CurrentSafe]['Y'], Config.Safes[CurrentSafe]['Z'], true)
-        if Distance < 1.3 and not Config.Safes[CurrentSafe]['Robbed'] then
+        if Distance < 1.3 and not Config.Safes[CurrentSafe]['Robbed'] and Config.Safes[CurrentSafe]['Busy'] then
             if CurrentCops >= Config.PoliceNeeded then
                 if IsAdvanced then
                     CrackSafe(CurrentSafe, IsAdvanced)

@@ -13,6 +13,7 @@ local CurrentVehicle = nil
 local CurrentGlovebox = nil
 local CurrentStash = nil
 local CurrentTrash = false   
+local InventoryOnly = false
 
 TriggerEvent("Framework:GetObject", function(obj) Framework = obj end)  
 
@@ -115,7 +116,8 @@ Citizen.CreateThread(function()
                            TriggerEvent('pepe-inventory:client:open:anim')
                        elseif CurrentDrop ~= 0 then
                            TriggerServerEvent("pepe-inventory:server:OpenInventory", "drop", CurrentDrop)
-                       else                       
+                       else                   
+                            InventoryOnly = true
                            TriggerServerEvent("pepe-inventory:server:OpenInventory")
                            TriggerEvent('pepe-inventory:client:open:anim')
                        end
@@ -277,6 +279,15 @@ end)
 
 RegisterNUICallback("CloseInventory", function(data, cb)
     if currentOtherInventory == "none-inv" then
+        if CurrentVehicle ~= nil then
+            TriggerServerEvent("pepe-inventory:server:CloseInventory", "trunk", CurrentVehicle)
+        elseif CurrentGlovebox ~= nil then
+            TriggerServerEvent("pepe-inventory:server:CloseInventory", "glovebox", CurrentGlovebox)
+        elseif CurrentStash ~= nil then
+            TriggerServerEvent("pepe-inventory:server:CloseInventory", "stash", CurrentStash)
+        else
+            TriggerServerEvent("pepe-inventory:server:CloseInventory", "drop", CurrentDrop)
+        end
         CurrentDrop = 0
         CurrentVehicle = nil
         CurrentGlovebox = nil
@@ -284,8 +295,10 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         SetNuiFocus(false, false)
         Config.HasInventoryOpen = false
         ClearPedTasks(GetPlayerPed(-1))
+        InventoryOnly = false
         return
     end
+
     if CurrentVehicle ~= nil then
         CloseTrunk()
         TriggerServerEvent("pepe-inventory:server:SaveInventory", "trunk", CurrentVehicle)
@@ -304,6 +317,7 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         CurrentDrop = 0
     end
     SetNuiFocus(false, false)
+    InventoryOnly = false
     Config.HasInventoryOpen = false
     PlaySoundFrontend(-1, "NAV", "HUD_AMMO_SHOP_SOUNDSET", 1)
     TriggerServerEvent('pepe-inventory:server:set:inventory:disabled', false)
@@ -398,15 +412,15 @@ AddEventHandler('pepe-inventory:client:CheckOpenState', function(type, id, label
     local name = Framework.Shared.SplitStr(label, "-")[2]
     if type == "stash" then
         if name ~= CurrentStash or CurrentStash == nil then
-            TriggerServerEvent('pepe-inventory:server:SetIsOpenState', false, type, id)
+            TriggerServerEvent('pepe-inventory:server:SetIsOpenState', false, "stash", id)
         end
     elseif type == "trunk" then
         if name ~= CurrentVehicle or CurrentVehicle == nil then
-            TriggerServerEvent('pepe-inventory:server:SetIsOpenState', false, type, id)
+            TriggerServerEvent('pepe-inventory:server:SetIsOpenState', false, "trunk", id)
         end
     elseif type == "glovebox" then
         if name ~= CurrentGlovebox or CurrentGlovebox == nil then
-            TriggerServerEvent('pepe-inventory:server:SetIsOpenState', false, type, id)
+            TriggerServerEvent('pepe-inventory:server:SetIsOpenState', false, "glovebox", id)
         end
     end
 end)

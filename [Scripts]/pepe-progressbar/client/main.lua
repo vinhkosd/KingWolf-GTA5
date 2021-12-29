@@ -123,10 +123,10 @@ function Process(action, start, tick, finish)
                 end
             end)
         else
-            Framework.Functions.Notify("Không thể thực hiện hành động!", "error")
+            Framework.Functions.Notify("You are already doing something", "error")
         end
     else
-        Framework.Functions.Notify("Không thể thực hiện hành động!", "error")
+        Framework.Functions.Notify("Can not perform action", "error")
     end
 end
 
@@ -241,6 +241,9 @@ function Finish()
     ActionCleanup()
 end
 
+function GetTaskBarStatus()
+    return isDoingAction
+end
 function ActionCleanup()
     local ped = PlayerPedId()
 
@@ -252,15 +255,11 @@ function ActionCleanup()
             ClearPedTasks(ped)
         end
     end
-    DisablePlayerFiring(PlayerId(), false) 
-    NetworkRequestControlOfEntity(prop_net)
-    SetEntityAsMissionEntity(prop_net, true, true)
-    NetworkRequestControlOfEntity(propTwo_net)
-    SetEntityAsMissionEntity(propTwo_net, true, true)
-    DetachEntity(prop_net, 1, 1)
-    DeleteEntity(prop_net)
-    DetachEntity(propTwo_net, 1, 1)
-    DeleteEntity(propTwo_net)
+
+    DetachEntity(NetToObj(prop_net), 1, 1)
+    DeleteEntity(NetToObj(prop_net))
+    DetachEntity(NetToObj(propTwo_net), 1, 1)
+    DeleteEntity(NetToObj(propTwo_net))
     prop_net = nil
     propTwo_net = nil
     runProgThread = false
@@ -295,7 +294,11 @@ function DisableActions(ped)
         DisablePlayerFiring(PlayerId(), true) -- Disable weapon firing
         DisableControlAction(0, 24, true) -- disable attack
         DisableControlAction(0, 25, true) -- disable aim
+        DisableControlAction(0, 37, true) -- disable weapon select
         DisableControlAction(1, 37, true) -- disable weapon select
+        DisableControlAction(0, 192, true) -- disable TAB
+        DisableControlAction(0, 204, true) -- disable TAB
+        DisableControlAction(0, 211, true) -- disable TAB
         DisableControlAction(0, 47, true) -- disable weapon
         DisableControlAction(0, 58, true) -- disable weapon
         DisableControlAction(0, 140, true) -- disable melee
@@ -306,10 +309,6 @@ function DisableActions(ped)
         DisableControlAction(0, 264, true) -- disable melee
         DisableControlAction(0, 257, true) -- disable melee
     end
-end
-
-function GetTaskBarStatus()
-    return isDoingAction
 end
 
 RegisterNetEvent("progressbar:client:progress")

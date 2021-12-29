@@ -90,7 +90,7 @@ Config.Blips = {
 }
 
 Config.DiscordSettings = {
-    ['AppId'] = 905784423755186226,
+    ['AppId'] = 923472886461763584,
     ['Text'] = 'Los Angeles City',
 }
 

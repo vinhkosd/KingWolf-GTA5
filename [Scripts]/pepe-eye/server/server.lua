@@ -12,7 +12,7 @@ Framework.Commands.Add("resettrunk", "Reset the eye.", {}, false, function(sourc
     local Plate = args[1]
     Config.TrunkData[Plate] = {['Busy'] = false}
     TriggerClientEvent('pepe-eye:client:sync:trunk:data', -1, Config.TrunkData)
-end, "admin")
+end, "god")
 
 RegisterServerEvent('pepe-eye:server:setup:trunk:data')
 AddEventHandler('pepe-eye:server:setup:trunk:data', function(Plate)

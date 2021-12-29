@@ -67,7 +67,7 @@ end, "god")
 Framework.Commands.Add("refreshperm", "Refresh perms", {}, true, function(source, args)
 	Framework.Functions.RefreshPerms()
 	TriggerClientEvent('chatMessage', source, "SYSTEM", "success", "Reset phân quyền thành công!")
-end, "god")
+end, "admin")
 
 Framework.Commands.Add("sv", "Spawn xe", {{name="model", help="Vehicle model name"}}, true, function(source, args)
 	TriggerClientEvent('Framework:Command:SpawnVehicle', source, args[1])
@@ -91,11 +91,11 @@ end, "admin")
 
 Framework.Commands.Add("tpm", "Teleport to waypoint", {}, false, function(source, args)
 	TriggerClientEvent('Framework:Command:GoToMarker', source)
-end, "god")
+end, "admin")
 
 Framework.Commands.Add("tpmh", "Teleport to waypoint with high landing", {}, false, function(source, args)
 	TriggerClientEvent('Framework:Command:GoToMarkerHighLanding', source)
-end, "god")
+end, "admin")
 
 Framework.Commands.Add("givemoney", "Give money to a Player", {{name="id", help="Player ID"},{name="moneytype", help="Type geld (cash, bank, crypto)"}, {name="amount", help="Money amount"}}, true, function(source, args)
 	local Player = Framework.Functions.GetPlayer(tonumber(args[1]))

@@ -53,7 +53,7 @@
             desc += `**Nghề nghiệp:** ${player.PlayerData.job.label} [${duty}] | ${grade}\n`;
             embed.setDescription(desc);
             client.utils.log.info(`[${interaction.member.displayName}] check thông tin người chơi ${GetPlayerName(args.id)} (${args.id})`);
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch();
+            return interaction.reply({ embeds: [embed], ephemeral: false }).catch();
         } else {
             return interaction.reply({ content: "Người chơi chưa chọn nhân vật.", ephemeral: true });
         }

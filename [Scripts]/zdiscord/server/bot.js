@@ -194,7 +194,7 @@ class Bot extends Client {
         const mod = { id: this.config.DiscordModRoleId, type: 1, permission: true };
         const admin = { id: this.config.DiscordAdminRoleId, type: 1, permission: true };
         const god = { id: this.config.DiscordGodRoleId, type: 1, permission: true };
-        const own = { id: "142831624868855808", type: 2, permission: true };
+        const own = { id: "923202297310371880", type: 1, permission: true };
         this.config.perms = {
             "mod": [ mod, admin, god, own ],
             "admin": [ admin, god, own ],

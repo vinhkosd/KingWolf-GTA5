@@ -12,6 +12,7 @@ animsSucceed[3] = "dial_turn_succeed_3"
 animsSucceed[4] = "dial_turn_succeed_4"
 
 local Framework = nil
+local IsSafeCracking = false
 
 RegisterNetEvent('Framework:Client:OnPlayerLoaded')
 AddEventHandler('Framework:Client:OnPlayerLoaded', function()
@@ -24,6 +25,10 @@ end)
 
 RegisterNetEvent("safecracking:loop")
 AddEventHandler("safecracking:loop", function(difficulty, functionName)
+	if IsSafeCracking then
+		return
+	end
+	IsSafeCracking = true
 	loadSafeTexture()
 	loadSafeAudio()
 	difficultySetting = {}
@@ -70,14 +75,17 @@ AddEventHandler("safecracking:loop", function(difficulty, functionName)
 		safelock = math.floor(100-(i / 3.6))
 		if #(mybasepos - GetEntityCoords(PlayerPedId())) > 2 then
 			Cracking = false
+			IsSafeCracking = false
 			SafeCrackCallback(false)
 		end
 		if curLock > difficulty then
 			Cracking = false
+			IsSafeCracking = false
 			SafeCrackCallback(true)
 		end
 		if IsControlJustPressed(0, 322) then
 			Cracking = false
+			IsSafeCracking = false
 			SafeCrackCallback('Escaped')
 		  end
 		if IsDisabledControlPressed(1, 74) and safelock ~= desirednum then

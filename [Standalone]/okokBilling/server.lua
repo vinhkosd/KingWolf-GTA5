@@ -1,8 +1,8 @@
 Framework = nil
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
--- local Webhook = 'https://discord.com/api/webhooks/923589924911992873/R27LmoNjKuOrBgw1xgeK7dO5wC2aloxdcJQiChnHSPtbY9lMLNr0priFSL6VTcuTJyjB'
-local Webhook = ''
+local Webhook = 'https://discord.com/api/webhooks/923589924911992873/R27LmoNjKuOrBgw1xgeK7dO5wC2aloxdcJQiChnHSPtbY9lMLNr0priFSL6VTcuTJyjB'
+-- local Webhook = ''
 local limiteTimeHours = Config.LimitDateDays*24
 local hoursToPay = limiteTimeHours
 local whenToAddFees = {}
@@ -147,8 +147,14 @@ end)
 RegisterServerEvent("okokBilling:CreateInvoice")
 AddEventHandler("okokBilling:CreateInvoice", function(data)
 	local src = source
-	local _source = Framework.Functions.GetPlayer(source)
+	local _source = Framework.Functions.GetPlayer(src)
     local target = Framework.Functions.GetPlayer(tonumber(data.target))
+
+	if _source == nil then 
+		_source = Framework.Functions.GetPlayer(data.source)
+		src = data.source
+	end
+
 	if target == nil or data.target == src then
 		TriggerClientEvent("Framework:Notify", src, "ID Người chơi không hợp lệ" , "error")
 		return
@@ -158,7 +164,7 @@ AddEventHandler("okokBilling:CreateInvoice", function(data)
 	local waiting = true
 
 	Framework.Functions.ExecuteSql(true, "SELECT id FROM okokBilling WHERE id = (SELECT MAX(id) FROM okokBilling)", function(result)
-		local oldId = tonumber(result[1].id and result[1].id or 0)
+		local oldId = tonumber((result[1] and result[1].id) and result[1].id or 0)
         webhookData = {
 			id = oldId + 1,
 			player_name = GetPlayerName(tonumber(data.target)),

@@ -72,10 +72,10 @@ end
 
 function GeneratePlate()
     --KWX50000
-    local plate = "KWX"..math.random(10000, 99999)
+    local plate = "LAC"..math.random(10000, 99999)
     Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
         while (result[1] ~= nil) do
-            plate = "KWX"..math.random(10000, 99999)
+            plate = "LAC"..math.random(10000, 99999)
         end
         return plate
     end)

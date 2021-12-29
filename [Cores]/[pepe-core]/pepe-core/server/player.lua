@@ -378,6 +378,10 @@ end
 Framework.Player.Save = function(source)
 	local PlayerData = Framework.Players[source].PlayerData
 	if PlayerData ~= nil then
+		if PlayerData.metadata["currentinvname"] ~= nil and PlayerData.metadata["currentinvtype"] ~= nil then
+			TriggerEvent("pepe-inventory:server:SaveInventory", PlayerData.metadata["currentinvtype"], PlayerData.metadata["currentinvname"])
+		end
+		
 		Framework.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..PlayerData.citizenid.."'", function(result)
 			if result[1] == nil then
 				Framework.Functions.ExecuteSql(true, "INSERT INTO `characters_metadata` (`citizenid`, `cid`, `steam`, `license`, `name`, `money`, `charinfo`, `position`, `job`, `globals`) VALUES ('"..PlayerData.citizenid.."', '"..tonumber(PlayerData.cid).."', '"..PlayerData.steam.."', '"..PlayerData.license.."', '"..PlayerData.name.."', '"..json.encode(PlayerData.money).."', '"..Framework.EscapeSqli(json.encode(PlayerData.charinfo)).."', '"..json.encode(PlayerData.position).."', '"..json.encode(PlayerData.job).."' ,'"..json.encode(PlayerData.metadata).."')")
@@ -476,6 +480,7 @@ Framework.Player.SaveInventory = function(source)
 			Framework.Functions.ExecuteSql(true, "UPDATE `characters_metadata` SET `inventory` = '{}' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
 		end
 	end
+	return true
 end
 
 Framework.Player.GetTotalWeight = function(items)

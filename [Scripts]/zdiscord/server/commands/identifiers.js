@@ -37,6 +37,6 @@ module.exports = {
         }
         embed.setDescription(desc);
         client.utils.log.info(`[${interaction.member.displayName}] pulled identifiers on ${GetPlayerName(args.id)} (${args.id})`);
-        return interaction.reply({ embeds: [embed], ephemeral: true }).catch();
+        return interaction.reply({ embeds: [embed], ephemeral: false }).catch();
     },
 };

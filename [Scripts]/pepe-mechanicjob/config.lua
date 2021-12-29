@@ -80,21 +80,39 @@ Config.Businesses = {
     "autocare",
 }
 
+-- Config.Plates = {
+--     [1] = {
+--         coords = {x = -323.1741, y = -134.0071, z = 38.981792, h = 69.773284, r = 1.0},
+--         AttachedVehicle = nil,
+--     },
+--     [2] = {
+--         coords = {x = -318.9394, y = -123.7791, z = 38.98, h = 68.536979, r = 1.0},
+--         AttachedVehicle = nil,
+--     },
+--     [3] = {
+--         coords = {x = -315.4446, y = -113.3009, z = 38.98, h = 70.15, r = 1.0},
+--         AttachedVehicle = nil,
+--     },
+--     [4] = {
+--         coords = {x = -326.3368, y = -144.5348, z = 38.98, h = 70.01, r = 1.0},
+--         AttachedVehicle = nil,
+--     },
+-- }
 Config.Plates = {
     [1] = {
-        coords = {x = -323.1741, y = -134.0071, z = 38.981792, h = 69.773284, r = 1.0},
+        coords = {x = -319.41, y = -119.73, z = 38.80, h = 70.76, r = 1.0},
         AttachedVehicle = nil,
     },
     [2] = {
-        coords = {x = -318.9394, y = -123.7791, z = 38.98, h = 68.536979, r = 1.0},
+        coords = {x = -321.61, y = -125.77, z = 38.80, h = 69.01, r = 1.0}, 
         AttachedVehicle = nil,
     },
     [3] = {
-        coords = {x = -315.4446, y = -113.3009, z = 38.98, h = 70.15, r = 1.0},
+        coords = {x = -324.42, y = -131.6, z = 38.80, h = 71.16, r = 1.0}, 
         AttachedVehicle = nil,
     },
     [4] = {
-        coords = {x = -326.3368, y = -144.5348, z = 38.98, h = 70.01, r = 1.0},
+        coords = {x = -333.33, y = -118.17, z = 38.82, h = 250.76, r = 1.0}, 
         AttachedVehicle = nil,
     },
 }

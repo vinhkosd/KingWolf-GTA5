@@ -250,7 +250,7 @@ function getDoctors()
 	for k, v in pairs(Framework.Functions.GetPlayers()) do
 		local Player = Framework.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if ((Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty and not Player.PlayerData.metadata["isdead"]) then
 				amount = amount + 1
 			end
 		end

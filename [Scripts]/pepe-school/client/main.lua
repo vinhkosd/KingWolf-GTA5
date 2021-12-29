@@ -62,7 +62,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(5)
-		TakeVehicle = { x = 241.00695, y = -1401.675, z = 30.580718-0.97 }
+		TakeVehicle = { x = 241.00695, y = -1401.675, z = 30.580718 }
 		if not IsTakenVehicle and IsPassedTheory then
 			local playerPed = PlayerPedId()
 			local coords = GetEntityCoords(playerPed)
@@ -284,7 +284,7 @@ Citizen.CreateThread(function()
 		local currentZone = nil
 
 		for k,v in pairs(Config.Zones) do
-			if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
+			if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < 1.5) then
 				isInMarker  = true
 				currentZone = k
 			end

@@ -49,7 +49,7 @@ Framework.Commands.Add("refreshcars", "Refresh de car dealer", {}, false, functi
         Config.Vehicles[6]['current-vehicle'] = RandomAddon
         TriggerClientEvent('pepe-vehicleshop:client:set:vehicles', -1, RandomSport, RandomSedan, RandomMotor, RandomMuscle, RandomVans, RandomAddon)
     end)
-end, "admin")
+end, "god")
 
 Citizen.CreateThread(function()
     while true do

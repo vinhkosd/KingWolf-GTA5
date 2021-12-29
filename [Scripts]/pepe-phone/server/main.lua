@@ -1235,7 +1235,7 @@ Framework.Commands.Add("triggercall", "Gia Lap cuoc goi", {}, false, function(so
     local Ply = Framework.Functions.GetPlayer(src)
     local rndCallId = math.random(100000000, 999999999)
     TriggerClientEvent('pepe-phone:client:GetCalled', Ply.PlayerData.source, Ply.PlayerData.charinfo.phone, rndCallId, false)
-end, 'admin')
+end, 'god')
 
 Framework.Commands.Add("viethoadon", "Viết hóa đơn", {{name="id", help="ID"},{name="money", help="Số tiền"}}, true, function(source, args)
     local src = source
@@ -1249,10 +1249,12 @@ Framework.Commands.Add("viethoadon", "Viết hóa đơn", {{name="id", help="ID"
         local data = {}
         data.society = Player.PlayerData.job.name
         data.society_name = Player.PlayerData.job.label
+        data.source = src
         data.target = tonumber(args[1])
         data.invoice_value = tonumber(args[2])
         data.invoice_item = tonumber(args[1])
-        TriggerEvent("okokBilling:CreateInvoice", source, data)
+        data.invoice_notes = ""
+        TriggerEvent("okokBilling:CreateInvoice", data)
         TriggerClientEvent("Framework:Notify", src, "Ghi hoá đơn thành công" , "success")
     end
 end)

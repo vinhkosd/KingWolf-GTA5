@@ -154,7 +154,7 @@ Framework.Commands.Add("unban", "Unban người chơi", {{name="Banid", help="Ba
     else 
         TriggerClientEvent('chatMessage', src, 'SYSTEM', 'error', 'Geef een ban id op..')
     end
-end, "admin")
+end, "god")
 
 Framework.Commands.Add("baninfo", "Xem thông tin ban của người chơi", {{name="BanId", help="BanId của người chơi"}}, true, function(source, args)
     local src = source
@@ -178,34 +178,34 @@ Framework.Commands.Add("baninfo", "Xem thông tin ban của người chơi", {{n
     end
 end, "admin")
 
-RegisterCommand("kickall", function(source, args, rawCommand)
-    local src = source
-    if src > 0 then
-        local reason = table.concat(args, ' ')
-        local Player = Framework.Functions.GetPlayer(src)
-        if Framework.Functions.HasPermission(src, "god") then
-            if args[1] ~= nil then
-                for k, v in pairs(Framework.Functions.GetPlayers()) do
-                    local Player = Framework.Functions.GetPlayer(v)
-                    if Player ~= nil then 
-                        DropPlayer(Player.PlayerData.source, reason)
-                    end
-                end
-            else
-                TriggerClientEvent('chatMessage', src, 'SYSTEM', 'error', 'Vui lòng nhập lý do..')
-            end
-        else
-            TriggerClientEvent('chatMessage', src, 'SYSTEM', 'error', 'Không đủ quyền hạn..')
-        end
-    else
-        for k, v in pairs(Framework.Functions.GetPlayers()) do
-            local Player = Framework.Functions.GetPlayer(v)
-            if Player ~= nil then 
-                DropPlayer(Player.PlayerData.source, "Khởi động lại máy chủ, vui lòng chờ trong giây lát!")
-            end
-        end
-    end
-end, false)
+-- RegisterCommand("kickall", function(source, args, rawCommand)
+--     local src = source
+--     if src > 0 then
+--         local reason = table.concat(args, ' ')
+--         local Player = Framework.Functions.GetPlayer(src)
+--         if Framework.Functions.HasPermission(src, "god") then
+--             if args[1] ~= nil then
+--                 for k, v in pairs(Framework.Functions.GetPlayers()) do
+--                     local Player = Framework.Functions.GetPlayer(v)
+--                     if Player ~= nil then 
+--                         DropPlayer(Player.PlayerData.source, reason)
+--                     end
+--                 end
+--             else
+--                 TriggerClientEvent('chatMessage', src, 'SYSTEM', 'error', 'Vui lòng nhập lý do..')
+--             end
+--         else
+--             TriggerClientEvent('chatMessage', src, 'SYSTEM', 'error', 'Không đủ quyền hạn..')
+--         end
+--     else
+--         for k, v in pairs(Framework.Functions.GetPlayers()) do
+--             local Player = Framework.Functions.GetPlayer(v)
+--             if Player ~= nil then 
+--                 DropPlayer(Player.PlayerData.source, "Khởi động lại máy chủ, vui lòng chờ trong giây lát!")
+--             end
+--         end
+--     end
+-- end, false)
 
 RegisterServerEvent('pepe-admin:server:bringTp')
 AddEventHandler('pepe-admin:server:bringTp', function(targetId, coords)
@@ -223,8 +223,8 @@ end)
 
 RegisterServerEvent('pepe-admin:server:setPermissions')
 AddEventHandler('pepe-admin:server:setPermissions', function(targetId, group)
-    Framework.Functions.AddPermission(targetId, group.rank)
-    TriggerClientEvent('Framework:Notify', targetId, 'Đã set permission thành công '..group.label)
+    -- Framework.Functions.AddPermission(targetId, group.rank)
+    -- TriggerClientEvent('Framework:Notify', targetId, 'Đã set permission thành công '..group.label)
 end)
 
 RegisterServerEvent('pepe-admin:server:OpenSkinMenu')
@@ -261,7 +261,7 @@ Framework.Commands.Add("setammo", "Staff: Set manual ammo for a weapon.", {{name
     local amount = tonumber(args[1]) ~= nil and tonumber(args[1]) or 250
 
     TriggerClientEvent('pepe-weapons:client:SetWeaponAmmoManual', src, weapon, amount)
-end, 'admin')
+end, 'god')
 
 Framework.Commands.Add("br", "Kéo người chơi về.", {{name="id", help="ID người chơi"}}, false, function(source, args)
     local playerId = tonumber(args[1])
@@ -277,8 +277,11 @@ Framework.Commands.Add("tps", "Dịch chuyển đến một người chơi hoặ
 end, "admin")
 
 Framework.Commands.Add("nc", "Toggle No clip", {}, false, function(source, args)
-    TriggerEvent("pepe-admin:server:togglePlayerNoclip", source)
-end, 'admin')
+    -- TriggerEvent("pepe-admin:server:togglePlayerNoclip", source)
+    if Framework.Functions.HasPermission(source, permissions["noclip"]) then
+        TriggerClientEvent("pepe-admin:client:toggleNoclip", source)
+    end
+end, 'god')
 
 Framework.Commands.Add("triggerlogin", "Trigger Player Login", {{name="id", help="ID người chơi"}}, false, function(source, args)
     src = source
@@ -344,4 +347,4 @@ end, "admin")
 
 Framework.Commands.Add("tal", "", {}, false, function(source, args)
     TriggerClientEvent('pepe-houserobbery:client:cc', source)
-  end, "admin")
+end, "god")

@@ -151,46 +151,48 @@ AddEventHandler('pepe-fishing:client:use:fishingrod', function()
     --     Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
     --     return
     -- end
+    Config.CanFish = true
     if not Config.UsingRod then
         if Config.CanFish then
-        if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
-            if not IsEntityInWater(GetPlayerPed(-1)) then
-                FreezeEntityPosition(GetPlayerPed(-1), true)
-                CatchFish()
-                -- if not exports['pepe-progressbar']:GetTaskBarStatus() then
-                --     if not DoingSomething then
-                --         DoingSomething = true
-                --         TriggerEvent('pepe-inventory:client:set:busy', true)
-                --          Citizen.SetTimeout(1000, function()
-                --             TriggerEvent('pepe-fishing:client:rod:anim')
-                --              Framework.Functions.Progressbar("drink", "Đang câu cá..", 5000, false, true, {
-                --                  disableMovement = true,
-                --                  disableCarMovement = false,
-                --                  disableMouse = false,
-                --                  disableCombat = true,
-                --              }, {}, {}, {}, function() -- Done
-                --                 DoingSomething = false
-                --                 TriggerEvent('pepe-inventory:client:set:busy', false)
-                --                 CatchFish()
-                --              end, function()
-                --                 DoingSomething = false
-                --                 exports['pepe-assets']:RemoveProp()
-                --                 TriggerEvent('pepe-inventory:client:set:busy', false)
-                --                 Framework.Functions.Notify("Đã hủy bỏ..", "error")
-                --                 FreezeEntityPosition(GetPlayerPed(-1), false)
-                --                 StopAnimTask(GetPlayerPed(-1), "amb@world_human_stand_fishing@idle_a", "idle_a", 1.0)
-                --              end)
-                --          end)
-                --     end
-                -- end
+            if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                if not IsEntityInWater(GetPlayerPed(-1)) then
+                    TriggerEvent('pepe-fishing:client:rod:anim')
+                    FreezeEntityPosition(GetPlayerPed(-1), true)
+                    CatchFish()
+                    -- if not exports['pepe-progressbar']:GetTaskBarStatus() then
+                    --     if not DoingSomething then
+                    --         DoingSomething = true
+                    --         TriggerEvent('pepe-inventory:client:set:busy', true)
+                    --          Citizen.SetTimeout(1000, function()
+                    --             TriggerEvent('pepe-fishing:client:rod:anim')
+                    --              Framework.Functions.Progressbar("drink", "Đang câu cá..", 5000, false, true, {
+                    --                  disableMovement = true,
+                    --                  disableCarMovement = false,
+                    --                  disableMouse = false,
+                    --                  disableCombat = true,
+                    --              }, {}, {}, {}, function() -- Done
+                    --                 DoingSomething = false
+                    --                 TriggerEvent('pepe-inventory:client:set:busy', false)
+                    --                 CatchFish()
+                    --              end, function()
+                    --                 DoingSomething = false
+                    --                 exports['pepe-assets']:RemoveProp()
+                    --                 TriggerEvent('pepe-inventory:client:set:busy', false)
+                    --                 Framework.Functions.Notify("Đã hủy bỏ..", "error")
+                    --                 FreezeEntityPosition(GetPlayerPed(-1), false)
+                    --                 StopAnimTask(GetPlayerPed(-1), "amb@world_human_stand_fishing@idle_a", "idle_a", 1.0)
+                    --              end)
+                    --          end)
+                    --     end
+                    -- end
+                else
+                    Framework.Functions.Notify('Bạn đang bơi.', 'error')
+                    FreezeEntityPosition(GetPlayerPed(-1), false)
+                end
             else
-                Framework.Functions.Notify('Bạn đang bơi.', 'error')
-				FreezeEntityPosition(GetPlayerPed(-1), false)
+                Framework.Functions.Notify('Bạn đang ở trong một chiếc xe.', 'error')
+                FreezeEntityPosition(GetPlayerPed(-1), false)
             end
-        else
-            Framework.Functions.Notify('Bạn đang ở trong một chiếc xe.', 'error')
-			FreezeEntityPosition(GetPlayerPed(-1), false)
-        end
         else
             Framework.Functions.Notify('Bạn không ở trong khu vực câu cá.', 'error')
 			FreezeEntityPosition(GetPlayerPed(-1), false)

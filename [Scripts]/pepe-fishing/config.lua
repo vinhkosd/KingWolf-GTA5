@@ -114,11 +114,11 @@ Config.SellPrices = {
 			[3] = 116,
 		},
     },
-    ['fish-shark'] = {
+  ['fish-shark'] = {
 		PriceList = {
 			[1] = 344,
 			[2] = 390,
 			[3] = 450,
 		},
-    },
+  },
 }

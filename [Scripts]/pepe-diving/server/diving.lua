@@ -66,4 +66,4 @@ end)
 
 Framework.Commands.Add("sanholocate", "Clear iedereen zijn chat", {}, false, function(source, args)
     TriggerClientEvent('pepe-diving:client:NewLocations', -1)
-end, 'admin')
+end, 'god')

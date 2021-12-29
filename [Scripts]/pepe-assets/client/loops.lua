@@ -8,6 +8,8 @@ local entityEnumerator = {
  end
 }
 
+local countPlayers = 5
+
 local IsBlacklist = true
 
 -- // Loops \\ --
@@ -204,6 +206,7 @@ Citizen.CreateThread(function()
   SetDiscordRichPresenceAssetText(Config.DiscordSettings['Text'])
   SetDiscordRichPresenceAssetSmall('main')
   SetDiscordRichPresenceAssetSmallText('Server ID: '..id)
+  SetRichPresence("Total Players: "..countPlayers.."/48 (Server ID: "..id..")")
   Citizen.Wait(12 * 1000)
  end
 end)
@@ -252,13 +255,18 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent('pepe-assets:client:turnoffblacklist')
-AddEventHandler('pepe-assets:client:turnoffblacklist', function()
-	local textBlacklist = "is not"
-	IsBlacklist = not IsBlacklist
+AddEventHandler('pepe-assets:client:turnoffblacklist', function(ServerIsBlacklist)
+	local textBlacklist = "đang tắt"
+	IsBlacklist = ServerIsBlacklist
 	if IsBlacklist then 
-		textBlacklist = "is"
+		textBlacklist = "đang bật"
 	end
-	Framework.Functions.Notify("Car "..textBlacklist.." blacklisted")
+	Framework.Functions.Notify("Car blacklist "..textBlacklist)
+end)
+
+RegisterNetEvent('pepe-assets:client:getEntityName')
+AddEventHandler('pepe-assets:client:getEntityName', function(entitymodel)
+	local modelName = GetDisplayNameFromVehicleModel(entitymodel)
 end)
 
 Citizen.CreateThread(function()
@@ -302,3 +310,8 @@ function EnumerateEntities(initFunc, moveFunc, disposeFunc)
  	disposeFunc(iter)
  end)
 end
+
+RegisterNetEvent('pepe-assets:client:countPlayers')
+AddEventHandler('pepe-assets:client:countPlayers', function(_countPlayers)
+	countPlayers = _countPlayers
+end)

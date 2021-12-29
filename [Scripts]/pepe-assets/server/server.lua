@@ -1,4 +1,5 @@
 Framework = nil
+IsBlacklist = true
 
 TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
 
@@ -39,5 +40,31 @@ Framework.Commands.Add("id", "Check id của bạn?", {}, false, function(source
 end)
 
 Framework.Commands.Add("carblacklist", "Bật/Tắt blacklistcar", {}, false, function(source, args)
-    TriggerClientEvent('pepe-assets:client:turnoffblacklist', -1)
+	IsBlacklist = not IsBlacklist
+    TriggerClientEvent('pepe-assets:client:turnoffblacklist', -1, IsBlacklist)
 end, "admin")
+
+AddEventHandler("entityCreating", function(entity)
+	if DoesEntityExist(entity) then
+		if NetworkGetEntityOwner(entity) == nil then
+			CancelEvent()
+		end
+		if IsBlacklist then
+			if Config.BlacklistedVehs[GetEntityModel(entity)] then
+				-- local owner = NetworkGetEntityOwner(entity)
+				CancelEvent()
+			end
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+		local amount = 0
+		for k, v in pairs(Framework.Functions.GetPlayers()) do
+			amount = amount + 1
+		end
+		TriggerClientEvent("pepe-assets:client:countPlayers", -1, amount)
+        Citizen.Wait(60 * 1000)--60s update player 1 lan
+    end
+end)

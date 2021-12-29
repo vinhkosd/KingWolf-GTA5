@@ -12,6 +12,7 @@ AddEventHandler('playerDropped', function(reason)
 	if reason ~= "Reconnecting" and src > 60000 then return false end
 	if(src==nil or (Framework.Players[src] == nil)) then return false end
 	Framework.Players[src].Functions.Save()
+	Citizen.Wait(2000)
 	Framework.Players[src] = nil
 end)
 

@@ -34,10 +34,10 @@ Citizen.CreateThread(function()
     while true do
 		Citizen.Wait(0)
         WaterOverrideSetStrength(1.0)
-		SetVehicleDensityMultiplierThisFrame(0.47)
+		SetVehicleDensityMultiplierThisFrame(1.0)
 		SetPedDensityMultiplierThisFrame(1.0)
-	    SetParkedVehicleDensityMultiplierThisFrame(0.10)
-		SetScenarioPedDensityMultiplierThisFrame(0.01, 0.01)
+	    SetParkedVehicleDensityMultiplierThisFrame(0.6)
+		SetScenarioPedDensityMultiplierThisFrame(0.6, 0.6)
 	end
 end)
 

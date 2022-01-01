@@ -586,6 +586,7 @@ RegisterNUICallback('resetOutfit', function()
     resetClothing(json.decode(previousSkinData))
     skinData = json.decode(previousSkinData)
     previousSkinData = {}
+    TriggerEvent("dpc:ResetClothing")
 end)
 
 function resetClothing(data)
@@ -1044,6 +1045,7 @@ function SaveSkin()
 	local model = GetEntityModel(GetPlayerPed(-1))
     clothing = json.encode(skinData)
 	TriggerServerEvent("pepe-clothing:saveSkin", model, clothing)
+    TriggerEvent("dpc:ResetClothing")
 end
 
 RegisterNetEvent('pepe-clothing:client:CreateFirstCharacter')

@@ -55,7 +55,7 @@ AddEventHandler('pepe-garbagejob:server:PayShitBakker', function(amount, locatio
         if location == #Config.Locations["vuilnisbakken"] then
             for i = 1, math.random(3, 5), 1 do
                 local item = Materials[math.random(1, #Materials)]
-                Player.Functions.AddItem(item, math.random(40, 70))
+                Player.Functions.AddItem(item, math.random(7, 10))
                 TriggerClientEvent('inventory:client:ItemBox', src, Framework.Shared.Items[item], 'add')
                 Citizen.Wait(500)
             end

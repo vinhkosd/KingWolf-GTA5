@@ -111,7 +111,7 @@ AddEventHandler('kingwolf_luckywheel:getLucky', function()
                 -- local _priceIndex = math.random(1, 20)
                 local _randomPrice = math.random(1, 100)
                 if _randomPrice == 1 then-- Ra xe
-                    local _subRan = math.random(1, 10)
+                    local _subRan = math.random(1, 100)
                     if _subRan <= 1 then-- 50% cua 1% Ra xe
                         _priceIndex = 19
                     else--50% win 2k

@@ -759,7 +759,6 @@ function Save(save)
     else
         LoadPed(oldPed)
     end
-
     TriggerEvent("clothing:setupCommandsData")
     CustomCamera('torso')
 end

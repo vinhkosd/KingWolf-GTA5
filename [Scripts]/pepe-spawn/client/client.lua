@@ -116,6 +116,10 @@ end
 function SpawnPlayer(SpawnId)
     if SpawnId == 'lastlocation' then
         Framework.Functions.GetPlayerData(function(PlayerData)
+            if PlayerData.position == nil or PlayerData.position.x == nil then
+                SpawnPlayer("spawn1")
+                return
+            end
           SetEntityCoords(GetPlayerPed(-1), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z - 0.9, 0, 0, 0, false)
           SetFocusArea(PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + 300, 0.0, 0.0, 0.0)
           SetCamParams(Cam, PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + 300, -85.0, 0.00, 0.00, 100.0, 7200, 0, 0, 2)

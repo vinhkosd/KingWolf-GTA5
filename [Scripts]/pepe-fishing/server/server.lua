@@ -100,8 +100,8 @@ AddEventHandler('pepe-fishing:server:fish:reward', function(attempt, duration, w
     -- - Câu trúng fish-shark sẽ có 0.3% ra điện thoại bẩn hoặc 2% ra thỏi vàng
 
     local Player = Framework.Functions.GetPlayer(source)
-    local RandomValue = math.random(1, 100)
-    if RandomValue <= 45 then
+    local RandomValue = math.random(1, 1000)
+    if RandomValue <= 450 then
         TriggerClientEvent("Framework:Notify", source, "Bạn đã câu hụt! ", "success", 4000)
         return
     end

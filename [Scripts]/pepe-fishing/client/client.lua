@@ -144,7 +144,7 @@ AddEventHandler('pepe-fishing:client:use:fishingrod', function()
     --     Framework.Functions.Notify("Bạn chưa đủ điều kiện để farm khu vực này (Yêu cầu: Level 3)", "error")
     --     return
     -- end
-    Config.CanFish = true
+    -- Config.CanFish = true
     if not Config.UsingRod then
         if Config.CanFish then
             if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
